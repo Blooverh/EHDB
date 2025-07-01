@@ -1,0 +1,25 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Blooverh",
+  "type": "commonjs",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.0.0",
+    "fast-csv": "^5.0.2",
+    "mongoose": "^8.16.1",
+    "puppeteer": "^24.11.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}
