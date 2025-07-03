@@ -27,18 +27,14 @@ const cpuSchema = new mongoose.Schema({
         cacheL2: {type: String, default: defaultVal},
         cacheL3: {type: String, default: defaultVal},
     },
+    mpn: {type: String, default: defaultVal},
     pcieGen: {type: String, default: defaultVal},
-    addedToAPI: {type: Date, default: Date.now},
-    releaseDate: {
-        type: Date,
-        required: true,
-        set: (val) => new Date(val)  // Ensure it converts to Date
-    },
     info: [{
         website: {type: String},
         currPrice: {type: Number, default: 0}, 
         oldPrice: {type: Number, default: 0},
-        priceChange: {type: Number, default: 0}
+        priceChange: {type: Number, default: 0}, 
+        link: {type: URL, default: defaultVal}
     }],
     slug: {
         type: String, 
