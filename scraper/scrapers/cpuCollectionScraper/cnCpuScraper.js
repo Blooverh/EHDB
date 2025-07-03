@@ -31,6 +31,8 @@ const cnCollectionCPU = async () => {
         let cpuTitles = [];
         let cpuPrices = [];
 
+        // Eval query selectors and extract title and prices from the list cards 
+        // !!!! FIXME: We can refactor both functions below and merge them into one function
         cpuTitles = await page.$$eval('.list-card', listCards =>
             listCards.map(card => {
                 const titleElement = card.querySelector('.listText a');
@@ -38,6 +40,7 @@ const cnCollectionCPU = async () => {
             })
         );
 
+        // FIX ME ! PRICE HAS TO BE CONVERTED INTO A FLOAT NUMBER 
         cpuPrices = await page.$$eval('.list-card', listCards =>
             listCards.map(card => {
                 const priceElement = card.querySelector('.price-cart span');
@@ -48,7 +51,7 @@ const cnCollectionCPU = async () => {
         // Pair each title with correspoding price
         cpuTitles.forEach((title, idx) => {
             const price = cpuPrices[idx] || 'No Price';
-
+            // push both title, price and website name to hashmap
             scrapedData.push({title, price, website: website});
         });
 
@@ -61,6 +64,10 @@ const cnCollectionCPU = async () => {
         console.error(`Error Scraping: ${website}`);
         console.error(err);
     }
+
+    // Once scraped data hash map is populated from the scraping
+    // call controller function with arguments of array type containing the title and the prices
+    // controller will run asynchronously, when done we can close browser and kill process
 
     await browser.close();
     console.log('Browser Closed');
