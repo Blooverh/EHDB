@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+import mongoose from "mongoose";
 const defaultVal = "N/A";
 
 // Creating schema that defines the structure of cpu documents within a mongo DB collection
@@ -34,7 +33,7 @@ const cpuSchema = new mongoose.Schema({
         currPrice: {type: Number, default: 0}, 
         oldPrice: {type: Number, default: 0},
         priceChange: {type: Number, default: 0}, 
-        link: {type: URL, default: defaultVal}
+        link: {type: String, default: defaultVal}
     }],
     slug: {
         type: String, 
@@ -63,6 +62,4 @@ cpuSchema.pre('save', function(next) {
 });
 
 
-const CPU = mongoose.model('CPU', cpuSchema);
-
-module.exports = CPU;
+export const CPU = mongoose.model('CPU', cpuSchema);

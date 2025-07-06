@@ -4,14 +4,14 @@
   "description": "",
   "license": "ISC",
   "author": "Blooverh",
-  "type": "commonjs",
+  "type": "module",
   "main": "main.js",
   "directories": {
     "lib": "lib",
     "test": "tests"
   },
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "start": "node main.js"
   },
   "dependencies": {

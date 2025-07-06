@@ -4,7 +4,7 @@
   "description": "backend for EHDB",
   "license": "ISC",
   "author": "Blooverh",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "jest",

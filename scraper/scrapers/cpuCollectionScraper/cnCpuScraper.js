@@ -1,13 +1,11 @@
-const puppeteer = require('puppeteer');
-// below libraries surpass security measures from cloudfare and others
-const puppeteer_extra = require('puppeteer-extra');
-const puppeteer_extra_plugin = require('puppeteer-extra-plugin-stealth');
 
+import puppeteer from 'puppeteer';
 // Data handler controller library - Adds the parts and their information to DB
-const cnAddCPU = require('../../lib/cpuDataHandlers/cpu_cnDataHandler');
+
+import cnAddCPU from '../../lib/DB_utilities/cpuDataHandlers/cpu_cnDataHandler.js';
 
 // scraper for CPU collection page on Cloud Ninjas
-const cnCollectionCPU = async () => {
+export const cnCollectionCPU = async () => {
 
     const collectionURL = 'https://cloudninjas.com/collections/cloud-ninjas-cpu-collection-processors';
     const website = "Cloud Ninjas";
@@ -32,7 +30,7 @@ const cnCollectionCPU = async () => {
         let cpuPrices = [];
 
         // Eval query selectors and extract title and prices from the list cards 
-        // !!!! FIXME: We can refactor both functions below and merge them into one function
+
         cpuTitles = await page.$$eval('.list-card', listCards =>
             listCards.map(card => {
                 const titleElement = card.querySelector('.listText a');
@@ -40,7 +38,6 @@ const cnCollectionCPU = async () => {
             })
         );
 
-        // FIX ME ! PRICE HAS TO BE CONVERTED INTO A FLOAT NUMBER 
         cpuPrices = await page.$$eval('.list-card', listCards =>
             listCards.map(card => {
                 const priceElement = card.querySelector('.price-cart span');
@@ -68,11 +65,15 @@ const cnCollectionCPU = async () => {
     // Once scraped data hash map is populated from the scraping
     // call controller function with arguments of array type containing the title and the prices
     // controller will run asynchronously, when done we can close browser and kill process
+    if(scrapedData.length > 0){
+        await cnAddCPU(scrapedData.map(data => data.title), scrapedData.map(data => data.price));
+        console.log('Cloud Ninjas Scraped and Saved Successfully to Database');
+    }else{
+        console.warn('No Data Scraped from Cloud Ninjas Could Be Saved in Database');
+    }
 
     await browser.close();
     console.log('Browser Closed');
     process.exit(0);
 
 };
-
-module.exports = { cnCollectionCPU };
