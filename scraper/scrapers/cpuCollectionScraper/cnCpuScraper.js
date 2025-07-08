@@ -52,8 +52,6 @@ export const cnCollectionCPU = async () => {
             scrapedData.push({title, price, website: website});
         });
 
-        console.log(scrapedData);
-
         console.log(`Scraping ${website} Completed`);
 
 

@@ -3,6 +3,7 @@ const defaultVal = "N/A";
 
 // Creating schema that defines the structure of cpu documents within a mongo DB collection
 // includes fields, data types, and any constraints
+
 const cpuSchema = new mongoose.Schema({
     brand: {type: String, default: defaultVal , required: true, lowercase: true},
     model: {type: String, default: defaultVal, required: true, unique: true, lowercase: true},
@@ -30,36 +31,28 @@ const cpuSchema = new mongoose.Schema({
     pcieGen: {type: String, default: defaultVal},
     info: [{
         website: {type: String},
-        currPrice: {type: Number, default: 0}, 
+        currPrice: {type: Number, default: 0},
         oldPrice: {type: Number, default: 0},
-        priceChange: {type: Number, default: 0}, 
+        priceChange: {type: Number, default: 0},
         link: {type: String, default: defaultVal}
     }],
     slug: {
-        type: String, 
+        type: String,
         required: true,
         unique: true
     }
 });
 
-//Mongoose pre-save hook to calculate the percentage value based on current and old price
-/* .pre('method', [...options])  - defines a pre hook for the model
-
-*/
-
 cpuSchema.pre('save', function(next) {
-    // `this` refers to document in question being saved
-    // we only calculate percentage if currPrice has been changed
-    // isModified() - Returns boolean value 
-    if(this.isModified('info.currPrice') && this.info.oldPrice){
-        if(this.info.oldPrice > 0) {
-            const change = ((this.info.currPrice - this.info.oldPrice) / this.info.oldPrice) * 100;
-            this.info.priceChange = parseFloat(change.toFixed(2));
-        }
+    if (this.isModified('info')) {
+        this.info.forEach(infoEntry => {
+            if (infoEntry.oldPrice && infoEntry.oldPrice > 0 && infoEntry.currPrice !== infoEntry.oldPrice) {
+                const change = ((infoEntry.currPrice - infoEntry.oldPrice) / infoEntry.oldPrice) * 100;
+                infoEntry.priceChange = parseFloat(change.toFixed(2));
+            }
+        });
     }
-
     next();
 });
-
 
 export const CPU = mongoose.model('CPU', cpuSchema);
