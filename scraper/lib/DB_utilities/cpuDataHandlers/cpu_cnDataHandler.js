@@ -39,7 +39,6 @@ export default async function cnAddCPU(titleArr, priceArr){
             lower: true,
             strict: true
         });
-        // console.log(`Slug for ${brand} - ${model} is ${slug} - Price ${priceInFloat}`);
 
         // Add cpus, or update cpus to database
         try{
@@ -100,7 +99,7 @@ export default async function cnAddCPU(titleArr, priceArr){
 
 // Function to extract cpu Name correctly within the Cloud Ninjas website 
 
-function extractCpuName(name){
+export function extractCpuName(name){
     let trimmedName = name.trim(); // remove whitespaces in front and back if exist
 
     // Normalize common dash characters (en dash, em dash) to a standard hyphen-minus
@@ -127,6 +126,5 @@ function extractCpuName(name){
         }
     }
 
-    // console.log(`${brand} - ${ model }`);
     return { brand, model };
 }

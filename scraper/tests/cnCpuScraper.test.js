@@ -1,7 +1,7 @@
 
 import { cnCollectionCPU } from '../scrapers/cpuCollectionScraper/cnCpuScraper.js';
 import puppeteer from 'puppeteer';
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 const cnCollectionURL = 'https://cloudninjas.com/collections/cloud-ninjas-cpu-collection-processors';
 // Mock puppeteer
 // replaces a module dependency in our code so we can control its behaviour during testing

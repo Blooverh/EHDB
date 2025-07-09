@@ -43,4 +43,28 @@ const cpuSchema = new mongoose.Schema({
     }
 });
 
+/*
+pre-hook function which is middleware that executes before a specific action. 
+- For example, argument has 'save' method, meaning this middleware 
+will execute before saving a document to the database such as 
+`await cpu.save()`
+
+This middleware calculates the percentage change 
+between new price and the old price of CPU when scraping.
+ - checks if info property has been modfied, and checks 
+ if there has been a new price extracted that is different from the current price
+then 
+*/
+cpuSchema.pre('save', function(next) {
+    if (this.isModified('info')) {
+        this.info.forEach(infoEntry => {
+            if (infoEntry.oldPrice && infoEntry.oldPrice > 0 && infoEntry.currPrice !== infoEntry.oldPrice) {
+                const change = ((infoEntry.currPrice - infoEntry.oldPrice) / infoEntry.oldPrice) * 100;
+                infoEntry.priceChange = parseFloat(change.toFixed(2));
+            }
+        });
+    }
+    next();
+});
+
 export const CPU = mongoose.model('CPU', cpuSchema);
