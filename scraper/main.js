@@ -12,6 +12,7 @@ const mongoString = process.env.MONGO_URI;
 
 // import collection data scraper
 import { cnCollectionCPU } from './scrapers/cpuCollectionScraper/cnCpuScraper.js';
+import { xByteCollectionCpu } from './scrapers/cpuCollectionScraper/xByteCpuScraper.js';
 
 async function main() {
     
@@ -26,7 +27,8 @@ async function main() {
         }
 
         // testing if info is pulled 
-        await cnCollectionCPU();
+        // await cnCollectionCPU();
+        await xByteCollectionCpu();
 
     }catch(err){
         console.error(err);

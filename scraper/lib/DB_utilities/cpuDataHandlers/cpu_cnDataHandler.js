@@ -1,4 +1,3 @@
-// import { CPU } from '../../../../backend/models/cpu.js';
 import { CPU } from '../../../models/cpu.js';
 import slugify from 'slugify';
 /* 
