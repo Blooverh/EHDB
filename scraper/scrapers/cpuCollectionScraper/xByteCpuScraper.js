@@ -81,12 +81,12 @@ export const xByteCollectionCpu = async () => {
 
         console.log(scrappedData);
 
-        await browser.close();
-        console.log('Scraping Complete');
-        process.exit(1);
-
     }catch(err){
         console.error(err);
         process.exit(0);
     }
+
+    await browser.close();
+    console.log('Scraping Complete');
+    process.exit(1);
 }
