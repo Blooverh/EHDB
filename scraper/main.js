@@ -29,8 +29,8 @@ async function main() {
 
         // testing if info is pulled 
         // await cnCollectionCPU();
-        // await xByteCollectionCpu();
-        await serverMonkeyCollectionCpu();
+        await xByteCollectionCpu();
+        // await serverMonkeyCollectionCpu();
 
     }catch(err){
         console.error(err);

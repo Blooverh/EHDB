@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import puppeteerExtra from 'puppeteer-extra'; // plug in to bypass cloudflare
+import xByteAddCPU from "../../lib/DB_utilities/cpuDataHandlers/cpu_xByteDataHandler.js";
 
 export const xByteCollectionCpu = async () => {
 
@@ -19,7 +20,7 @@ export const xByteCollectionCpu = async () => {
     try{
         await page.goto(xBytePages[0], {waitUntil: 'domcontentloaded', timeout: 60000});
 
-        /* // we check based on page 1 how may pages exist within this collection
+        /*  // we check based on page 1 how may pages exist within this collection
             // everytime we run the function if a new page is added it will scrape that new page  
         */
 
@@ -79,11 +80,18 @@ export const xByteCollectionCpu = async () => {
         to send to function that will organize title and price
         and add it to the Database */
 
-        console.log(scrappedData);
+        // console.log(scrappedData);
 
     }catch(err){
         console.error(err);
         process.exit(0);
+    }
+
+    if (scrappedData.length > 0) {
+        await xByteAddCPU(scrappedData.map(d => d.title), scrappedData.map(d => d.price));
+        console.log(`Finished scraping ${websiteName}, data saved to DB.`);
+    } else {
+        console.warn(`No data scraped for ${websiteName}`);
     }
 
     await browser.close();
