@@ -17,17 +17,18 @@ export const cnCollectionCPU = async () => {
     const browser = await puppeteer.launch({ headless: true }); // headless options allows browser runnning unattended and without visible UI
     const page = await browser.newPage(); 
 
-    console.log(`Starting to Scrape ${website}...`);
+    console.log(`[SCRAPPING] ${website}...`);
 
     try{
 
-        console.log('Getting Page ' + `${collectionURL}`);
         // browse to page wait for document to load, overhead is 1 second wait before timing out
         await page.goto(collectionURL, {waitUntil: 'domcontentloaded', timeout: 60000});
 
-        // arrays to hold title, mpn, cache and price 
+        // arrays to hold title, mpn, cache, link and price 
+        // MISSING MPN AND CACHE
         let cpuTitles = [];
         let cpuPrices = [];
+        let cpuLinks = [];
 
         // Eval query selectors and extract title and prices from the list cards 
 
@@ -45,33 +46,42 @@ export const cnCollectionCPU = async () => {
             })
         );
 
+        cpuLinks = await page.$$eval('.list-card', listCards => 
+            listCards.map(card => {
+                const linkEl = card.querySelector('.listText a');
+                const link = linkEl.href;
+                return link ? link : 'No Link Found';
+            })
+        );
+
         // Pair each title with correspoding price
         cpuTitles.forEach((title, idx) => {
-            const price = cpuPrices[idx] || 'No Price';
+            const price = cpuPrices[idx];
+            const link = cpuLinks[idx];
             // push both title, price and website name to hashmap
-            scrapedData.push({title, price, website: website});
+            scrapedData.push({title, price, link, website: website});
         });
 
-        console.log(`Scraping ${website} Completed`);
-
+        // console.log(cpuLinks);
 
     }catch(err){
-        console.error(`Error Scraping: ${website}`);
-        console.error(err);
+        console.error(`[ERROR SCRAPING] ${website} -> ` + err);
+        process.exit(1); 
     }
+
+    await browser.close();
 
     // Once scraped data hash map is populated from the scraping
     // call controller function with arguments of array type containing the title and the prices
     // controller will run asynchronously, when done we can close browser and kill process
     if(scrapedData.length > 0){
-        await cnAddCPU(scrapedData.map(data => data.title), scrapedData.map(data => data.price));
-        console.log('Cloud Ninjas Scraped and Saved Successfully to Database');
+        await cnAddCPU(scrapedData.map(data => data.title), scrapedData.map(data => data.price), scrapedData.map(data => data.link));
+        console.log('[INFO] Cloud Ninjas data saved to DB.');
     }else{
-        console.warn('No Data Scraped from Cloud Ninjas Could Be Saved in Database');
+        console.warn('[INFO] No data scraped from Cloud Ninjas');
     }
 
-    await browser.close();
-    console.log('Browser Closed');
+    console.log('[PROCESS] Cloud Ninjas CPUs Scraped and Saved accordingly')
     process.exit(0);
 
 };

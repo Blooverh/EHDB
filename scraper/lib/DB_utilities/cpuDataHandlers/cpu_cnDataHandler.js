@@ -15,12 +15,12 @@ Objective of this module
 */
 
 // Function that receives arrays of titles and prices from extracted data object 
-export default async function cnAddCPU(titleArr, priceArr){
+export default async function cnAddCPU(titleArr, priceArr, linksArr){
 
     // Check if both title array and price array have the same length 
     // so they can be mapped together 
-    if(titleArr.length !== priceArr.length){
-        console.error('Array of titles and array of prices do not have same length; thus cannot be added to DB');
+    if(titleArr.length !== priceArr.length && titleArr.length !== linksArr.length){
+        console.error('[ERROR] Arrays do not have same length; thus cannot be added to DB');
         // Using process.exit(1) so we let main file know there was a failure
         process.exit(1);
     }
@@ -30,6 +30,7 @@ export default async function cnAddCPU(titleArr, priceArr){
         // since price is scraped in a string format, we have to parse to a float number 
         // as price properties in database are of number type
         let priceInFloat = parseFloat(priceArr[i].replace(/[^0-9.]/g, '')) || 0;
+        let link = linksArr[i];
 
         const { brand, model } = extractCpuName(originalName);
 
@@ -49,7 +50,6 @@ export default async function cnAddCPU(titleArr, priceArr){
                 // check if CPU has a property info.website for Cloud Ninjas
                 let existingWebsite = cpu.info.find(website => website.website === 'Cloud Ninjas');
 
-                console.log(`Does website Cloud Ninjas exist in DB: ${existingWebsite}`);
                 // if website exists grab current price
                 // if different from price in DB update currPrice to new scraped price
                 // price on DB will go to oldPrice
@@ -59,8 +59,14 @@ export default async function cnAddCPU(titleArr, priceArr){
                         existingWebsite.oldPrice = existingWebsite.currPrice;
                         existingWebsite.currPrice = priceInFloat;
                     }
+
+                    if(existingWebsite.link === 'N/A'){
+                        existingWebsite.link = link;
+                    }
+
                 }else{
-                    cpu.info.push({website: 'Cloud Ninjas ', currPrice: priceInFloat, oldPrice: priceInFloat });
+                    cpu.info.push({website: 'Cloud Ninjas ', currPrice: priceInFloat, oldPrice: priceInFloat, link: link });
+                    console.log(`[UPDATED PRICING & LINK] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat} | Link: ${link}`);
                 }
 
                 // save CPU with updated info 
@@ -68,7 +74,6 @@ export default async function cnAddCPU(titleArr, priceArr){
                 await cpu.save();
 
             }else {
-
                 cpu = new CPU({
                     brand: brand,
                     model: model, 
@@ -77,21 +82,17 @@ export default async function cnAddCPU(titleArr, priceArr){
                         website: 'Cloud Ninjas',
                         currPrice: priceInFloat,
                         oldPrice: priceInFloat
-                    }]
+                    }], 
+                    link: link
                 });
 
                 await cpu.save();
                 
-                console.log(`Saved new CPU: ${cpu.brand} ${cpu.model} | Slug: ${cpu.slug} | current price: ${cpu.info[0].currPrice} | old price: ${cpu.info[0].oldPrice}`);
+                console.log(`[SAVED] ${cpu.brand} ${cpu.model} | Slug: ${cpu.slug} | current price: ${priceInFloat} | old price: ${priceInFloat} | link: ${link}`);
             }
 
-            // for each cpu give 5ms to return data extracted with a promise,
-            // if rejected throw promise reject as it was not saved to DB 
-            await new Promise(resolve => setTimeout(resolve, 800)); 
-
         }catch(err){
-            console.error(`Error updating CPU ${brand} ${model}:`, err);
-            process.exit(1);
+            console.error(`[ERROR] CPU ${brand} ${model} not updated: `, err);
         }
     }
 }

@@ -1,12 +1,11 @@
 import { CPU } from '../../../models/cpu.js';
-import slugify from 'slugify';
 
 export default async function xByteAddCPU(titleArr, priceArr){
 
     // check if both argument arrays have the same length
     // if not same length console error and terminate process
     if(titleArr.length !== priceArr.length){
-        console.error('Both Title and Price array do not have same length');
+        console.error('[ERROR ] Both Title and Price array do not have same length');
         process.exit(1); // end process due to error
     }
 
@@ -19,12 +18,6 @@ export default async function xByteAddCPU(titleArr, priceArr){
         // extract brand and model from title
         const { brand, model } = extractTitle(originalTitle);
         
-        // create a slug 
-        const slug = slugify(model, {
-            replacement: '-',
-            lower: true,
-            strict: true
-        });
         
         try{
 
@@ -33,37 +26,34 @@ export default async function xByteAddCPU(titleArr, priceArr){
 
             // if cpu does not exists, skip to next step
             if(!cpu) {
-                console.log(`⚠️ CPU not found: ${brand} ${model}, skipping...`);
                 continue;
             }
 
-            console.log(`✅ Brand: ${cpu.brand}, Model: ${cpu.model}, xByte Price: ${priceInFloat}`);
+            // check if xByte entry for this cpu exists
+            let existsBrand = cpu.info.find(entry => entry.website === 'xByte');
+            // if exists (truthy value), updated current price with new price and old price with price previous to new change
+            if(existsBrand){
+                if(existsBrand.currPrice !== priceInFloat ){
+                    existsBrand.oldPrice = existsBrand.currPrice;
+                    existsBrand.currPrice = priceInFloat;
+                }
 
-            // let existsBrand  = cpu.info.find(entry => entry.website === 'xByte');
+                console.log(`[UPDATED PRICING] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat}`);
+            }else{
+                // if there is no entry for this cpu with xByte, add it cpu object
+                cpu.info.push({ website: 'xByte', currPrice: priceInFloat, oldPrice: priceInFloat });
+                console.log(`[SAVED ENTRY] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat}`);
+            }
 
-            // if(existsBrand){
-            //     if(existsBrand.currPrice !== priceInFloat ){
-            //         existsBrand.oldPrice = currPrice;
-            //         currPrice = priceInFloat;
-            //     }
-            // }else{
-            //     cpu.info.push({ website: 'xByte', currPrice: price, oldPrice: price});
-            // }
+            // save changes to database
 
-            // await cpu.save();
-
-            // await new Promise(resolve => setTimeout(resolve, 500));
-
+            await cpu.save();
 
 
         }catch(err){
-            console.error(`Error updating CPU ${brand} ${model}: `, err);
-            process.exit(1);
+            console.error(`[ERROR] CPU ${brand} ${model} Not updated `, err);
         }
     }
-
-    process.exit(0);
-
 }
 
 // function to extract the titles from xbyte scraping
@@ -100,8 +90,6 @@ export function extractTitle(title){
     }
 
     brand.charAt(0).toUpperCase();
-
-    // console.log(brand + " " + model);
 
     return { brand, model };
 

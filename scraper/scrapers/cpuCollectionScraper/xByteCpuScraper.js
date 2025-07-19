@@ -15,7 +15,7 @@ export const xByteCollectionCpu = async () => {
     // title correctly and the price 
     let scrappedData =[];
 
-    console.log("Scrapping xByte's website");
+    console.log("[SCRAPPING] xByte");
 
     try{
         await page.goto(xBytePages[0], {waitUntil: 'domcontentloaded', timeout: 60000});
@@ -26,7 +26,6 @@ export const xByteCollectionCpu = async () => {
 
         // Evaluate the first instance of the HTML element that contains the total of pages 
         const totalPages = await page.$eval('.total[title="Total pages"]', el => el.textContent.trim().replace('/','').trim());
-        console.log(totalPages);
 
         for(let i =2; i <= totalPages; i++){
             xBytePages.push(`https://www.xbyte.com/products?class=CPUs&class_id=39&p=${i}&product_layout=product-list#results`);
@@ -41,7 +40,7 @@ export const xByteCollectionCpu = async () => {
         for(let i = 0; i < xBytePages.length; i++){
             await page.goto(xBytePages[i], {waitUntil: 'domcontentloaded', timeout: 60000 });
 
-            console.log(`Visiting page ${i}`);
+            console.log(`[VISITING PAGE]  ${i}`);
 
             /*
                 we run 2 for loops on top of the main loop
@@ -76,25 +75,20 @@ export const xByteCollectionCpu = async () => {
             });
         }
         
-        /* !!!! Missing iteration over scrapedData Array 
-        to send to function that will organize title and price
-        and add it to the Database */
-
-        // console.log(scrappedData);
-
     }catch(err){
         console.error(err);
-        process.exit(0);
+        process.exit(1);
     }
+
+     await browser.close();
 
     if (scrappedData.length > 0) {
         await xByteAddCPU(scrappedData.map(d => d.title), scrappedData.map(d => d.price));
-        console.log(`Finished scraping ${websiteName}, data saved to DB.`);
+        console.log(`[INFO] xByte data saved to DB.`);
     } else {
-        console.warn(`No data scraped for ${websiteName}`);
+        console.warn(`[INFO] No data scraped from xByte`);
     }
 
-    await browser.close();
-    console.log('Scraping Complete');
+    console.log('[PROCESS] xByte CPUs Scraped and Saved accordingly');
     process.exit(1);
 }
