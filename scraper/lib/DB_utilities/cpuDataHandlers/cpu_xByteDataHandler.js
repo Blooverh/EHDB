@@ -1,6 +1,6 @@
 import { CPU } from '../../../models/cpu.js';
 
-export default async function xByteAddCPU(titleArr, priceArr){
+export default async function xByteAddCPU(titleArr, priceArr, linksArr){
 
     // check if both argument arrays have the same length
     // if not same length console error and terminate process
@@ -11,6 +11,7 @@ export default async function xByteAddCPU(titleArr, priceArr){
 
     for(let i=0; i< titleArr.length; i++){
         let originalTitle = titleArr[i];
+        let link = linksArr[i];
 
         // parse price to a float as it is a string originally
         let priceInFloat = parseFloat(priceArr[i].replace(/[^0-9.]/g, '')) || 0;
@@ -38,11 +39,15 @@ export default async function xByteAddCPU(titleArr, priceArr){
                     existsBrand.currPrice = priceInFloat;
                 }
 
-                console.log(`[UPDATED PRICING] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat}`);
+                if(existsBrand.link === 'N/A'){
+                    existsBrand.link = link;
+                }
+
+                console.log(`[UPDATED PRICING] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat} Link: ${link}`);
             }else{
                 // if there is no entry for this cpu with xByte, add it cpu object
                 cpu.info.push({ website: 'xByte', currPrice: priceInFloat, oldPrice: priceInFloat });
-                console.log(`[SAVED ENTRY] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat}`);
+                console.log(`[SAVED ENTRY] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat} Link: ${link}`);
             }
 
             // save changes to database

@@ -64,9 +64,11 @@ export default async function cnAddCPU(titleArr, priceArr, linksArr){
                         existingWebsite.link = link;
                     }
 
+                    console.log(`[UPDATED PRICING] ${cpu.brand} - ${cpu.model} -> New Price: ${existingWebsite.currPrice} Old Price: ${existingWebsite.oldPrice}`);
+
                 }else{
                     cpu.info.push({website: 'Cloud Ninjas ', currPrice: priceInFloat, oldPrice: priceInFloat, link: link });
-                    console.log(`[UPDATED PRICING & LINK] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat} | Link: ${link}`);
+                    console.log(`[UPDATED PRICING] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat}`);
                 }
 
                 // save CPU with updated info 

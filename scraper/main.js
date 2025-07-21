@@ -28,8 +28,8 @@ async function main() {
         }
 
         // testing if info is pulled 
-        await cnCollectionCPU();
-        // await xByteCollectionCpu();
+        // await cnCollectionCPU();
+        await xByteCollectionCpu();
         // await serverMonkeyCollectionCpu();
 
     }catch(err){

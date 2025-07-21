@@ -33,6 +33,7 @@ export const xByteCollectionCpu = async () => {
 
         let cpuTitles = [];
         let cpuPrices = [];
+        let cpuLinks = [];
 
         // iterate through each page and scrape titles and prices of CPUs and add them 
         // as an object within ScrappedData array 
@@ -67,11 +68,21 @@ export const xByteCollectionCpu = async () => {
                 })
             );
 
+            cpuLinks = await page.$$eval('.results > li' , listCards => 
+                listCards.map(card => {
+                    const linkEl = card.querySelector('a');
+                    const link = linkEl.href;
+                    return link ? link : 'No Link Found';
+
+                })
+            );
+
             // pair each title and price into an object and add to array 
 
             cpuTitles.forEach((title, index) => {
                  const price = cpuPrices[index];
-                 scrappedData.push({title, price });
+                 const link = cpuLinks[index];
+                 scrappedData.push({title, price, link });
             });
         }
         
@@ -80,10 +91,13 @@ export const xByteCollectionCpu = async () => {
         process.exit(1);
     }
 
-     await browser.close();
+    await browser.close();
+
+    // console.log(scrappedData);
+
 
     if (scrappedData.length > 0) {
-        await xByteAddCPU(scrappedData.map(d => d.title), scrappedData.map(d => d.price));
+        await xByteAddCPU(scrappedData.map(d => d.title), scrappedData.map(d => d.price), scrappedData.map(d => d.link));
         console.log(`[INFO] xByte data saved to DB.`);
     } else {
         console.warn(`[INFO] No data scraped from xByte`);
