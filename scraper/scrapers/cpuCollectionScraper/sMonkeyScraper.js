@@ -1,6 +1,6 @@
 import PuppeteerExtra from "puppeteer-extra";
 import puppeteerStealthPlugIn from "puppeteer-extra-plugin-stealth";
-// import smAddCPU from "../../lib/DB_utilities/cpuDataHandlers/cpu_smDataHandler.js";
+import smAddCPU from "../../lib/DB_utilities/cpuDataHandlers/cpu_smDataHandler.js";
 
 export const serverMonkeyCollectionCpu = async () => {
     const serverMonkeyPages = [];
@@ -76,22 +76,22 @@ export const serverMonkeyCollectionCpu = async () => {
 
     }catch(err){
         console.error(`Error Scraping Server Monkey Website`);
-        process.exit(0);
+        process.exit(1);
     }
 
     await browser.close();
 
-    console.log(scrappedData);
+    // console.log(scrappedData);
 
     // After scraping CPUs for this website, save the data
-    // if (scrappedData.length > 0) {
-    //     await serverMonkeyAddCPU(scrappedData.map(d => d.title), scrappedData.map(d => d.price));
-    //     console.log(`Finished scraping ${websiteName}, data saved to DB.`);
-    // } else {
-    //     console.warn(`No data scraped for ${websiteName}`);
-    // }
+    if (scrappedData.length > 0) {
+        await smAddCPU(scrappedData.map(d => d.title), scrappedData.map(d => d.price), scrappedData.map(d => d.link));
+        console.log(`[DATA SAVED IN DB]`);
+    } else {
+        console.warn(`[ERROR] No data scraped for ${websiteName}`);
+    }
 
 
     console.log(`[PROCESS] Server Monkey CPUs Scraped and Saved Accordingly`);
-    process.exit(1);
+    process.exit(0);
 }
