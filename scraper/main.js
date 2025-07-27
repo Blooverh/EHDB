@@ -16,6 +16,7 @@ const mongoString = process.env.MONGO_URI;
 import { cnCollectionCPU } from './scrapers/cpuCollectionScraper/cnCpuScraper.js';
 import { xByteCollectionCpu } from './scrapers/cpuCollectionScraper/xByteCpuScraper.js';
 import { serverMonkeyCollectionCpu } from './scrapers/cpuCollectionScraper/sMonkeyScraper.js';
+import { techpowerupCPU } from './scrapers/cpuCollectionScraper/techPowUpScraper.js';
 
 // Helper function to connect to DB 
 async function connectToDB() {
@@ -92,6 +93,15 @@ async function main() {
             await serverMonkeyCollectionCpu();
             console.log('[SCRAPING COMPLETE]');
         });
+
+        // techpowerup scraper 
+        cpuScraper.command('techpowerup')
+        .description('Scrapping data from all cpus of TechPowerUp website')
+        .action( async () => {
+            console.log('[SCRAPING] TechPowerUp');
+            await techpowerupCPU();
+            console.log('[SCRAPING COMPLETE]');
+        })
 
         await scraper.parseAsync(process.argv);    
 
