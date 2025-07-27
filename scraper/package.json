@@ -15,6 +15,7 @@
     "start": "node main.js"
   },
   "dependencies": {
+    "commander": "^14.0.0",
     "dotenv": "^17.0.0",
     "fast-csv": "^5.0.2",
     "mongoose": "^8.16.1",

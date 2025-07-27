@@ -93,5 +93,4 @@ export const serverMonkeyCollectionCpu = async () => {
 
 
     console.log(`[PROCESS] Server Monkey CPUs Scraped and Saved Accordingly`);
-    process.exit(0);
 }

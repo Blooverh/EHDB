@@ -62,7 +62,6 @@ export const cnCollectionCPU = async () => {
             scrapedData.push({title, price, link, website: website});
         });
 
-        // console.log(cpuLinks);
 
     }catch(err){
         console.error(`[ERROR SCRAPING] ${website} -> ` + err);
@@ -81,7 +80,6 @@ export const cnCollectionCPU = async () => {
         console.warn('[INFO] No data scraped from Cloud Ninjas');
     }
 
-    console.log('[PROCESS] Cloud Ninjas CPUs Scraped and Saved accordingly')
-    process.exit(0);
+    console.log('[PROCESS] Cloud Ninjas CPUs Scraped and Saved accordingly');
 
 };

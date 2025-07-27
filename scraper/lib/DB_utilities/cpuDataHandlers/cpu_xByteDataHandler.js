@@ -37,17 +37,18 @@ export default async function xByteAddCPU(titleArr, priceArr, linksArr){
                 if(existsBrand.currPrice !== priceInFloat ){
                     existsBrand.oldPrice = existsBrand.currPrice;
                     existsBrand.currPrice = priceInFloat;
+
                 }
 
                 if(existsBrand.link === 'N/A'){
                     existsBrand.link = link;
                 }
 
-                console.log(`[UPDATED PRICING] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat} Link: ${link}`);
+                console.log(`[UPDATED ENTRY] ${cpu.brand} - ${cpu.model} -> New Price: ${priceInFloat} Old Price: ${cpu.existsBrand.currPrice}`);
             }else{
                 // if there is no entry for this cpu with xByte, add it cpu object
                 cpu.info.push({ website: 'xByte', currPrice: priceInFloat, oldPrice: priceInFloat });
-                console.log(`[SAVED ENTRY] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat} Link: ${link}`);
+                console.log(`[SAVED NEW ENTRY] ${cpu.brand} - ${cpu.model} -> Price: ${priceInFloat} Link: ${link}`);
             }
 
             // save changes to database

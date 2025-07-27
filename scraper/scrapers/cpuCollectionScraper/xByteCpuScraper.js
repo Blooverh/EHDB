@@ -104,5 +104,4 @@ export const xByteCollectionCpu = async () => {
     }
 
     console.log('[PROCESS] xByte CPUs Scraped and Saved accordingly');
-    process.exit(1);
 }
