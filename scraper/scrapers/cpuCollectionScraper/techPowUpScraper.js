@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import techpAddCPU from "../../lib/DB_utilities/cpuDataHandlers/cpu_techpowerupDataHandler.js";
 
 const pageArr =[
 'https://www.techpowerup.com/cpu-specs/?f=socket_AMD+Socket+AM5~generation_AMD+EPYC',
@@ -40,14 +41,21 @@ export const techpowerupCPU = async () => {
             });
         }
 
-        console.log(scrapped_data);
-    
-
-        await browser.close();
-        
+        // console.log(scrapped_data);
 
     }catch(e){
         console.log(e);
     }
+
+    await browser.close();
+
+    if(scrapped_data.length >0){
+        await techpAddCPU(scrapped_data.map(data => data.title), scrapped_data.map(data => data.link));
+        console.log('[INFO] TechPowerUp data saved to DB');
+    }else{
+        console.warn('[INFO] No data scraped from TechPowerUp');
+    }
+
+    console.log('[PROCESS] TechPowerUp CPUs scraped and saved successfully');
 
 }
