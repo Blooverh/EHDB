@@ -9,7 +9,7 @@ const cpuSchema = new mongoose.Schema({
     model: {type: String, default: defaultVal, required: true, unique: true, lowercase: true},
     codename: {type: String, default: defaultVal},
     generation: {type: String, default: defaultVal},
-    memorySupport: {type: String, default: defaultVal},
+    memorySupport: [{type: String, default: defaultVal}],
     ratedSpeeds: {type: Number, default: 0},
     socket: {type: String, default: defaultVal},
     socketPackage: {type: String, default: defaultVal},
@@ -27,7 +27,6 @@ const cpuSchema = new mongoose.Schema({
         cacheL2: {type: String, default: defaultVal},
         cacheL3: {type: String, default: defaultVal},
     },
-    mpn: {type: String, default: defaultVal},
     pcieGen: {type: String, default: defaultVal},
     info: [{
         website: {type: String},

@@ -1,5 +1,5 @@
 import { CPU } from "../../../models/cpu.js";
-import { PuppeteerExtra } from "puppeteer-extra";
+import PuppeteerExtra  from "puppeteer-extra";
 import puppeteerStealthPlugIn from "puppeteer-extra-plugin-stealth";
 /**
     * Finds existing CPUs in the database and updates them with data scraped from TechPowerUp.
