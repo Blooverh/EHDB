@@ -4,15 +4,21 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
+// Get the file path from the current module URL (this file)
+// derive __filename and __dirname from it 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 PuppeteerExtra.use(puppeteerStealthPlugIn());
 
+// adding delay for a less bot ish movement for avoiding bot detection
 const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
+// resolve the following URL from the json file (the path) to a path object and add it to variable 'jsonfile'
 const jsonfile = path.resolve(__dirname, '../../lib/infoExtracter/cpus_and_links.json');
 
+// SOME OF THIS FILES WITH TIME WILL HAVE MORE CPUS THAT WILL NOT SHOW IN PAGE
+// WE WILL NEED A AWAY TO FIND A SOLUTION TO GET THOSE MISSING CPUS AND URLS
 const pageArr =[
 'https://www.techpowerup.com/cpu-specs/?f=socket_AMD+Socket+AM5~generation_AMD+EPYC',
 'https://www.techpowerup.com/cpu-specs/?f=socket_AMD+Socket+SP3~generation_AMD+EPYC',
@@ -52,6 +58,7 @@ export const techpowerupCPU = async () => {
                 scrapped_data.push({title, link});
             });
 
+            // apply delay for extra bot detection
             await delay(Math.floor(Math.random() * 2000) + 1000);
         }
 
@@ -61,6 +68,7 @@ export const techpowerupCPU = async () => {
         console.log(e);
     }
 
+    // write scraped data by stringifying into json format and use fs library to write scraped data to the json file 
     const jsonContent = JSON.stringify(scrapped_data, null, 2);
     fs.writeFileSync(jsonfile, jsonContent, 'utf8');
 
