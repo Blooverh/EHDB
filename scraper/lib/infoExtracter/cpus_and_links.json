@@ -1,0 +1,1482 @@
+[
+  {
+    "title": "EPYC 4124P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4124p.c3610"
+  },
+  {
+    "title": "EPYC 4244P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4244p.c3609"
+  },
+  {
+    "title": "EPYC 4245P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4245p.c4177"
+  },
+  {
+    "title": "EPYC 4344P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4344p.c3608"
+  },
+  {
+    "title": "EPYC 4345P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4345p.c4176"
+  },
+  {
+    "title": "EPYC 4364P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4364p.c3611"
+  },
+  {
+    "title": "EPYC 4464P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4464p.c3612"
+  },
+  {
+    "title": "EPYC 4465P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4465p.c4175"
+  },
+  {
+    "title": "EPYC 4484PX",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4484px.c3606"
+  },
+  {
+    "title": "EPYC 4545P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4545p.c4174"
+  },
+  {
+    "title": "EPYC 4564P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4564p.c3613"
+  },
+  {
+    "title": "EPYC 4565P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4565p.c4173"
+  },
+  {
+    "title": "EPYC 4584PX",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4584px.c3607"
+  },
+  {
+    "title": "EPYC 4585PX",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-4585px.c4172"
+  },
+  {
+    "title": "EPYC 7203",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7203.c3372"
+  },
+  {
+    "title": "EPYC 7203P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7203p.c3373"
+  },
+  {
+    "title": "EPYC 7232P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7232p.c2263"
+  },
+  {
+    "title": "EPYC 7251",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7251.c1928"
+  },
+  {
+    "title": "EPYC 7252",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7252.c2258"
+  },
+  {
+    "title": "EPYC 7261",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7261.c2299"
+  },
+  {
+    "title": "EPYC 7262",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7262.c2257"
+  },
+  {
+    "title": "EPYC 7272",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7272.c2256"
+  },
+  {
+    "title": "EPYC 7281",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7281.c1927"
+  },
+  {
+    "title": "EPYC 7282",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7282.c2255"
+  },
+  {
+    "title": "EPYC 72F3",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-72f3.c2391"
+  },
+  {
+    "title": "EPYC 7301",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7301.c1926"
+  },
+  {
+    "title": "EPYC 7302",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7302.c2254"
+  },
+  {
+    "title": "EPYC 7302P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7302p.c2262"
+  },
+  {
+    "title": "EPYC 7303",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7303.c3371"
+  },
+  {
+    "title": "EPYC 7303P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7303p.c3370"
+  },
+  {
+    "title": "EPYC 7313",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7313.c2389"
+  },
+  {
+    "title": "EPYC 7313P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7313p.c2390"
+  },
+  {
+    "title": "EPYC 7343",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7343.c2388"
+  },
+  {
+    "title": "EPYC 7351",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7351.c1925"
+  },
+  {
+    "title": "EPYC 7351P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7351p.c1931"
+  },
+  {
+    "title": "EPYC 7352",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7352.c2253"
+  },
+  {
+    "title": "EPYC 7371",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7371.c2121"
+  },
+  {
+    "title": "EPYC 7373X",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7373x.c2762"
+  },
+  {
+    "title": "EPYC 73F3",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-73f3.c2387"
+  },
+  {
+    "title": "EPYC 7401",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7401.c1924"
+  },
+  {
+    "title": "EPYC 7401P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7401p.c1930"
+  },
+  {
+    "title": "EPYC 7402",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7402.c2252"
+  },
+  {
+    "title": "EPYC 7402P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7402p.c2261"
+  },
+  {
+    "title": "EPYC 7413",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7413.c2386"
+  },
+  {
+    "title": "EPYC 7443",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7443.c2384"
+  },
+  {
+    "title": "EPYC 7443P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7443p.c2385"
+  },
+  {
+    "title": "EPYC 7451",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7451.c1923"
+  },
+  {
+    "title": "EPYC 7452",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7452.c2251"
+  },
+  {
+    "title": "EPYC 7453",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7453.c2382"
+  },
+  {
+    "title": "EPYC 7473X",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7473x.c2761"
+  },
+  {
+    "title": "EPYC 74F3",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-74f3.c2383"
+  },
+  {
+    "title": "EPYC 7501",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7501.c1922"
+  },
+  {
+    "title": "EPYC 7502",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7502.c2250"
+  },
+  {
+    "title": "EPYC 7502P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7502p.c2260"
+  },
+  {
+    "title": "EPYC 7513",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7513.c2381"
+  },
+  {
+    "title": "EPYC 7542",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7542.c2249"
+  },
+  {
+    "title": "EPYC 7543",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7543.c2379"
+  },
+  {
+    "title": "EPYC 7543P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7543p.c2380"
+  },
+  {
+    "title": "EPYC 7551",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7551.c1921"
+  },
+  {
+    "title": "EPYC 7551P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7551p.c1929"
+  },
+  {
+    "title": "EPYC 7552",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7552.c2248"
+  },
+  {
+    "title": "EPYC 7573X",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7573x.c2760"
+  },
+  {
+    "title": "EPYC 75F3",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-75f3.c2378"
+  },
+  {
+    "title": "EPYC 7601",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7601.c1920"
+  },
+  {
+    "title": "EPYC 7642",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7642.c2247"
+  },
+  {
+    "title": "EPYC 7643",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7643.c2377"
+  },
+  {
+    "title": "EPYC 7643P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7643p.c3369"
+  },
+  {
+    "title": "EPYC 7663",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7663.c2376"
+  },
+  {
+    "title": "EPYC 7663P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7663p.c3368"
+  },
+  {
+    "title": "EPYC 7702",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7702.c2246"
+  },
+  {
+    "title": "EPYC 7702P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7702p.c2259"
+  },
+  {
+    "title": "EPYC 7713",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7713.c2374"
+  },
+  {
+    "title": "EPYC 7713P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7713p.c2375"
+  },
+  {
+    "title": "EPYC 7742",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7742.c2245"
+  },
+  {
+    "title": "EPYC 7763",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7763.c2373"
+  },
+  {
+    "title": "EPYC 7773X",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7773x.c2759"
+  },
+  {
+    "title": "EPYC 7F32",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7f32.c2300"
+  },
+  {
+    "title": "EPYC 7F52",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7f52.c2301"
+  },
+  {
+    "title": "EPYC 7F72",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7f72.c2302"
+  },
+  {
+    "title": "EPYC 7H12",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-7h12.c2244"
+  },
+  {
+    "title": "EPYC 9015",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9015.c3903"
+  },
+  {
+    "title": "EPYC 9115",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9115.c3902"
+  },
+  {
+    "title": "EPYC 9124",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9124.c2917"
+  },
+  {
+    "title": "EPYC 9135",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9135.c3901"
+  },
+  {
+    "title": "EPYC 9174F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9174f.c2918"
+  },
+  {
+    "title": "EPYC 9175F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9175f.c3900"
+  },
+  {
+    "title": "EPYC 9184X",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9184x.c3255"
+  },
+  {
+    "title": "EPYC 9224",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9224.c2919"
+  },
+  {
+    "title": "EPYC 9254",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9254.c2920"
+  },
+  {
+    "title": "EPYC 9255",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9255.c3899"
+  },
+  {
+    "title": "EPYC 9274F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9274f.c2921"
+  },
+  {
+    "title": "EPYC 9275F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9275f.c3898"
+  },
+  {
+    "title": "EPYC 9334",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9334.c2922"
+  },
+  {
+    "title": "EPYC 9335",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9335.c3897"
+  },
+  {
+    "title": "EPYC 9354",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9354.c2923"
+  },
+  {
+    "title": "EPYC 9354P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9354p.c2924"
+  },
+  {
+    "title": "EPYC 9355",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9355.c3895"
+  },
+  {
+    "title": "EPYC 9355P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9355p.c3896"
+  },
+  {
+    "title": "EPYC 9365",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9365.c3893"
+  },
+  {
+    "title": "EPYC 9374F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9374f.c2925"
+  },
+  {
+    "title": "EPYC 9375F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9375f.c3894"
+  },
+  {
+    "title": "EPYC 9384X",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9384x.c3254"
+  },
+  {
+    "title": "EPYC 9454",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9454.c2926"
+  },
+  {
+    "title": "EPYC 9454P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9454p.c2927"
+  },
+  {
+    "title": "EPYC 9455",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9455.c3890"
+  },
+  {
+    "title": "EPYC 9455P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9455p.c3892"
+  },
+  {
+    "title": "EPYC 9474F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9474f.c2928"
+  },
+  {
+    "title": "EPYC 9475F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9475f.c3889"
+  },
+  {
+    "title": "EPYC 9534",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9534.c2929"
+  },
+  {
+    "title": "EPYC 9535",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9535.c3888"
+  },
+  {
+    "title": "EPYC 9554",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9554.c2930"
+  },
+  {
+    "title": "EPYC 9554P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9554p.c2931"
+  },
+  {
+    "title": "EPYC 9555",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9555.c3886"
+  },
+  {
+    "title": "EPYC 9555P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9555p.c3887"
+  },
+  {
+    "title": "EPYC 9565",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9565.c3884"
+  },
+  {
+    "title": "EPYC 9575F",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9575f.c3885"
+  },
+  {
+    "title": "EPYC 9634",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9634.c2932"
+  },
+  {
+    "title": "EPYC 9645",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9645.c3908"
+  },
+  {
+    "title": "EPYC 9654",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9654.c2933"
+  },
+  {
+    "title": "EPYC 9654P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9654p.c2934"
+  },
+  {
+    "title": "EPYC 9655",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9655.c3882"
+  },
+  {
+    "title": "EPYC 9655P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9655p.c3883"
+  },
+  {
+    "title": "EPYC 9684X",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9684x.c3253"
+  },
+  {
+    "title": "EPYC 9734",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9734.c3258"
+  },
+  {
+    "title": "EPYC 9745",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9745.c3907"
+  },
+  {
+    "title": "EPYC 9754",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9754.c3257"
+  },
+  {
+    "title": "EPYC 9754S",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9754s.c3256"
+  },
+  {
+    "title": "EPYC 9755",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9755.c3881"
+  },
+  {
+    "title": "EPYC 9825",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9825.c3906"
+  },
+  {
+    "title": "EPYC 9845",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9845.c3905"
+  },
+  {
+    "title": "EPYC 9965",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-9965.c3904"
+  },
+  {
+    "title": "EPYC Embedded 9124",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9124.c3194"
+  },
+  {
+    "title": "EPYC Embedded 9254",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9254.c3193"
+  },
+  {
+    "title": "EPYC Embedded 9354",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9354.c3192"
+  },
+  {
+    "title": "EPYC Embedded 9354P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9354p.c3195"
+  },
+  {
+    "title": "EPYC Embedded 9454",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9454.c3191"
+  },
+  {
+    "title": "EPYC Embedded 9454P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9454p.c3196"
+  },
+  {
+    "title": "EPYC Embedded 9554",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9554.c3190"
+  },
+  {
+    "title": "EPYC Embedded 9554P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9554p.c3197"
+  },
+  {
+    "title": "EPYC Embedded 9654",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9654.c3189"
+  },
+  {
+    "title": "EPYC Embedded 9654P",
+    "link": "https://www.techpowerup.com/cpu-specs/epyc-embedded-9654p.c3198"
+  },
+  {
+    "title": "Xeon E5-1603 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1603-v3.c2669"
+  },
+  {
+    "title": "Xeon E5-1607 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1607-v3.c2668"
+  },
+  {
+    "title": "Xeon E5-1620 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1620-v3.c2660"
+  },
+  {
+    "title": "Xeon E5-1620 v4",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1620-v4.c3172"
+  },
+  {
+    "title": "Xeon E5-1630 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1630-v3.c2661"
+  },
+  {
+    "title": "Xeon E5-1630 v4",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1630-v4.c3173"
+  },
+  {
+    "title": "Xeon E5-1650 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1650-v3.c2662"
+  },
+  {
+    "title": "Xeon E5-1650 v4",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1650-v4.c3174"
+  },
+  {
+    "title": "Xeon E5-1660 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1660-v3.c2663"
+  },
+  {
+    "title": "Xeon E5-1660 v4",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1660-v4.c3175"
+  },
+  {
+    "title": "Xeon E5-1680 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1680-v3.c2664"
+  },
+  {
+    "title": "Xeon E5-1680 v4",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1680-v4.c3176"
+  },
+  {
+    "title": "Xeon E5-1681 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1681-v3.c2665"
+  },
+  {
+    "title": "Xeon E5-1686 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1686-v3.c2666"
+  },
+  {
+    "title": "Xeon E5-1691 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-1691-v3.c2667"
+  },
+  {
+    "title": "Xeon E5-2603 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2603-v3.c2855"
+  },
+  {
+    "title": "Xeon E5-2608L v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2608l-v3.c2856"
+  },
+  {
+    "title": "Xeon E5-2609 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2609-v3.c2857"
+  },
+  {
+    "title": "Xeon E5-2618L v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2618l-v3.c2858"
+  },
+  {
+    "title": "Xeon E5-2620 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2620-v3.c2859"
+  },
+  {
+    "title": "Xeon E5-2622 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2622-v3.c2863"
+  },
+  {
+    "title": "Xeon E5-2623 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2623-v3.c2860"
+  },
+  {
+    "title": "Xeon E5-2628 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2628-v3.c2864"
+  },
+  {
+    "title": "Xeon E5-2628L v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2628l-v3.c2870"
+  },
+  {
+    "title": "Xeon E5-2629 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2629-v3.c2865"
+  },
+  {
+    "title": "Xeon E5-2630 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2630-v3.c2866"
+  },
+  {
+    "title": "Xeon E5-2630L v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2630l-v3.c2867"
+  },
+  {
+    "title": "Xeon E5-2637 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2637-v3.c2861"
+  },
+  {
+    "title": "Xeon E5-2640 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2640-v3.c2868"
+  },
+  {
+    "title": "Xeon E5-2643 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2643-v3.c2862"
+  },
+  {
+    "title": "Xeon E5-2648L v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2648l-v3.c2878"
+  },
+  {
+    "title": "Xeon E5-2649 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2649-v3.c2871"
+  },
+  {
+    "title": "Xeon E5-2650 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2650-v3.c2872"
+  },
+  {
+    "title": "Xeon E5-2650 v4",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2650-v4.c3791"
+  },
+  {
+    "title": "Xeon E5-2650L v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2650l-v3.c2879"
+  },
+  {
+    "title": "Xeon E5-2652 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2652-v3.c2873"
+  },
+  {
+    "title": "Xeon E5-2658 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2658-v3.c2880"
+  },
+  {
+    "title": "Xeon E5-2658A v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2658a-v3.c2881"
+  },
+  {
+    "title": "Xeon E5-2660 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2660-v3.c2874"
+  },
+  {
+    "title": "Xeon E5-2663 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2663-v3.c2875"
+  },
+  {
+    "title": "Xeon E5-2666 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2666-v3.c2876"
+  },
+  {
+    "title": "Xeon E5-2667 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2667-v3.c2869"
+  },
+  {
+    "title": "Xeon E5-2669 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2669-v3.c2882"
+  },
+  {
+    "title": "Xeon E5-2670 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2670-v3.c2883"
+  },
+  {
+    "title": "Xeon E5-2673 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2673-v3.c2884"
+  },
+  {
+    "title": "Xeon E5-2675 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2675-v3.c2898"
+  },
+  {
+    "title": "Xeon E5-2676 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2676-v3.c2885"
+  },
+  {
+    "title": "Xeon E5-2678 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2678-v3.c2886"
+  },
+  {
+    "title": "Xeon E5-2680 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2680-v3.c2887"
+  },
+  {
+    "title": "Xeon E5-2683 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2683-v3.c2893"
+  },
+  {
+    "title": "Xeon E5-2685 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2685-v3.c2888"
+  },
+  {
+    "title": "Xeon E5-2686 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2686-v3.c2902"
+  },
+  {
+    "title": "Xeon E5-2687W v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2687w-v3.c2877"
+  },
+  {
+    "title": "Xeon E5-2690 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2690-v3.c2890"
+  },
+  {
+    "title": "Xeon E5-2692 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2692-v3.c2891"
+  },
+  {
+    "title": "Xeon E5-2693 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2693-v3.c2892"
+  },
+  {
+    "title": "Xeon E5-2695 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2695-v3.c2894"
+  },
+  {
+    "title": "Xeon E5-2696 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2696-v3.c2903"
+  },
+  {
+    "title": "Xeon E5-2697 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2697-v3.c2897"
+  },
+  {
+    "title": "Xeon E5-2698 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2698-v3.c2899"
+  },
+  {
+    "title": "Xeon E5-2698A v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2698a-v3.c2900"
+  },
+  {
+    "title": "Xeon E5-2698B v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2698b-v3.c2901"
+  },
+  {
+    "title": "Xeon E5-2699 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2699-v3.c2904"
+  },
+  {
+    "title": "Xeon E5-2699A v4",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-2699a-v4.c3227"
+  },
+  {
+    "title": "Xeon E5-4610 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4610-v3.c2906"
+  },
+  {
+    "title": "Xeon E5-4620 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4620-v3.c2907"
+  },
+  {
+    "title": "Xeon E5-4627 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4627-v3.c2908"
+  },
+  {
+    "title": "Xeon E5-4640 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4640-v3.c2909"
+  },
+  {
+    "title": "Xeon E5-4648 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4648-v3.c2910"
+  },
+  {
+    "title": "Xeon E5-4650 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4650-v3.c2911"
+  },
+  {
+    "title": "Xeon E5-4655 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4655-v3.c2905"
+  },
+  {
+    "title": "Xeon E5-4660 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4660-v3.c2912"
+  },
+  {
+    "title": "Xeon E5-4667 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4667-v3.c2913"
+  },
+  {
+    "title": "Xeon E5-4669 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e5-4669-v3.c2914"
+  },
+  {
+    "title": "Xeon E7-4830 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-4830-v3.c1823"
+  },
+  {
+    "title": "Xeon E7-4850 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-4850-v3.c1824"
+  },
+  {
+    "title": "Xeon E7-8860 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-8860-v3.c2338"
+  },
+  {
+    "title": "Xeon E7-8867 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-8867-v3.c2339"
+  },
+  {
+    "title": "Xeon E7-8870 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-8870-v3.c1821"
+  },
+  {
+    "title": "Xeon E7-8880 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-8880-v3.c1820"
+  },
+  {
+    "title": "Xeon E7-8880L v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-8880l-v3.c2342"
+  },
+  {
+    "title": "Xeon E7-8890 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-8890-v3.c1819"
+  },
+  {
+    "title": "Xeon E7-8891 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-8891-v3.c2340"
+  },
+  {
+    "title": "Xeon E7-8893 v3",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-e7-8893-v3.c2341"
+  },
+  {
+    "title": "Xeon Silver 4116",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4116.c2057"
+  },
+  {
+    "title": "Xeon Silver 4309Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4309y.c2453"
+  },
+  {
+    "title": "Xeon Silver 4310",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4310.c2454"
+  },
+  {
+    "title": "Xeon Silver 4310T",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4310t.c2455"
+  },
+  {
+    "title": "Xeon Silver 4314",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4314.c2451"
+  },
+  {
+    "title": "Xeon Silver 4316",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4316.c2452"
+  },
+  {
+    "title": "Xeon Silver 4410T",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4410t.c3169"
+  },
+  {
+    "title": "Xeon Silver 4410Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4410y.c3168"
+  },
+  {
+    "title": "Xeon Silver 4416+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4416.c3167"
+  },
+  {
+    "title": "Xeon Silver 4509Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4509y.c3497"
+  },
+  {
+    "title": "Xeon Silver 4510",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4510.c3496"
+  },
+  {
+    "title": "Xeon Silver 4510T",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4510t.c3498"
+  },
+  {
+    "title": "Xeon Silver 4514Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4514y.c3495"
+  },
+  {
+    "title": "Xeon Silver 4516Y+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-silver-4516y.c3494"
+  },
+  {
+    "title": "Xeon Gold 5315Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5315y.c2450"
+  },
+  {
+    "title": "Xeon Gold 5317",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5317.c2446"
+  },
+  {
+    "title": "Xeon Gold 5318H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5318h.c2456"
+  },
+  {
+    "title": "Xeon Gold 5318N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5318n.c2447"
+  },
+  {
+    "title": "Xeon Gold 5318S",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5318s.c2445"
+  },
+  {
+    "title": "Xeon Gold 5318Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5318y.c2444"
+  },
+  {
+    "title": "Xeon Gold 5320",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5320.c2449"
+  },
+  {
+    "title": "Xeon Gold 5320H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5320h.c2470"
+  },
+  {
+    "title": "Xeon Gold 5320T",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5320t.c2448"
+  },
+  {
+    "title": "Xeon Gold 5411N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5411n.c3152"
+  },
+  {
+    "title": "Xeon Gold 5412U",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5412u.c3153"
+  },
+  {
+    "title": "Xeon Gold 5415+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5415.c3164"
+  },
+  {
+    "title": "Xeon Gold 5416S",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5416s.c3161"
+  },
+  {
+    "title": "Xeon Gold 5418N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5418n.c3154"
+  },
+  {
+    "title": "Xeon Gold 5418Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5418y.c3155"
+  },
+  {
+    "title": "Xeon Gold 5420+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5420.c3151"
+  },
+  {
+    "title": "Xeon Gold 5423N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5423n.c3158"
+  },
+  {
+    "title": "Xeon Gold 5433N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5433n.c3159"
+  },
+  {
+    "title": "Xeon Gold 5512U",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5512u.c3428"
+  },
+  {
+    "title": "Xeon Gold 5515+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5515.c3427"
+  },
+  {
+    "title": "Xeon Gold 5520+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-5520.c3426"
+  },
+  {
+    "title": "Xeon Gold 6154",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6154.c2056"
+  },
+  {
+    "title": "Xeon Gold 6312U",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6312u.c2443"
+  },
+  {
+    "title": "Xeon Gold 6314U",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6314u.c2436"
+  },
+  {
+    "title": "Xeon Gold 6326",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6326.c2439"
+  },
+  {
+    "title": "Xeon Gold 6328H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6328h.c2457"
+  },
+  {
+    "title": "Xeon Gold 6328HL",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6328hl.c2458"
+  },
+  {
+    "title": "Xeon Gold 6330",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6330.c2434"
+  },
+  {
+    "title": "Xeon Gold 6330H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6330h.c2469"
+  },
+  {
+    "title": "Xeon Gold 6334",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6334.c2438"
+  },
+  {
+    "title": "Xeon Gold 6336Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6336y.c2442"
+  },
+  {
+    "title": "Xeon Gold 6338N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6338n.c2437"
+  },
+  {
+    "title": "Xeon Gold 6338T",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6338t.c2441"
+  },
+  {
+    "title": "Xeon Gold 6342",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6342.c2440"
+  },
+  {
+    "title": "Xeon Gold 6346",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6346.c2433"
+  },
+  {
+    "title": "Xeon Gold 6348",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6348.c2432"
+  },
+  {
+    "title": "Xeon Gold 6348H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6348h.c2468"
+  },
+  {
+    "title": "Xeon Gold 6354",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6354.c2435"
+  },
+  {
+    "title": "Xeon Gold 6414U",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6414u.c3140"
+  },
+  {
+    "title": "Xeon Gold 6416H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6416h.c3160"
+  },
+  {
+    "title": "Xeon Gold 6418H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6418h.c3156"
+  },
+  {
+    "title": "Xeon Gold 6421N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6421n.c3141"
+  },
+  {
+    "title": "Xeon Gold 6426Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6426y.c3162"
+  },
+  {
+    "title": "Xeon Gold 6428N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6428n.c3142"
+  },
+  {
+    "title": "Xeon Gold 6430",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6430.c3143"
+  },
+  {
+    "title": "Xeon Gold 6434",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6434.c3165"
+  },
+  {
+    "title": "Xeon Gold 6434H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6434h.c3166"
+  },
+  {
+    "title": "Xeon Gold 6438M",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6438m.c3144"
+  },
+  {
+    "title": "Xeon Gold 6438N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6438n.c3145"
+  },
+  {
+    "title": "Xeon Gold 6438Y+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6438y.c3146"
+  },
+  {
+    "title": "Xeon Gold 6442Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6442y.c3157"
+  },
+  {
+    "title": "Xeon Gold 6444Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6444y.c3163"
+  },
+  {
+    "title": "Xeon Gold 6448H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6448h.c3147"
+  },
+  {
+    "title": "Xeon Gold 6448Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6448y.c3148"
+  },
+  {
+    "title": "Xeon Gold 6454S",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6454s.c3149"
+  },
+  {
+    "title": "Xeon Gold 6458Q",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6458q.c3150"
+  },
+  {
+    "title": "Xeon Gold 6526Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6526y.c3423"
+  },
+  {
+    "title": "Xeon Gold 6530",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6530.c3425"
+  },
+  {
+    "title": "Xeon Gold 6534",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6534.c3424"
+  },
+  {
+    "title": "Xeon Gold 6538N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6538n.c3431"
+  },
+  {
+    "title": "Xeon Gold 6542Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6542y.c3421"
+  },
+  {
+    "title": "Xeon Gold 6544Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6544y.c3422"
+  },
+  {
+    "title": "Xeon Gold 6548N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6548n.c3430"
+  },
+  {
+    "title": "Xeon Gold 6548Y+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6548y.c3420"
+  },
+  {
+    "title": "Xeon Gold 6554S",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-gold-6554s.c3432"
+  },
+  {
+    "title": "Xeon Platinum 8180",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8180.c2055"
+  },
+  {
+    "title": "Xeon Platinum 8180M",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8180m.c2164"
+  },
+  {
+    "title": "Xeon Platinum 8253",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8253.c2181"
+  },
+  {
+    "title": "Xeon Platinum 8256",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8256.c2180"
+  },
+  {
+    "title": "Xeon Platinum 8260",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8260.c2179"
+  },
+  {
+    "title": "Xeon Platinum 8260M",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8260m.c2178"
+  },
+  {
+    "title": "Xeon Platinum 8268",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8268.c2177"
+  },
+  {
+    "title": "Xeon Platinum 8270",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8270.c2172"
+  },
+  {
+    "title": "Xeon Platinum 8276",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8276.c2171"
+  },
+  {
+    "title": "Xeon Platinum 8280",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8280.c2170"
+  },
+  {
+    "title": "Xeon Platinum 8280M",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8280m.c2169"
+  },
+  {
+    "title": "Xeon Platinum 8351N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8351n.c2429"
+  },
+  {
+    "title": "Xeon Platinum 8352M",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8352m.c2431"
+  },
+  {
+    "title": "Xeon Platinum 8352S",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8352s.c2430"
+  },
+  {
+    "title": "Xeon Platinum 8352V",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8352v.c2428"
+  },
+  {
+    "title": "Xeon Platinum 8353H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8353h.c2459"
+  },
+  {
+    "title": "Xeon Platinum 8354H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8354h.c2460"
+  },
+  {
+    "title": "Xeon Platinum 8356H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8356h.c2465"
+  },
+  {
+    "title": "Xeon Platinum 8358",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8358.c2424"
+  },
+  {
+    "title": "Xeon Platinum 8358P",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8358p.c2425"
+  },
+  {
+    "title": "Xeon Platinum 8360H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8360h.c2466"
+  },
+  {
+    "title": "Xeon Platinum 8360HL",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8360hl.c2467"
+  },
+  {
+    "title": "Xeon Platinum 8360Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8360y.c2423"
+  },
+  {
+    "title": "Xeon Platinum 8362",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8362.c2426"
+  },
+  {
+    "title": "Xeon Platinum 8368",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8368.c2422"
+  },
+  {
+    "title": "Xeon Platinum 8368Q",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8368q.c2427"
+  },
+  {
+    "title": "Xeon Platinum 8376H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8376h.c2462"
+  },
+  {
+    "title": "Xeon Platinum 8376HL",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8376hl.c2461"
+  },
+  {
+    "title": "Xeon Platinum 8380",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8380.c2421"
+  },
+  {
+    "title": "Xeon Platinum 8380H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8380h.c2463"
+  },
+  {
+    "title": "Xeon Platinum 8380HL",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8380hl.c2464"
+  },
+  {
+    "title": "Xeon Platinum 8444H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8444h.c3139"
+  },
+  {
+    "title": "Xeon Platinum 8450H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8450h.c3138"
+  },
+  {
+    "title": "Xeon Platinum 8452Y",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8452y.c3135"
+  },
+  {
+    "title": "Xeon Platinum 8454H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8454h.c3136"
+  },
+  {
+    "title": "Xeon Platinum 8458P",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8458p.c3133"
+  },
+  {
+    "title": "Xeon Platinum 8460H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8460h.c3134"
+  },
+  {
+    "title": "Xeon Platinum 8460Y+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8460y.c3095"
+  },
+  {
+    "title": "Xeon Platinum 8461V",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8461v.c3093"
+  },
+  {
+    "title": "Xeon Platinum 8462Y+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8462y.c3137"
+  },
+  {
+    "title": "Xeon Platinum 8468",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8468.c3094"
+  },
+  {
+    "title": "Xeon Platinum 8468H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8468h.c3131"
+  },
+  {
+    "title": "Xeon Platinum 8468V",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8468v.c3132"
+  },
+  {
+    "title": "Xeon Platinum 8470",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8470.c3089"
+  },
+  {
+    "title": "Xeon Platinum 8470N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8470n.c3090"
+  },
+  {
+    "title": "Xeon Platinum 8470Q",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8470q.c3091"
+  },
+  {
+    "title": "Xeon Platinum 8471N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8471n.c3092"
+  },
+  {
+    "title": "Xeon Platinum 8480+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8480.c2958"
+  },
+  {
+    "title": "Xeon Platinum 8481C",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8481c.c3992"
+  },
+  {
+    "title": "Xeon Platinum 8490H",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8490h.c2942"
+  },
+  {
+    "title": "Xeon Platinum 8558",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8558.c3413"
+  },
+  {
+    "title": "Xeon Platinum 8558P",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8558p.c3414"
+  },
+  {
+    "title": "Xeon Platinum 8558U",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8558u.c3415"
+  },
+  {
+    "title": "Xeon Platinum 8562Y+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8562y.c3412"
+  },
+  {
+    "title": "Xeon Platinum 8568Y+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8568y.c3411"
+  },
+  {
+    "title": "Xeon Platinum 8570",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8570.c3410"
+  },
+  {
+    "title": "Xeon Platinum 8571N",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8571n.c3429"
+  },
+  {
+    "title": "Xeon Platinum 8580",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8580.c3409"
+  },
+  {
+    "title": "Xeon Platinum 8581V",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8581v.c3418"
+  },
+  {
+    "title": "Xeon Platinum 8592+",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8592.c3408"
+  },
+  {
+    "title": "Xeon Platinum 8592V",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8592v.c3417"
+  },
+  {
+    "title": "Xeon Platinum 8593Q",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-8593q.c3416"
+  },
+  {
+    "title": "Xeon Platinum 9221",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-9221.c2168"
+  },
+  {
+    "title": "Xeon Platinum 9222",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-9222.c2167"
+  },
+  {
+    "title": "Xeon Platinum 9242",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-9242.c2166"
+  },
+  {
+    "title": "Xeon Platinum 9282",
+    "link": "https://www.techpowerup.com/cpu-specs/xeon-platinum-9282.c2165"
+  }
+]

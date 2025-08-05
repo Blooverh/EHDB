@@ -1,5 +1,17 @@
-import puppeteer from "puppeteer";
-import techpAddCPU from "../../lib/DB_utilities/cpuDataHandlers/cpu_techpowerupDataHandler.js";
+import PuppeteerExtra from "puppeteer-extra";
+import puppeteerStealthPlugIn from 'puppeteer-extra-plugin-stealth';
+import fs from 'node:fs';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+PuppeteerExtra.use(puppeteerStealthPlugIn());
+
+const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+const jsonfile = path.resolve(__dirname, '../../lib/infoExtracter/cpus_and_links.json');
 
 const pageArr =[
 'https://www.techpowerup.com/cpu-specs/?f=socket_AMD+Socket+AM5~generation_AMD+EPYC',
@@ -15,7 +27,7 @@ const pageArr =[
 export const techpowerupCPU = async () => {
 
     let scrapped_data = [];
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await PuppeteerExtra.launch({ headless: true });
     const page = await browser.newPage();
 
     try{
@@ -39,23 +51,21 @@ export const techpowerupCPU = async () => {
                 const link = cpuLink[idx];
                 scrapped_data.push({title, link});
             });
+
+            await delay(Math.floor(Math.random() * 2000) + 1000);
         }
 
-        // console.log(scrapped_data);
+        console.log(scrapped_data);
 
     }catch(e){
         console.log(e);
     }
 
+    const jsonContent = JSON.stringify(scrapped_data, null, 2);
+    fs.writeFileSync(jsonfile, jsonContent, 'utf8');
+
     await browser.close();
 
-    if(scrapped_data.length >0){
-        await techpAddCPU(scrapped_data.map(data => data.title), scrapped_data.map(data => data.link));
-        console.log('[INFO] TechPowerUp data saved to DB');
-    }else{
-        console.warn('[INFO] No data scraped from TechPowerUp');
-    }
-
-    console.log('[PROCESS] TechPowerUp CPUs scraped and saved successfully');
+    console.log('[PROCESS] TechPowerUp CPU collection scraped and saved successfully to JSON file');
 
 }

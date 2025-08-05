@@ -94,14 +94,17 @@ async function main() {
             console.log('[SCRAPING COMPLETE]');
         });
 
-        // techpowerup scraper 
+        // techpowerup scraper (ONLY SCRAPES COLLECTIONS AND ADDS TITLE AND LINK TO JSON FILE)
         cpuScraper.command('techpowerup')
         .description('Scrapping data from all cpus of TechPowerUp website')
         .action( async () => {
             console.log('[SCRAPING] TechPowerUp');
             await techpowerupCPU();
             console.log('[SCRAPING COMPLETE]');
-        })
+        });
+
+        // since we have the cpus in a json file we need to have command that calls function that reads all of this 
+        // data and scrapes the cpu info and adds it to the cpu
 
         await scraper.parseAsync(process.argv);    
 
