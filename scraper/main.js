@@ -18,6 +18,9 @@ import { xByteCollectionCpu } from './scrapers/cpuCollectionScraper/xByteCpuScra
 import { serverMonkeyCollectionCpu } from './scrapers/cpuCollectionScraper/sMonkeyScraper.js';
 import { techpowerupCPU } from './scrapers/cpuCollectionScraper/techPowUpScraper.js';
 
+// import individual cpu data scraper 
+import techpowerupCPU_data from './lib/DB_utilities/cpuDataHandlers/cpu_techpowerupDataHandler.js'
+
 // Helper function to connect to DB 
 async function connectToDB() {
     // if string not imported from .env file, connection to DB rejected
@@ -100,6 +103,14 @@ async function main() {
         .action( async () => {
             console.log('[SCRAPING] TechPowerUp');
             await techpowerupCPU();
+            console.log('[SCRAPING COMPLETE]');
+        });
+
+        cpuScraper.command('techpowerup_data')
+        .description('Scraping data from each individual cpu URL and save it to DB')
+        .action( async () => {
+            console.log('[SCRAPING] TechPowerUp Individual CPUs');
+            await techpowerupCPU_data();
             console.log('[SCRAPING COMPLETE]');
         });
 
