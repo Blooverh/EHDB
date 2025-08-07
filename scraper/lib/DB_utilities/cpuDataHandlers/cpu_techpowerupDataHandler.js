@@ -1,7 +1,7 @@
 import { CPU } from "../../../models/cpu.js";
 import PuppeteerExtra  from "puppeteer-extra";
 import puppeteerStealthPlugIn from "puppeteer-extra-plugin-stealth";
-import fs from 'node:fs';
+import fs, { cp } from 'node:fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -55,13 +55,14 @@ export default async function techpAddCPU(){
         }
 
         // CHANGE LIMIT TO URL ARRAY LENGTH ONCE ALL SCRAPED
-        for(let i = 0; i < 2; i++){
+        for(let i = 0; i < cpuURLs.length; i++){
             const cpuModel = cpuTitles[i];
             const cpuURL = cpuURLs[i];
 
             const cpu = await CPU.findOne({ model: cpuModel.toLowerCase() });
 
-            if(cpu){
+            // check if cpu exists and if codename is default value, if it is we proceed to scraping techpowerup cpu and get all the information needed to save to DB
+            if(cpu && cpu.codename == 'N/A'){
                 // console.log(`[CPU] ${cpu.brand} - ${cpuModel} does exist in DB`);
 
                 await page.goto(cpuURL, {waitUntil: 'domcontentloaded', timeout: 60000});
@@ -76,41 +77,119 @@ export default async function techpAddCPU(){
                         find(el => el.textContent.trim() === headerText);
                         // return the text of the next cell in the row or null if not found 
                         return headerCell ? headerCell.nextElementSibling.textContent.trim() : null;
-                    }
+                    };
 
                     //scrape each field and add it to data object 
                     const codename = getTextFromRow('Codename:');
                     if(codename){ data.codename = codename;}
 
                     const generation = getTextFromRow('Generation:');
-                    if(generation) { data.generation = generation}
+                    if(generation) { data.generation = generation.replace(/\s+/g, ' ').trim(); }
 
                     const memorySupport = getTextFromRow('Memory Support:');
-                    if(memorySupport) {data.memorySupport = memorySupport}
+                    if(memorySupport) {data.memorySupport = memorySupport.split(',').map(s => s.trim());}
 
-                    const ratedSpeeds = getTextFromRow('Rated Speed:');
-                    if(ratedSpeeds) {data.ratedSpeeds = ratedSpeeds}
+                    const ratedSpeedsStr = getTextFromRow('Rated Speed:');
+                    if(ratedSpeedsStr) {
+                        const speed = parseInt(ratedSpeedsStr, 10);
+                        if (!isNaN(speed)) {
+                            data.ratedSpeeds = speed;
+                        }
+                    }
 
                     const socket = getTextFromRow('Socket:');
                     if(socket) { data.socket = socket}
 
-                    // Socket package missing
+                    const socketPackage = getTextFromRow('Package:');
+                    if(socketPackage){data.socketPackage = socketPackage}
 
                     const processSize = getTextFromRow('Process Size:');
                     if(processSize){ data.processSize = processSize}
 
-                    const cores = getTextFromRow('# of Cores:');
-                    let core = parseFloat(cores);
-                    if(!isNaN(core)){ 
-                        data.cores = core;
+                    const coresStr = getTextFromRow('# of Cores:');
+                    if (coresStr) {
+                        const cores = parseInt(coresStr, 10);
+                        if(!isNaN(cores)){ 
+                            data.coreNum = cores;
+                        }
+                    }
+
+                    const threadsStr = getTextFromRow('# of Threads:');
+                    if (threadsStr) {
+                        const threads = parseInt(threadsStr, 10);
+                        if(!isNaN(threads)){
+                            data.threadNum = threads;
+                        }
+                    }
+
+                    const frequencyStr = getTextFromRow('Frequency:');
+                    if (frequencyStr) {
+                        const frequency = parseFloat(frequencyStr.replace('GHz', '').trim());
+                        if(!isNaN(frequency)){
+                            data.frequency = frequency;
+                        }
+                    }
+
+                    const turboClocksStr = getTextFromRow('Turbo Clock:');
+                    if (turboClocksStr) {
+                        const clock = parseFloat(turboClocksStr.replace(/[^0-9.]/g,'').trim());
+                        if(!isNaN(clock)){
+                            data.turboFrequency = clock;
+                        }
+                    }
+
+                    const powerStr = getTextFromRow('TDP:');
+                    if (powerStr) {
+                        const tdp = parseFloat(powerStr.replace('W','').trim());
+                        if(!isNaN(tdp)){
+                            data.tdp = tdp;
+                        }
+                    }
+
+                    const memoryBus = getTextFromRow('Memory Bus:');
+                    if(memoryBus){
+                        data.memoryBus = memoryBus;
+                    }
+
+                    const mpn = getTextFromRow('Part#:');
+                    if(mpn){
+                        data.partNum = mpn;
+                    }
+
+                    const eccMemory = getTextFromRow('ECC Memory:');
+                    data.eccMemory = (eccMemory === 'Yes');
+
+                    const cacheL1 = getTextFromRow('Cache L1:');
+                    const cacheL2 = getTextFromRow('Cache L2:');
+                    const cacheL3 = getTextFromRow('Cache L3:');
+                    if(cacheL1 && cacheL2 && cacheL3){
+                        data.cache = {
+                            cacheL1: cacheL1,
+                            cacheL2: cacheL2,
+                            cacheL3: cacheL3
+                        };
+                    }
+
+                    const pcieGen = getTextFromRow('PCI-Express:');
+                    if(pcieGen){
+                        data.pcieGen = pcieGen;
                     }
 
                     return data;
                 });
+                
+                // Assign all scraped properties from cpuData to the cpu document
+                Object.assign(cpu, cpuData);
 
-                console.log([cpuData.codename, cpuData.generation, cpuData.memorySupport, cpuData.ratedSpeeds, cpuData.socket, cpuData.processSize, cpuData.cores]);
+                await cpu.save();
 
-            }else{
+                // console.log(`[SCRAPED DATA] for ${cpuModel}:`, cpuData);
+                console.log(`[SCRAPED DATA] for ${cpuModel}`);
+
+            }else if(cpu && cpu.codename != 'N/A'){
+                console.log(`[SKIP] ${cpuModel} was already scraped`);
+            }
+            else{
                 console.log(`[CPU] ${cpuModel} DOES NOT EXIST in DB`)
             }
 
