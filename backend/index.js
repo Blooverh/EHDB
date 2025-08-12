@@ -1,0 +1,46 @@
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+import { cpuRouter } from './routers/cpuRouter.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({path: path.resolve(__dirname, '../.env')});
+
+const PORT = process.env.PORT || 3000;
+
+const app = express();
+
+app.use(express.urlencoded({extended: true}));
+
+app.use(express.json());
+
+app.use(cors());
+
+const MONGO_URI = process.env.MONGO_URI;
+
+if(!MONGO_URI){
+    console.log('[ERROR] MONGO DB CREDENTIAL NOT FOUND');
+}
+
+mongoose.connect(MONGO_URI).then(() => {
+    console.log('[CONNECTED] To Database');
+}).catch(err => {
+    console.error('[CONNECTION ERROR]: ' + err);
+    process.exit(1);
+});
+
+app.get('/', (req, res) => {
+    res.json('Hello');
+});
+
+app.use('/api', cpuRouter);
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[RUNNING] Port: ${PORT} `);
+});
+

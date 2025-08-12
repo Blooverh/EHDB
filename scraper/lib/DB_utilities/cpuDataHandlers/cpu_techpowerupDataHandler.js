@@ -11,8 +11,6 @@ const __dirname = path.dirname(__filename);
 // adding delay for a less bot ish movement for avoiding bot detection
 const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
-
-// const jsonFile = path.resolve(__dirname, '../../infoExtracter/cpus_and_links.json');
 /**
     * Finds existing CPUs in the database and updates them with data scraped from TechPowerUp.
     * @param {string[]} modelArr - Array of CPU models to find and update.
