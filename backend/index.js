@@ -15,11 +15,13 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+// built-in middleware to parse incoming request with urlencoded payloads (used for form handling)
 app.use(express.urlencoded({extended: true}));
 
+// will allow front end to make requests as JSON from the backend 
 app.use(express.json());
 
-app.use(cors());
+// app.use(cors()); // will not be needed as im serving vue straight to backend, and not 2 separate domains
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -28,7 +30,7 @@ if(!MONGO_URI){
 }
 
 mongoose.connect(MONGO_URI).then(() => {
-    console.log('[CONNECTED] To Database');
+    console.log('[DATABASE CONNECTED]');
 }).catch(err => {
     console.error('[CONNECTION ERROR]: ' + err);
     process.exit(1);
@@ -41,6 +43,6 @@ app.get('/', (req, res) => {
 app.use('/api', cpuRouter);
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[RUNNING] Port: ${PORT} `);
+    console.log(`[RUNNING] On Port: ${PORT} `);
 });
 

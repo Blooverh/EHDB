@@ -1,7 +1,7 @@
 import { CPU } from "../../../models/cpu.js";
 import PuppeteerExtra  from "puppeteer-extra";
 import puppeteerStealthPlugIn from "puppeteer-extra-plugin-stealth";
-import fs, { cp } from 'node:fs';
+import fs from 'node:fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -39,9 +39,6 @@ export default async function techpAddCPU(){
             cpuTitles.push(cpu.title);
             cpuURLs.push(cpu.link);
         }
-
-        // console.log(cpuTitle);
-        // console.log(cpuURL);
 
 
         PuppeteerExtra.use(puppeteerStealthPlugIn());
