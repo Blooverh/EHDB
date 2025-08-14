@@ -15,13 +15,16 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+// Serve static files from the Vue frontend build directory
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
 // built-in middleware to parse incoming request with urlencoded payloads (used for form handling)
 app.use(express.urlencoded({extended: true}));
 
 // will allow front end to make requests as JSON from the backend 
 app.use(express.json());
 
-// app.use(cors()); // will not be needed as im serving vue straight to backend, and not 2 separate domains
+app.use(cors()); // will not be needed as im serving vue straight to backend, and not 2 separate domains
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -36,11 +39,13 @@ mongoose.connect(MONGO_URI).then(() => {
     process.exit(1);
 });
 
-app.get('/', (req, res) => {
-    res.json('Hello');
-});
-
 app.use('/api', cpuRouter);
+
+
+// All remaining requests return the Vue app, so it can handle routing
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend/dist', 'index.html'));
+});
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`[RUNNING] On Port: ${PORT} `);
