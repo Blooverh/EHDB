@@ -18,6 +18,8 @@ import { xByteCollectionCpu } from './scrapers/cpuCollectionScraper/xByteCpuScra
 import { serverMonkeyCollectionCpu } from './scrapers/cpuCollectionScraper/sMonkeyScraper.js';
 import { techpowerupCPU } from './scrapers/cpuCollectionScraper/techPowUpScraper.js';
 
+import { cnCollectionServer } from './scrapers/serverCollectionScraper/cnServerScraper.js';
+
 // import individual cpu data scraper 
 import techpowerupCPU_data from './lib/DB_utilities/cpuDataHandlers/cpu_techpowerupDataHandler.js'
 
@@ -55,6 +57,9 @@ async function main() {
         // main cpu programer command 
         const cpuScraper = scraper.command('cpu')
         .description('Commands for scraping cpu data');
+
+        // main Server command 
+        const serverScraper = scraper.command('server').description('Commands for Scraping Server data');
 
         // command for scraping cloud Ninjas
         cpuScraper.command('cninjas').
@@ -106,6 +111,8 @@ async function main() {
             console.log('[SCRAPING COMPLETE]');
         });
 
+        // since we have the cpus in a json file we need to have command that calls function that reads all of this 
+        // data and scrapes the cpu info and adds it to the cpu
         cpuScraper.command('techpowerup_data')
         .description('Scraping data from each individual cpu URL and save it to DB')
         .action( async () => {
@@ -114,8 +121,13 @@ async function main() {
             console.log('[SCRAPING COMPLETE]');
         });
 
-        // since we have the cpus in a json file we need to have command that calls function that reads all of this 
-        // data and scrapes the cpu info and adds it to the cpu
+        // Server Scraping commands 
+        serverScraper.command('cnServerCollection_data').description('Scraping Cloud Ninjas Server Collection')
+        .action(async () => {
+            console.log('[SCRAPING] Cloud Ninjas Server Collection')
+            await cnCollectionServer();
+            console.log('[SCRAPING COMPLETE]');
+        })
 
         await scraper.parseAsync(process.argv);    
 
