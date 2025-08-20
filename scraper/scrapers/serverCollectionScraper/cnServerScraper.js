@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import cnAddServer from "../../lib/DB_utilities/serverDataHandler/server_cnDataHandler.js";
 
 // URL for main collection of all servers 1st page 
 const CN_COLLECTION_URL = 'https://cloudninjas.com/collections/cloud-ninjas-servers';
@@ -58,11 +59,6 @@ export const cnCollectionServer = async () => {
             });
         }
 
-        // console.log(serverTitles);
-        // console.log(serverURLs);
-
-        console.log(scrapedData);
-        console.log(`There are ${scrapedData.length} Servers in the collection`);
     }catch(e){
         console.error(e);
         process.exit(1); 
@@ -70,6 +66,12 @@ export const cnCollectionServer = async () => {
 
     await browser.close();
 
+    if(scrapedData.length > 1){
+        await cnAddServer(scrapedData);
+    }else{
+        console.warn('[INFO] No Servers Scraped from Cloud Ninjas')
+    }
 
+    console.log('[PROCESS] Cloud Ninjas Servers Scraped and Saved Accordingly');
 }
 
