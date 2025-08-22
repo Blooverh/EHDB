@@ -24,12 +24,10 @@ export const cnCollectionServer = async () => {
         )
         
         totalPages = pageArr.at(-1);
-        console.log(pageArr);
+        
         for(let i=2; i <= totalPages; i++){
             CN_URLS.push(`${CN_COLLECTION_URL}?page=${i}`);
         }
-
-        console.log(CN_URLS);
 
         let serverTitles = [];
         let serverURLs = [];

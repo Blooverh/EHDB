@@ -4,7 +4,6 @@ const defVal = 'N/A';
 const serverSchema = new mongoose.Schema({
     brand: {type: String, default: defVal},
     model: {type: String, default: defVal},
-    chassisType: {type: String, default: defVal},
     chassisInfo: [{
         website: {type: String, default: defVal}, 
         currPrice: {type: Number, default: 0},
