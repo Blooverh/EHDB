@@ -15,7 +15,7 @@ export const cnCollectionServer = async () => {
 
     try{
         // 1st step, get all total pages 
-        await page.goto(CN_COLLECTION_URL, {waitUntil: 'domcontentloaded', timeout: 6000});
+        await page.goto(CN_COLLECTION_URL, {waitUntil: 'domcontentloaded', timeout: 60000});
 
         let pageArr = await page.$$eval('.box-page', pages => 
             pages.map(page => {

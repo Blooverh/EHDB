@@ -108,7 +108,6 @@ export default async function cnAddServer(dataArr){
                     // if chassis for website does not exist create new entry of that chassis for that website
 
                     server.chassisInfo.push({website: data.website, currPrice: data.pricing, oldPrice: data.pricing, chassis: data.chassisType, websiteLink: data.serverLink});
-                    
                     console.log(`[NEW CHASSIS ADDED] Server: ${server.brand} ${server.model} - chassis: ${data.chassisType}, Price: ${data.pricing}`);
 
                 }

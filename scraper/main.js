@@ -19,6 +19,7 @@ import { serverMonkeyCollectionCpu } from './scrapers/cpuCollectionScraper/sMonk
 import { techpowerupCPU } from './scrapers/cpuCollectionScraper/techPowUpScraper.js';
 
 import { cnCollectionServer } from './scrapers/serverCollectionScraper/cnServerScraper.js';
+import { smCollectionServer } from './scrapers/serverCollectionScraper/smServerScraper.js';
 
 // import individual cpu data scraper 
 import techpowerupCPU_data from './lib/DB_utilities/cpuDataHandlers/cpu_techpowerupDataHandler.js'
@@ -127,7 +128,15 @@ async function main() {
             console.log('[SCRAPING] Cloud Ninjas Server Collection')
             await cnCollectionServer();
             console.log('[SCRAPING COMPLETE]');
-        })
+        });
+
+        // ADD server monkey server scraper command
+        serverScraper.command('smServerCollection_data').description('Scraping Server Monkey Server Collection')
+        .action(async ()=> {
+            console.log('[SCRAPING] Server Monkey Server Collection');
+            await smCollectionServer();
+            console.log('[SCRAPING COMPLETE]');
+        });
 
         await scraper.parseAsync(process.argv);    
 
