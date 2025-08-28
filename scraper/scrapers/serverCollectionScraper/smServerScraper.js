@@ -1,6 +1,6 @@
 import PuppeteerExtra from "puppeteer-extra";
 import puppeteerStealthPlugIn from "puppeteer-extra-plugin-stealth";
-
+import smAddServer from "../../lib/DB_utilities/serverDataHandler/server_smDataHandler.js";
 // use plug in since server monkey uses extra bot detection measures 
 PuppeteerExtra.use(puppeteerStealthPlugIn());
 
@@ -14,6 +14,8 @@ export async function smCollectionServer() {
     let collectionPages = [];
 
     let scrapedServers = [];
+
+    let scrapedData = [];
 
     const browser = await PuppeteerExtra.launch({headless: true});
     const page = await browser.newPage();
@@ -55,7 +57,7 @@ export async function smCollectionServer() {
             
         }
 
-        console.log(collectionPages);
+        // console.log(collectionPages);
 
         for(let i =0; i < collectionPages.length; i++){
             await page.goto(collectionPages[i], {waitUntil: 'domcontentloaded', timeout: 60000});
@@ -80,12 +82,10 @@ export async function smCollectionServer() {
             });
         }
         
-        console.log(scrapedServers);
+        // console.log(scrapedServers);
 
         let chassisArr = [];
         let priceArr = [];
-
-        let scrapedData = [];
 
         for(const server of scrapedServers){
 
@@ -115,10 +115,9 @@ export async function smCollectionServer() {
                 scrapedData.push({title:server.title, link: server.url, chassis, price})
             });
 
-            
         }
 
-        console.log(scrapedData);
+        // console.log(scrapedData);
 
 
     }catch(error){
@@ -128,6 +127,11 @@ export async function smCollectionServer() {
 
     await browser.close();
 
+    if(scrapedData.length < 1) {
+        await smAddServer(scrapedData);
+    }else {
+        console.warn('[INFO] No Servers were Scraped from Server Monkey');
+    }
 
     console.log('[PROCESS] Server Monkey Servers Scraped and Saved to DB Accordingly');
 }
