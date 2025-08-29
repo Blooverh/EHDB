@@ -117,20 +117,20 @@ export async function smCollectionServer() {
 
         }
 
-        // console.log(scrapedData);
+        console.log(scrapedData);
+
+        await browser.close();
+
+        if(scrapedData.length > 1) {
+            await smAddServer(scrapedData);
+        }else {
+            console.warn('[INFO] No Servers were Scraped from Server Monkey');
+        }
 
 
     }catch(error){
         console.error('[ERROR] Could Not Scrape Server Monkey Servers: ' + error);
         process.exit(1);
-    }
-
-    await browser.close();
-
-    if(scrapedData.length < 1) {
-        await smAddServer(scrapedData);
-    }else {
-        console.warn('[INFO] No Servers were Scraped from Server Monkey');
     }
 
     console.log('[PROCESS] Server Monkey Servers Scraped and Saved to DB Accordingly');
