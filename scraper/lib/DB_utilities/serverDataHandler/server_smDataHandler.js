@@ -13,24 +13,71 @@ export default async function smAddServer(dataArr){
         let originalChassis = server.chassis
         let price = server.price;
         let link = server.link;
+        let brand, model;
 
 
         try{
 
-            let { brand, model } = extractTitle(originalTitle);
-
-            console.log(`${brand} - ${model}`);
-            
+            ({ brand, model } = extractTitle(originalTitle));
+            // console.log(`${brand} ${model}`);
             let chassis = extractChassis(originalChassis);
+            // console.log(chassis);
+            let serverDb = await Server.findOne({brand: brand, model: model}); 
 
-            console.log(chassis);
+            if(serverDb){
+                
+                let chassisToUpdate = serverDb.chassisInfo.find(info => 
+                    info.website === 'Server Monkey' && info.chassis === chassis
+                )
 
-            
+                // if entry of website and chassis exists on website, update pricing if there is new pricing
+                if(chassisToUpdate){
+                    if(chassisToUpdate.currPrice !== price){
+                        chassisToUpdate.oldPrice = chassisToUpdate.currPrice;
+                        chassisToUpdate.currPrice = price;
+
+                        console.log(`[PRICE UPDATE] Server ${serverDb.brand} ${serverDb.model}, chassis: ${chassisToUpdate.chassis}, NEW PRICE: ${chassisToUpdate.currPrice}`);
+                    }
+                }else{
+                    // add new entry for server in DB if does not exist on database
+                    serverDb.chassisInfo.push({website: 'Server Monkey', currPrice: price, oldPrice: price, chassis: chassis, websiteLink: link});
+
+                    console.log(`[NEW CHASSIS ENTRY] ${serverDb.brand} ${serverDb.model} - chassis: ${chassis}, Price: ${price}`);
+                }
+
+                await serverDb.save();
+
+            }else{
+                console.log(`${brand} ${model} does not exist in database - Adding to database`);
+                const newSlug= slugify(model, {
+                replacement: '-',
+                    lower: true,
+                    strict: true
+                });
+
+                serverDb = new Server({
+                    brand: brand,
+                    model: model,
+                    chassisInfo: [{
+                        website: 'Server Monkey',
+                        currPrice: price,
+                        oldPrice: price,
+                        websiteLink: link,
+                        chassis: chassis
+                    }],
+                    slug: newSlug
+                })
+
+                await serverDb.save();
+
+                console.log(`[NEW SERVER SAVED] ${brand} - ${model}`);
+
+            }
 
 
         }catch(error){
 
-            console.log(`[ERROR] Could Not Save Server to DataBase`)
+            console.log(`[SERVER FAILED] Could Not Save ${brand} ${model} - [ERROR] ${error.message}`);
         }
             
     }
@@ -67,10 +114,12 @@ function extractChassis(chassis){
     let originalChassis = chassis.replace('Chassis','').replace('Refurbished', '').trim();
 
     let words = originalChassis.split(' ');
+    words = words.filter( item => item != '');
+
     let finalChassis = '';
 
     if(words[0] === 'Dell'){
-        finalChassis = `${words.splice(3).join(' ')}`;
+        finalChassis = `${words.splice(3).join(' ').trim()}`;
     }else if(words[0] === 'HPE' || words[0] === 'HP'){
         if(words[4] === 'Plus'){
             finalChassis = `${words.splice(5).join(' ')}`;
