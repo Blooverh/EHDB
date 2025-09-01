@@ -1,6 +1,10 @@
 <script setup>
+import Header from './components/Header.vue';
+import Homepage from './views/Homepage.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { RouterView } from 'vue-router';
+
 
 const cpus = ref(null);
 
@@ -15,17 +19,16 @@ onMounted( async () => {
 </script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
-
-  <div v-if="cpus">
-    <ul v-for="(item, idx) in cpus" :key="item.id || idx">
-      <li>{{ item.brand }} {{  item.model }}</li>
-    </ul>
-  </div>
+  <header>
+    <Header />
+  </header>
+  <main>
+    <RouterView/>
+  </main>
+  <footer>
+    Footer 
+  </footer>
+  
 </template>
 
 <style scoped></style>

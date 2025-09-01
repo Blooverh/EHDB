@@ -1,6 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
-
 
 import { CPU } from '../models/cpu.js';
 
@@ -33,7 +31,7 @@ cpuRouter.get('/cpus/:brand', async (req, res) => {
         const cpus = await CPU.find({brand: brand}).lean();
 
         // If no CPUs are found, you could return a 404
-        if (cpus.length === 0) {
+        if (cpus.length < 1) {
             return res.status(404).json({ message: `No CPUs found for brand: ${req.params.brand}` });
         }
 

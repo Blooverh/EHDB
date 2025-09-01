@@ -1,11 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import cors from 'cors';
+// import cors from 'cors';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
+// Routers for each hardware part
 import { cpuRouter } from './routers/cpuRouter.js';
+import { serverRouter } from './routers/serverRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,7 +26,7 @@ app.use(express.urlencoded({extended: true}));
 // will allow front end to make requests as JSON from the backend 
 app.use(express.json());
 
-app.use(cors()); // will not be needed as im serving vue straight to backend, and not 2 separate domains
+// app.use(cors()); // will not be needed as im serving vue straight to backend, and not 2 separate domains
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -40,6 +42,7 @@ mongoose.connect(MONGO_URI).then(() => {
 });
 
 app.use('/api', cpuRouter);
+app.use('/api', serverRouter);
 
 
 // All remaining requests return the Vue app, so it can handle routing
