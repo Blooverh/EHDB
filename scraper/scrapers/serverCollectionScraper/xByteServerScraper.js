@@ -1,7 +1,7 @@
 import PuppeteerExtra from "puppeteer-extra";
 import PuppeteerStealthPlugin from "puppeteer-extra-plugin-stealth";
 
-PuppeteerExtra.use(PuppeteerStealthPlugin);
+PuppeteerExtra.use(PuppeteerStealthPlugin());
 
 // xByte's page containing all Dell servers (what they specialize)
 const xByteServerURL = 'https://www.xbyte.com/products?class=Servers&class_id=84';
@@ -34,7 +34,35 @@ export async function xByteCollectionServer(){
 
         // Scraping each server from list from collection of pages above scraped
 
-        
+        for(let i =0; i < xBytePageCollection.length; i++){
+
+            await page.goto(xBytePageCollection[i], {waitUntil: 'domcontentloaded', timeout: 60000});
+
+            let serverTitles = [];
+            let serverUrls = [];
+
+            serverTitles = await page.$$eval('.results > li', listCards => listCards.map(card => {
+                const titleEl = card.querySelector('.title');
+
+                return titleEl ? titleEl.textContent.trim() : 'No Title Found';
+            }));
+
+            // Servers with configurator will display options when url has '?config='
+            serverUrls = await page.$$eval('.results > li', listCards => listCards.map(card => {
+                const urlEl = card.querySelector('a.product-card');
+                const confUrl = urlEl.href + '?config=';
+
+                return confUrl ? confUrl : 'No Link Found';
+            }));
+
+            serverTitles.forEach((title, idx) => {
+                const url = serverUrls[idx];
+                scrapedServers.push({title, url});
+            });
+
+        }
+
+        console.log(scrapedServers);
 
 
     }catch(err){
