@@ -20,6 +20,7 @@ import { techpowerupCPU } from './scrapers/cpuCollectionScraper/techPowUpScraper
 
 import { cnCollectionServer } from './scrapers/serverCollectionScraper/cnServerScraper.js';
 import { smCollectionServer } from './scrapers/serverCollectionScraper/smServerScraper.js';
+import { xByteCollectionServer } from './scrapers/serverCollectionScraper/xByteServerScraper.js';
 
 // import individual cpu data scraper 
 import techpowerupCPU_data from './lib/DB_utilities/cpuDataHandlers/cpu_techpowerupDataHandler.js'
@@ -133,10 +134,18 @@ async function main() {
         // ADD server monkey server scraper command
         serverScraper.command('smServerCollection_data').description('Scraping Server Monkey Server Collection')
         .action(async ()=> {
-            console.log('[SCRAPING] Server Monkey Server Collection');
+            console.log("[SCRAPING] Server Monkey Server's from Collection and individual pages");
             await smCollectionServer();
             console.log('[SCRAPING COMPLETE]');
         });
+
+        serverScraper.command('xbyteServerCollection_data').description("Scraping xByte's Server Collection").
+        action(async () => {
+            console.log('[SCRAPING] xByte Servers from Server collection and Individual pages');
+            await xByteCollectionServer();
+            console.log('[SCRAPING] COMPLETE');
+
+        })
 
         await scraper.parseAsync(process.argv);    
 
