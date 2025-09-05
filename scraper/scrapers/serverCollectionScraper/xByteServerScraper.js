@@ -1,5 +1,6 @@
 import PuppeteerExtra from "puppeteer-extra";
 import PuppeteerStealthPlugin from "puppeteer-extra-plugin-stealth";
+import xbyteAddServer from "../../lib/DB_utilities/serverDataHandler/server_xbyteDataHandler.js";
 
 PuppeteerExtra.use(PuppeteerStealthPlugin());
 
@@ -67,9 +68,14 @@ export async function xByteCollectionServer(){
 
     }catch(err){
         console.error(err);
+        process.exit(1);
     }
 
 
     await browser.close();
+
+    await xbyteAddServer(scrapedServers);
+
+    console.log('[PROCESS] xByte Servers Scraped and Saved to DB Accordingly');
 
 }
