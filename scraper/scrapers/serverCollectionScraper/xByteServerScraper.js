@@ -31,8 +31,6 @@ export async function xByteCollectionServer(){
             xBytePageCollection.push(`https://www.xbyte.com/products?class=Servers&class_id=84&p=${i}&product_layout=product-list#results`);
         }
 
-        console.log(xBytePageCollection);
-
         // Scraping each server from list from collection of pages above scraped
 
         for(let i =0; i < xBytePageCollection.length; i++){
@@ -63,7 +61,7 @@ export async function xByteCollectionServer(){
 
         }
 
-        console.log(scrapedServers);
+        // console.log(scrapedServers);
 
 
     }catch(err){
