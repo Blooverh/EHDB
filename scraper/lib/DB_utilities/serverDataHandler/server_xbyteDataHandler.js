@@ -90,20 +90,76 @@ export default async function xbyteAddServer(dataArr){
         }
 
         let {brand, model} = extractTitle(server.server);
-        // let chassis = extractChassis(server.chassis);
+        let chassis = extractChassis(server.chassis);
 
         console.log(`Brand: ${brand} Model ${model}`);
         // console.log(chassis);
 
-        // try{
+        try{
 
-        //     const serverDB = await Server.findOne({brand: brand, model: model});
+            let serverDB = await Server.findOne({brand: brand, model: model});
+
+            if(serverDB){
+                console.log(`[INFO] ${brand} ${model} Exists in Database`);
+
+                // check for each server if chassis entry exists in DB
+                for(let i =0; i < chassis.length; i++){
+                    let chassisToUpdate = serverDB.chassisInfo.find(info =>
+                        info.website === 'xByte' && info.chassis === chassis[i]
+                    );
+
+                    // Check price of chassis entry, if scraped price different from curr price on DB update pricing
+                    if(chassisToUpdate){
+                        if(chassisToUpdate.currPrice !== server.prices[i]){
+                            chassisToUpdate.oldPrice = chassisToUpdate.currPrice;
+                            chassisToUpdate.currPrice = server.prices[i];
+                            console.log(`[PRICE UPDATED] Server ${serverDB.brand} ${serverDB.model}, chassis ${chassisToUpdate.chassis}, new price: ${chassisToUpdate.currPrice}`);
+                        }else{
+                            console.log(`[NO PRICE UPDATE] xByte's ${brand} ${model} ${chassis[i]} has no price update`);
+                        }
+                    }else{
+                        serverDB.chassisInfo.push({website: 'xByte', currPrice: server.prices[i], oldPrice: server.prices[i], chassis: chassis[i], websiteLink: server.websiteLink});
+
+                        console.log(`[NEW CHASSIS ENTRY] Server ${serverDB.brand} ${serverDB.model}, chassis ${chassis[i]} | Price: ${server.prices[i]}`);
+                    }
+
+                    await serverDB.save();
+                }
+
+            }else{ // Add server if not in DB 
+                console.log(`[INFO] ${brand} ${model} needs to added to Database`);
+
+                const newSlug = slugify(model, {
+                    replacement: '-',
+                    lower: true,
+                    strict: true
+                });
+
+                // for this case we only add the first chassis and respective price
+                // when we run the script again, the other chassis will be added as new entries 
+                // rather then everything added at once.
+                serverDB = new Server({
+                    brand: brand, 
+                    model: model,
+                    chassisInfo: [{
+                        website: 'xByte',
+                        currPrice: server.prices[0],
+                        oldPrice: server.prices[0],
+                        websiteLink: server.websiteLink,
+                        chassis: chassis[0]
+                    }],
+                    slug: newSlug
+                });
+
+                await serverDB.save();
+
+                console.log(`[NEW SERVER ADDED] ${brand} ${model} with chassis`);
+            }
 
 
-
-        // }catch(error){
-        //     console.error(`[ERROR] Could Not Save ${brand} ${model} in Database`);
-        // }
+        }catch(error){
+            console.error(`[ERROR] Could Not Save ${brand} ${model} in Database - ${error.message}`);
+        }
 
     }
 
@@ -121,6 +177,17 @@ function extractTitle(title){
 
 }
 
-function extractChassis(title){
+function extractChassis(chassis){
+    // will contain all chassis in correct format 
+        let finalChassis = [];
 
+        for(const ch of chassis){
+
+            let chassis = ch.split(' ').slice(3).join(' ');
+
+            finalChassis.push(chassis);
+
+        }
+
+        return finalChassis;
 }
