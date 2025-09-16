@@ -30,6 +30,7 @@ import SearchBar from './SearchBar.vue';
                         <a class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Servers</a>
 
                         <ul class="dropdown-menu">
+                            <li><RouterLink to="/servers">All Servers</RouterLink></li>
                             <li><RouterLink to="/dell">Dell</RouterLink></li>
                             <li><RouterLink to="/hpe">HPE</RouterLink></li>
                             <li><RouterLink to="/supermicro">Supermicro</RouterLink></li>

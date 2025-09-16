@@ -6,18 +6,53 @@ export const serverRouter = express.Router();
 
 // get all servers api
 serverRouter.get('/servers', async (req, res) => {
+    // try{
+    //     const servers= await Server.find({}).lean();
+
+    //     if(servers.length < 1){
+    //         return res.status(404).json({message: 'No Servers Fetched from Database'});
+    //     }
+
+    //     res.json(servers);
+    // }catch(error){
+    //     console.error(error);
+    //     res.status(500).json({message: 'Internal Server Error'});
+    // }
+
+    // array of fields for filtering 
+    const filterableFields = ['brand', 'model', 'socketInfo', 'compatibleCpuGen', 'memorySpecs.memory_type', 'memorySpecs.speeds', 'ssdInterfaces'];
+
+    // destructure query parameters with default values for pagination
+    const { page = 1, limit = 20} = req.query;
+
     try{
-        const servers= await Server.find({}).lean();
+        const filter = {};
 
-        if(servers.length < 1){
-            return res.status(404).json({message: 'No Servers Fetched from Database'});
-        }
+        filterableFields.forEach(field => {
+            if(req.query[field]){
+                // case insensitive regext for flexible searching
+                filter[field] = {$regex: req.query[field], $options: 'i'};
+            }
+        });
 
-        res.json(servers);
+        // total number of servers (server documents) that match the filter
+        const totalDocs = await Server.countDocuments(filter);
+
+        const totalPages = Math.ceil(totalDocs / limit);
+
+        // fetch servers for current page 
+        const servers = await Server.find(filter)
+        .limit(parseInt(limit))
+        .skip((page - 1) * limit)
+        .exec();
+
+        // send response 
+        res.json({servers, totalPages, currentPage: parseInt(page), totalDocs});
+
     }catch(error){
-        console.error(error);
-        res.status(500).json({message: 'Internal Server Error'});
+        res.status(500).json({message: error.message});
     }
+
 });
 
 // router for brand collection

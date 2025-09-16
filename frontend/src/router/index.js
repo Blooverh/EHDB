@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // Importing Views
 import NotFound from '@/views/NotFound.vue'
 import Homepage from '@/views/Homepage.vue'
+import ServerCollection from '@/views/ServerCollection.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +13,12 @@ const router = createRouter({
       name: 'Home Page',
       component: Homepage,
       meta: { title: 'EHDB Home Page'}
+    },
+    {
+      path: '/servers',
+      name: 'Server Collection',
+      component: ServerCollection,
+      meta: {title: 'Server Collection'}
     },
     {
       path: '/:pathMatch(.*)*', name: 'Not Found', component: NotFound,
