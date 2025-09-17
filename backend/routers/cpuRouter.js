@@ -6,14 +6,44 @@ export const cpuRouter = express.Router();
 
 // Get all CPUs
 cpuRouter.get('/cpus', async (req, res) => {
+    const filterableItems = ['brand', 'codename', 'generation', 'memorySupport', 'ratedSpeeds','socket', 'coreNum', 'threadNum', 'cache.cacheL3' ];
+    
+    const numericFields = ['coreNum', 'threadNum', 'ratedSpeeds'];
+
+    // query parameters with default values
+    const {page = 1, limit = 20} = req.query;
+
     try {
-        const cpus = await CPU.find({}).lean();
+
+        const filter = {};
+
+        filterableItems.forEach(field => {
+            if(req.query[field]){
+                if(numericFields.includes(field)){
+                    const numValue = parseInt(req.query[field]);
+                    if(!isNaN(numValue)){
+                        filter[field] = numValue;
+                    }
+                }else{
+                    filter[field] = {$regex: req.query[field], $options: 'i'};
+                }
+                
+            }
+        })
+
+        const totalCPUs = await CPU.countDocuments(filter);
+        const totalPages = Math.ceil(totalCPUs/limit); // divide total cpus for 20 cpus per page depending on filter
+
+        const cpus = await CPU.find(filter)
+        .limit(parseInt(limit))
+        .skip((page-1) * limit)
+        .exec();
 
         if(cpus.length < 1 ){
             return res.status(404).json({message: 'No CPUs found'});
         }
 
-        res.json(cpus);
+        res.json({cpus, totalCPUs, totalPages, currentPage: parseInt(page)});
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Internal Server Error' });

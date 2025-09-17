@@ -16,7 +16,7 @@ const totalDocuments = ref(0);
 const filters = ref({
   brand: '',
   model: '',
-  // need to add more filters when server is populated
+  // need to add more filters when server is populated like pricing
 });
 const loading = ref(true);
 const error = ref(null);

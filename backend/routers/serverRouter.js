@@ -6,18 +6,6 @@ export const serverRouter = express.Router();
 
 // get all servers api
 serverRouter.get('/servers', async (req, res) => {
-    // try{
-    //     const servers= await Server.find({}).lean();
-
-    //     if(servers.length < 1){
-    //         return res.status(404).json({message: 'No Servers Fetched from Database'});
-    //     }
-
-    //     res.json(servers);
-    // }catch(error){
-    //     console.error(error);
-    //     res.status(500).json({message: 'Internal Server Error'});
-    // }
 
     // array of fields for filtering 
     const filterableFields = ['brand', 'model', 'socketInfo', 'compatibleCpuGen', 'memorySpecs.memory_type', 'memorySpecs.speeds', 'ssdInterfaces'];
