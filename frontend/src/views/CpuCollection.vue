@@ -1,5 +1,6 @@
 <script setup>
 import '../assets/css/hardwareCollection.css';
+import CpuFilterBox from '@/components/CpuFilterBox.vue';
 import { ref, reactive, watch } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
@@ -98,10 +99,7 @@ watch(() => route.query, async (newQuery) => {
          <h1>cpu Collection</h1>
          <p>Browse our catalog of enterprise cpus.</p>
     
-         <!-- Filter Controls -->
-         <div class="filter-controls">
-           <input type="text" v-model.lazy="filters.brand" placeholder="Filter by Brand..." class="filter-input" />
-         </div>
+         <CpuFilterBox />
     
          <!-- Loading and Error State -->
          <div v-if="loading" class="loading-message">Loading cpus...</div>

@@ -50,6 +50,27 @@ cpuRouter.get('/cpus', async (req, res) => {
     }
 });
 
+// route that sends all cpu properties used for filtering
+cpuRouter.get('/cpus/filter-options', async (req, res) => {
+    try{
+        const brands = await CPU.distinct("brand");
+        const codename = await CPU.distinct("codename");
+        const generation = await CPU.distinct("generation");
+        const memorySupport = await CPU.distinct("memorySupport");
+        const ratedSpeeds = await CPU.distinct("ratedSpeeds");
+        const socket = await CPU.distinct("socket");
+        const coreNum = await CPU.distinct("coreNum");
+        const threadNum = await CPU.distinct("threadNum");
+        const cache = await CPU.distinct("cache.cacheL3");
+
+        res.json({brands, codename, generation, memorySupport, ratedSpeeds, socket, coreNum, threadNum, cache});
+    }catch(err){
+        res.status(500).json({message: 'Internal Server Error'});
+    }
+
+
+});
+
 // collection of cpus by brand 
 cpuRouter.get('/cpus/:brand', async (req, res) => {
 
@@ -93,5 +114,7 @@ cpuRouter.get('/cpus/:brand/:slug', async (req, res) => {
         console.error('[ERROR]: ' + err);
         res.status(500).json({ message: 'Internal Server Error'});
     }
-})
+});
+
+
 
