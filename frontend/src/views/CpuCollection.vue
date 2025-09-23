@@ -1,7 +1,7 @@
 <script setup>
 import '../assets/css/hardwareCollection.css';
 import CpuFilterBox from '@/components/CpuFilterBox.vue';
-import { ref, reactive, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -9,19 +9,8 @@ const router = useRouter();
 const route = useRoute();
 
 // --- STATE ---
-// Initialize state from the URL query to support deep-linking and browser history.
-const currentPage = ref(parseInt(route.query.page) || 1);
-const filters = reactive({
-    brand: route.query.brand || '',
-    codename: route.query.codename || '',
-    generation: route.query.generation || '',
-    memorySupport: route.query.memorySupport || '',
-    ratedSpeeds: route.query.ratedSpeeds ? parseInt(route.query.ratedSpeeds) : null,
-    socket: route.query.socket || '',
-    coreNum: route.query.coreNum ? parseInt(route.query.coreNum) : null,
-    threadNum: route.query.threadNum ? parseInt(route.query.threadNum) : null,
-    'cache.cacheL3': route.query['cache.cacheL3'] ? parseInt(route.query['cache.cacheL3']) : null,
-});
+// The current page is now a computed property derived from the URL.
+const currentPage = computed(() => parseInt(route.query.page) || 1);
 
 // --- DATA ---
 // Refs to hold data returned from the server.
@@ -32,49 +21,31 @@ const loading = ref(true);
 const error = ref(null);
 
 // --- ACTIONS ---
-// Function to push the component's current state to the URL.
-const updateUrl = () => {
-    const query = {};
-    if (currentPage.value > 1) {
-        query.page = currentPage.value;
+// Pagination actions now directly trigger a route change.
+const goToPage = (page) => {
+    const query = { ...route.query, page }; // query retains query parans and page number
+    // if page number is less than 1 page query paramater is deleted
+    if (page <= 1) {
+        delete query.page;
     }
-    for (const key in filters) {
-        const value = filters[key];
-        if (value !== null && value !== '') {
-            query[key] = value;
-        }
-    }
-    router.push({ query });
+    router.push({ query }); // pass query to router
 };
 
-// Pagination actions simply update the reactive state; watchers handle the side effects.
+// functions that increases and decreases pages and triggers function to change router url
 const nextPage = () => {
     if (currentPage.value < totalPages.value) {
-        currentPage.value++;
+        goToPage(currentPage.value + 1);
     }
 };
 const prevPage = () => {
     if (currentPage.value > 1) {
-        currentPage.value--;
+        goToPage(currentPage.value - 1);
     }
 };
 
 // --- WATCHERS (SIDE EFFECTS) ---
 
-// 1. When user input changes the local state (filters or page), update the URL.
-watch(filters, () => {
-    // When a filter changes, always reset to page 1.
-    if (currentPage.value !== 1) {
-        currentPage.value = 1;
-    } else {
-        // If already on page 1, the page watcher won't fire, so trigger update manually.
-        updateUrl();
-    }
-}, { deep: true });
-
-watch(currentPage, updateUrl);
-
-// 2. When the URL changes, fetch new data. This is the single source of truth for API calls.
+// When the URL changes, fetch new data. This is the single source of truth for API calls.
 watch(() => route.query, async (newQuery) => {
     loading.value = true;
     error.value = null;

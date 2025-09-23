@@ -8,8 +8,8 @@
 
     onMounted(async () => {
         try{
-            const serverRes = await axios.get('/api/servers');
-            const cpuRes = await axios.get('/api/cpus');
+            const serverRes = await axios.get('/api/servers-length');
+            const cpuRes = await axios.get('/api/cpus-length');
             servers.value = serverRes.data;
             cpus.value = cpuRes.data;
 

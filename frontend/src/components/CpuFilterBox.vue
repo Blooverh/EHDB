@@ -19,14 +19,14 @@ const filters = ref({
 });
 
 const selectedFilters = ref({
-    brand: route.query.brand || '',
+    brand: [].concat(route.query.brand || []),
     codename: route.query.codename || '' ,
     generation: route.query.generation || '',
     memorySupport: route.query.memorySupport,
     ratedSpeeds: route.query.ratedSpeeds ? parseInt(route.query.ratedSpeeds): null,
     socket: route.query.socket,
-    coreNum: route.query.coreNums ? parseInt(route.query.coreNums) : null,
-    threadNum: route.query.threadNums ? parseInt(route.query.threadNums) : null,
+    coreNum: route.query.coreNum ? parseInt(route.query.coreNum) : null,
+    threadNum: route.query.threadNum ? parseInt(route.query.threadNum) : null,
     cache: route.query.cache ? parseInt(route.query.cache) : null
 });
 
@@ -36,7 +36,25 @@ onMounted( async () => {
 });
 
 function updateFilters() {
-    router.push({query: {...selectedFilters.value }});
+    const query = { ...route.query };
+
+    // Iterate over all filters managed by this component and update the query object.
+    for (const key in selectedFilters.value) {
+        const value = selectedFilters.value[key];
+        // If the filter has a value, add it to the query.
+        if (value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {
+            query[key] = value;
+        } else {
+            // Otherwise, remove it from the query.
+            delete query[key];
+        }
+    }
+
+    // A filter change should always reset the user to the first page of results.
+    delete query.page;
+
+    // Push the updated query to the router.
+    router.push({ query });
 }
 
 </script>
@@ -46,11 +64,11 @@ function updateFilters() {
     <h3 class="font-bold mb-2">Filters</h3>
 
     <div class="mb-4">
-      <label>Brand:</label>
-      <select v-model="selectedFilters.brand" @change="updateFilters">
-        <option value="">All</option>
-        <option v-for="b in filters.brands" :key="b" :value="b">{{ b }}</option>
-      </select>
+      <label class="font-bold mb-2 block">Brand</label>
+      <div class="input-option" v-for="brand in filters.brands" :key="brand">
+        <input type="checkbox" :id="brand" :value="brand" v-model="selectedFilters.brand" @change="updateFilters">
+        <label :for="brand" class="ml-2">{{ brand }}</label>
+      </div>
     </div>
 
     <div class="mb-4">

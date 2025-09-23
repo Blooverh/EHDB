@@ -43,6 +43,22 @@ serverRouter.get('/servers', async (req, res) => {
 
 });
 
+serverRouter.get('/servers-length', async (req, res) => {
+
+    try{
+        const servers = await Server.find({});
+
+        if(!servers){
+            return res.status(404).json({message: 'Servers not found'});
+        }
+
+        res.json(servers);
+    }catch(err){
+        res.status(500).json({message: 'Internal Server Error'});
+    }
+
+});
+
 // router for brand collection
 serverRouter.get('/servers/:brand', async (req, res) => {
     const brandParam = req.params.brand;

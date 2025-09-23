@@ -50,6 +50,22 @@ cpuRouter.get('/cpus', async (req, res) => {
     }
 });
 
+cpuRouter.get('/cpus-length', async (req, res) => {
+
+    try{
+        const cpus = await CPU.find({});
+
+        if(!cpus){
+            return res.status(400).json({message: 'Could not fetch CPUs'});
+        }
+
+        res.json(cpus);
+    }catch(err){
+        res.status(500).json({message: 'Internal Server Error'});
+    }
+
+})
+
 // route that sends all cpu properties used for filtering
 cpuRouter.get('/cpus/filter-options', async (req, res) => {
     try{
