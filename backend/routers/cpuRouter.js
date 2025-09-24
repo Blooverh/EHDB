@@ -5,6 +5,10 @@ import { CPU } from '../models/cpu.js';
 export const cpuRouter = express.Router();
 
 // Get all CPUs
+/*
+TODO: NEED TO FIX WHERE PARAMS CAN BE FROM AN ARRAY OF VALUES OF THE SAME PROPERTY 
+SO WE CAN HAVE QUERY PARAMS SUCH AS `/api/cpus?brand=intel&brand=amd&page=2
+*/
 cpuRouter.get('/cpus', async (req, res) => {
     const filterableItems = ['brand', 'codename', 'generation', 'memorySupport', 'ratedSpeeds','socket', 'coreNum', 'threadNum', 'cache.cacheL3' ];
     

@@ -23,7 +23,7 @@ const error = ref(null);
 // --- ACTIONS ---
 // Pagination actions now directly trigger a route change.
 const goToPage = (page) => {
-    const query = { ...route.query, page }; // query retains query parans and page number
+    const query = { ...route.query, page }; // query retains query params and page number
     // if page number is less than 1 page query paramater is deleted
     if (page <= 1) {
         delete query.page;
@@ -46,6 +46,21 @@ const prevPage = () => {
 // --- WATCHERS (SIDE EFFECTS) ---
 
 // When the URL changes, fetch new data. This is the single source of truth for API calls.
+/* 
+  First argument is a getter function returning the current route query. 
+  The second argument is the callback, which receives the new query whenever it changes. 
+  Since `route` is reactive (provided by vue-router), we can watch it to react to changes 
+  caused by user interactions (e.g. checking a filter checkbox updates the URL). 
+
+  We use `{ deep: true }` so the watcher also reacts to changes inside the query object, 
+  not just when the entire query reference is replaced. 
+
+  By default, watchers are lazy (they only run when the source changes), so we add 
+  `immediate: true` to also run the callback once right after the watcher is created.
+
+  We don’t use onMounted() here because we rely on a watch() with the { immediate: true } option. This watcher automatically tracks reactive dependencies, such as the route queries, and runs the callback whenever they change. This ensures that CPUs are fetched not only initially, but also every time the URL changes due to addition, removal, or modification of query parameters.
+
+*/
 watch(() => route.query, async (newQuery) => {
     loading.value = true;
     error.value = null;
