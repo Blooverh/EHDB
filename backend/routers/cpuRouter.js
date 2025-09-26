@@ -22,22 +22,50 @@ cpuRouter.get('/cpus', async (req, res) => {
         const filter = {};
 
         filterableItems.forEach(field => {
-            if(req.query[field]){
-                if(numericFields.includes(field)){
-                    const numValue = parseInt(req.query[field]);
-                    if(!isNaN(numValue)){
-                        filter[field] = numValue;
-                    }
-                }else{
-                    filter[field] = {$regex: req.query[field], $options: 'i'};
+            const queryParam = req.query[field];
+            if (!queryParam) return; // Skip if the parameter doesn't exist
+
+            if (numericFields.includes(field)) {
+                // Coerce to array and parse numbers
+                const values = Array.isArray(queryParam) ? queryParam : String(queryParam).split(',');
+                const numericValues = values.map(val => parseInt(val, 10)).filter(num => !isNaN(num));
+
+                if (numericValues.length > 1) {
+                    filter[field] = { $in: numericValues }; // if query parameter for a numeric filter field, use $in operator to query DB for all the matching cases of values in 'numericValues'
+                } else if (numericValues.length === 1) {
+                    filter[field] = numericValues[0];
                 }
-                
+                // If no valid numbers, do nothing.
+            } else {
+                // Coerce comma-separated strings and arrays into a consistent array format
+                const values = Array.isArray(queryParam) ? queryParam : String(queryParam).split(',');
+
+                if (values.length > 1) {
+                    // Multiple values: use $in
+                    if (field === 'brand' || field === 'generation') {
+                        // Use simple string matching for 'brand' since it's guaranteed lowercase
+                        filter[field] = { $in: values };
+                    } else {
+                        // Use case-insensitive regex for other multi-value string fields
+                        const regexArray = values.map(val => new RegExp(`^${val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i'));
+                        filter[field] = { $in: regexArray };
+                    }
+                } else if (values.length === 1 && values[0]) {
+                    // Single value: use $regex for case-insensitivity
+                    const escapedValue = values[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    filter[field] = { $regex: `^${escapedValue}$`, $options: 'i' };
+                }
+                // If values is empty array after split (e.g. from an empty query param), do nothing.
             }
-        })
+        });
 
         const totalCPUs = await CPU.countDocuments(filter);
         const totalPages = Math.ceil(totalCPUs/limit); // divide total cpus for 20 cpus per page depending on filter
 
+        /*
+            Since some filters contain special characters when usign find based on filters 
+            mongodb regex engine will handle the search based on the above regex value creation 
+        */
         const cpus = await CPU.find(filter)
         .limit(parseInt(limit))
         .skip((page-1) * limit)

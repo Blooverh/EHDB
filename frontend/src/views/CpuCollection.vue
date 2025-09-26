@@ -71,8 +71,13 @@ watch(() => route.query, async (newQuery) => {
         totalPages.value = response.data.totalPages;
         totalCpus.value = response.data.totalCpus;
     } catch (err) {
+      // Add different error messages depending on status code given by backend
+      if(err.response.status === 404){
+        error.value = 'No CPUs Match Your Selection';
+      }else {
         error.value = 'Failed to fetch CPUs. Please try again later.';
-        console.error(err);
+      }
+      console.error(err.response);
     } finally {
         loading.value = false;
     }
@@ -89,7 +94,7 @@ watch(() => route.query, async (newQuery) => {
     
          <!-- Loading and Error State -->
          <div v-if="loading" class="loading-message">Loading cpus...</div>
-         <div v-if="error" class="error-message">{{ error }}</div>
+         <div v-if="error" class="error-message">{{ error }} <RouterLink to='/cpus'>Reset Filter</RouterLink></div>
     
          <!-- cpu Grid and No Results -->
          <div v-if="!loading && !error">

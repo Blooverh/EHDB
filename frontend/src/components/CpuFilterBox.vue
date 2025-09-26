@@ -21,7 +21,7 @@ const filters = ref({
 const selectedFilters = ref({
     brand: [].concat(route.query.brand || []),
     codename: route.query.codename || '' ,
-    generation: route.query.generation || '',
+    generation: [].concat(route.query.generation || []),
     memorySupport: route.query.memorySupport,
     ratedSpeeds: route.query.ratedSpeeds ? parseInt(route.query.ratedSpeeds): null,
     socket: route.query.socket,
@@ -40,14 +40,14 @@ function updateFilters() {
 
     // Iterate over all filters managed by this component and update the query object.
     for (const key in selectedFilters.value) {
-        const value = selectedFilters.value[key];
-        // If the filter has a value, add it to the query.
-        if (value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {
-            query[key] = value;
-        } else {
-            // Otherwise, remove it from the query.
-            delete query[key];
-        }
+      const value = selectedFilters.value[key];
+      // If the filter has a value, add it to the query.
+      if (value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {
+          query[key] = value;
+      } else {
+          // Otherwise, remove it from the query.
+          delete query[key];
+      }
     }
 
     // A filter change should always reset the user to the first page of results.
@@ -72,11 +72,11 @@ function updateFilters() {
     </div>
 
     <div class="mb-4">
-      <label>Generation:</label>
-      <select v-model="selectedFilters.generation" @change="updateFilters">
-        <option value="">All</option>
-        <option v-for="g in filters.generation" :key="g" :value="g">{{ g }}</option>
-      </select>
+      <label class="font-bold mb-2 block">Generation</label>
+      <div class="input-option" v-for="generation in filters.generation" :key="generation">
+        <input type="checkbox" :id="generation" :value="generation" v-model="selectedFilters.generation" @change="updateFilters">
+        <label :for="generation" class="ml-2">{{ generation }}</label>
+      </div>
     </div>
 
     <div>
