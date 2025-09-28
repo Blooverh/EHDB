@@ -138,5 +138,5 @@ watch(() => route.query, (newQuery) => {
           <span>Page {{ currentPage }} of {{ totalPages }}</span>
           <button @click="nextPage" :disabled="currentPage >= totalPages">Next</button>
         </div>
-      </div>
+    </div>
 </template>

@@ -86,36 +86,40 @@ watch(() => route.query, async (newQuery) => {
 </script>
 
 <template>
+
+  <div class="cpu-collection">
+    <CpuFilterBox/>
     <div class="collection-container">
-         <h1>cpu Collection</h1>
-         <p>Browse our catalog of enterprise cpus.</p>
-    
-         <CpuFilterBox />
-    
-         <!-- Loading and Error State -->
-         <div v-if="loading" class="loading-message">Loading cpus...</div>
-         <div v-if="error" class="error-message">{{ error }} <RouterLink to='/cpus'>Reset Filter</RouterLink></div>
-    
-         <!-- cpu Grid and No Results -->
-         <div v-if="!loading && !error">
-           <div v-if="cpus.length > 0" class="cpu-grid">
-             <!-- cpu Card -->
-             <div v-for="cpu in cpus" :key="cpu._id" class="cpu-card">
-              <h3 class="cpu-brand">{{ cpu.brand }}</h3>
-              <p class="cpu-model">{{ cpu.model }}</p>
-              <!-- You can add more cpu details here -->
-            </div>
+        <h1>cpu Collection</h1>
+        <p>Browse our catalog of enterprise cpus.</p>
+
+        <!-- Loading and Error State -->
+        <div v-if="loading" class="loading-message">Loading cpus...</div>
+        <div v-if="error" class="error-message">{{ error }} <RouterLink to='/cpus'>Reset Filter</RouterLink></div>
+
+        <!-- cpu Grid and No Results -->
+        <div v-if="!loading && !error">
+          <div v-if="cpus.length > 0" class="cpu-grid">
+            <!-- cpu Card -->
+            <div v-for="cpu in cpus" :key="cpu._id" class="cpu-card">
+            <h3 class="cpu-brand">{{ cpu.brand }}</h3>
+            <p class="cpu-model">{{ cpu.model }}</p>
+            <!-- You can add more cpu details here -->
+          </div>
           </div>
           <div v-else class="no-results">
             <p>No cpus found matching your criteria.</p>
           </div>
         </div>
-   
-        <!-- Pagination Controls -->
-        <div v-if="!loading && totalPages > 1" class="pagination-controls">
-          <button @click="prevPage" :disabled="currentPage <= 1">Previous</button>
-          <span>Page {{ currentPage }} of {{ totalPages }}</span>
-          <button @click="nextPage" :disabled="currentPage >= totalPages">Next</button>
-        </div>
+
+      <!-- Pagination Controls -->
+      <div v-if="!loading && totalPages > 1" class="pagination-controls">
+        <button @click="prevPage" :disabled="currentPage <= 1">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="currentPage >= totalPages">Next</button>
       </div>
+    </div>
+  </div>
 </template>
+
+

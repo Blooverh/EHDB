@@ -1,7 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, Transition } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+
+// State for toggling the brand filter visibility
+const isBrandFilterVisible = ref(true);
+const isGenFilterVisible = ref(true);
+const isCoreFilterVisible = ref(true);
 
 const route = useRoute();
 const router = useRouter()
@@ -18,21 +23,24 @@ const filters = ref({
     cache: []
 });
 
+
+// we use empty array and we concatenate the values of the queries related to that query property, so we can update filters
 const selectedFilters = ref({
     brand: [].concat(route.query.brand || []),
-    codename: route.query.codename || '' ,
+    codename: [].concat(route.query.codename || []),
     generation: [].concat(route.query.generation || []),
-    memorySupport: route.query.memorySupport,
-    ratedSpeeds: route.query.ratedSpeeds ? parseInt(route.query.ratedSpeeds): null,
-    socket: route.query.socket,
-    coreNum: route.query.coreNum ? parseInt(route.query.coreNum) : null,
-    threadNum: route.query.threadNum ? parseInt(route.query.threadNum) : null,
-    cache: route.query.cache ? parseInt(route.query.cache) : null
+    memorySupport: [].concat(route.query.memorySupport || []),
+    ratedSpeeds: [].concat(parseInt(route.query.ratedSpeeds || [])),
+    socket: [].concat(route.query.socket || []),
+    coreNum: [].concat(parseInt(route.query.coreNum) || []),
+    threadNum: [].concat(parseInt(route.query.threadNum) || []),
+    cache: [].concat(parseInt(route.query.cache) || [])
 });
 
 onMounted( async () => {
-    const { data } = await axios.get('/api/cpus/filter-options');
-    filters.value = data;
+  const { data } = await axios.get('/api/cpus/filter-options');
+  filters.value = data;
+
 });
 
 function updateFilters() {
@@ -60,31 +68,64 @@ function updateFilters() {
 </script>
 
 <template>
-<div class="filter-box p-4 border rounded">
-    <h3 class="font-bold mb-2">Filters</h3>
+  <div class="filter">
+    <div class="filter-box">
+      <h3 class="fw-bold mb-2">Filters</h3>
 
-    <div class="mb-4">
-      <label class="font-bold mb-2 block">Brand</label>
-      <div class="input-option" v-for="brand in filters.brands" :key="brand">
-        <input type="checkbox" :id="brand" :value="brand" v-model="selectedFilters.brand" @change="updateFilters">
-        <label :for="brand" class="ml-2">{{ brand }}</label>
+      <div class="mb-4 brand-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">Brand</p>
+          <button type="button" class="toggle-btn" @click="isBrandFilterVisible = !isBrandFilterVisible">
+            {{ isBrandFilterVisible ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+
+        <Transition name="slide-fade">
+          <div v-if="isBrandFilterVisible" class="option-box">
+            <div class="input-option" v-for="brand in filters.brands" :key="brand">
+              <input type="checkbox" :id="brand" :value="brand" v-model="selectedFilters.brand" @change="updateFilters">
+              <label :for="brand" class="ml-2">{{ brand }}</label>
+            </div>
+          </div>
+        </Transition>
       </div>
-    </div>
 
-    <div class="mb-4">
-      <label class="font-bold mb-2 block">Generation</label>
-      <div class="input-option" v-for="generation in filters.generation" :key="generation">
-        <input type="checkbox" :id="generation" :value="generation" v-model="selectedFilters.generation" @change="updateFilters">
-        <label :for="generation" class="ml-2">{{ generation }}</label>
+      <div class="mb-4 generation-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">Generation</p>
+          <button type="button" class="toggle-btn" @click="isGenFilterVisible = !isGenFilterVisible">
+            {{ isGenFilterVisible ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+
+        <Transition name="slide-fade">
+          <div class="option-box" v-if="isGenFilterVisible">
+            <div class="input-option" v-for="generation in filters.generation" :key="generation">
+              <input type="checkbox" name="generation" :id="generation" :value="generation" v-model="selectedFilters.generation" @change="updateFilters">
+              <label :for="generation" class="ml-2">{{ generation }}</label>
+            </div>
+          </div>
+        </Transition>
       </div>
-    </div>
 
-    <div>
-      <label>Cores:</label>
-      <select v-model="selectedFilters.coreNum" @change="updateFilters">
-        <option value="">All</option>
-        <option v-for="c in filters.coreNum" :key="c" :value="c">{{ c }}</option>
-      </select>
+      <div class="mb-4 core-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">CPU Cores</p>
+          <button type="button" class="toggle-btn" @click="isCoreFilterVisible = !isCoreFilterVisible">
+            {{ isCoreFilterVisible ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+
+        <Transition name="slide-fade">
+          <div class="option-box" v-if="isCoreFilterVisible">
+            <div class="input-option" v-for="coreNum in filters.coreNum" :key="coreNum">
+              <input type="checkbox" name="cores" :id="coreNum" :value="coreNum" v-model="selectedFilters.coreNum" @change="updateFilters">
+              <label :for="coreNum" class="ml-2">{{ coreNum }}</label>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
     </div>
   </div>
 </template>
