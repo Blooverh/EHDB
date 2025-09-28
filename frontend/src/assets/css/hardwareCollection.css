@@ -13,6 +13,25 @@
     overflow-y: scroll;
     top: 20px;
 }
+
+.filter-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.reset{
+    background-color: #1AC6FF;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    padding: 5px;
+}
+
+.reset:hover {
+    background-color: #1ac6ffb6;
+}
+
 .filter-header{
     display: flex;
     flex-direction: row;

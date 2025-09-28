@@ -12,29 +12,29 @@ const route = useRoute();
 const router = useRouter()
 
 const filters = ref({
-    brands: [],
-    codenames: [],
-    generation: [],
-    memorySupports: [],
-    ratedSpeeds: [],
-    socket: [],
-    coreNum: [],
-    threadNum: [],
-    cache: []
+  brands: [],
+  codenames: [],
+  generation: [],
+  memorySupports: [],
+  ratedSpeeds: [],
+  socket: [],
+  coreNum: [],
+  threadNum: [],
+  cache: []
 });
 
 
 // we use empty array and we concatenate the values of the queries related to that query property, so we can update filters
 const selectedFilters = ref({
-    brand: [].concat(route.query.brand || []),
-    codename: [].concat(route.query.codename || []),
-    generation: [].concat(route.query.generation || []),
-    memorySupport: [].concat(route.query.memorySupport || []),
-    ratedSpeeds: [].concat(parseInt(route.query.ratedSpeeds || [])),
-    socket: [].concat(route.query.socket || []),
-    coreNum: [].concat(parseInt(route.query.coreNum) || []),
-    threadNum: [].concat(parseInt(route.query.threadNum) || []),
-    cache: [].concat(parseInt(route.query.cache) || [])
+  brand: [].concat(route.query.brand || []),
+  codename: [].concat(route.query.codename || []),
+  generation: [].concat(route.query.generation || []),
+  memorySupport: [].concat(route.query.memorySupport || []),
+  ratedSpeeds: [].concat(parseInt(route.query.ratedSpeeds || [])),
+  socket: [].concat(route.query.socket || []),
+  coreNum: [].concat(parseInt(route.query.coreNum) || []),
+  threadNum: [].concat(parseInt(route.query.threadNum) || []),
+  cache: [].concat(parseInt(route.query.cache) || [])
 });
 
 onMounted( async () => {
@@ -65,12 +65,29 @@ function updateFilters() {
     router.push({ query });
 }
 
+function resetFilter() {
+  selectedFilters.value.brand = [];
+  selectedFilters.value.codename = [];
+  selectedFilters.value.generation = [];
+  selectedFilters.value.memorySupport = [];
+  selectedFilters.value.ratedSpeeds = [];
+  selectedFilters.value.socket = [];
+  selectedFilters.value.coreNum = [];
+  selectedFilters.value.threadNum = [];
+  selectedFilters.value.cache = [];
+
+  updateFilters();
+}
+
 </script>
 
 <template>
   <div class="filter">
     <div class="filter-box">
-      <h3 class="fw-bold mb-2">Filters</h3>
+      <div class="filter-head mb-3">
+        <h3 class="fw-bold mb-2">Filters</h3>
+        <button type="button" class="reset" name="reset-filter" @click="resetFilter">Reset</button>
+      </div>
 
       <div class="mb-4 brand-box">
         <div class="filter-header">
