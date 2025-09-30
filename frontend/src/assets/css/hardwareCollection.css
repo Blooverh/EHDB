@@ -1,49 +1,55 @@
+/* CPU Collection View */
 .cpu-collection {
-    display: grid;
-    grid-template-columns: 500px 1fr;
-    margin: 30px 20px 20px 20px;
-    gap: 20px;
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  margin: 30px 20px 20px 20px;
+  gap: 20px;
+}
+
+.cpu-card {
+  border-color: #1AC6FF;
 }
 
 /* Filter component style */
 
 .filter-box {
-    height: min-content;
-    position: sticky;
-    overflow-y: scroll;
-    top: 20px;
+  height: 100vh;
+  position: sticky;
+  overflow-y: scroll;
+  top: 20px;
+  padding: 10px;
 }
 
 .filter-head{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .reset{
-    background-color: #1AC6FF;
-    font-weight: 700;
-    border-radius: 8px;
-    border: none;
-    padding: 5px;
+  background-color: #1AC6FF;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  padding: 5px;
 }
 
 .reset:hover {
-    background-color: #1ac6ffb6;
+  background-color: #1ac6ffb6;
 }
 
 .filter-header{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .brand-box, .generation-box, .core-box{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 8px;
-    border: solid 1px #1AC6FF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: solid 1px #1AC6FF;
 }
 
 .option-box {

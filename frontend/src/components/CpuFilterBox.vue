@@ -4,18 +4,24 @@ import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
 
 // State for toggling the brand filter visibility
-const isBrandFilterVisible = ref(true);
-const isGenFilterVisible = ref(true);
-const isCoreFilterVisible = ref(true);
+const isBrandFilterVisible = ref(false);
+const isGenFilterVisible = ref(false);
+const isCoreFilterVisible = ref(false);
+const isCodenameFilterVisible = ref(false);
+const isRatedSpeedsFilterVisible = ref(false);
+const isMemSupportFilterVisible = ref(false);
+const isSocketFilterAvailable = ref(false);
+const isThreadFilterAvailable = ref(false);
+const isCacheFilterAvailable = ref(false);
 
 const route = useRoute();
 const router = useRouter()
 
 const filters = ref({
   brands: [],
-  codenames: [],
+  codename: [],
   generation: [],
-  memorySupports: [],
+  memorySupport: [],
   ratedSpeeds: [],
   socket: [],
   coreNum: [],
@@ -30,11 +36,11 @@ const selectedFilters = ref({
   codename: [].concat(route.query.codename || []),
   generation: [].concat(route.query.generation || []),
   memorySupport: [].concat(route.query.memorySupport || []),
-  ratedSpeeds: [].concat(parseInt(route.query.ratedSpeeds || [])),
+  ratedSpeeds: [].concat(parseInt(route.query.ratedSpeeds) || []),
   socket: [].concat(route.query.socket || []),
   coreNum: [].concat(parseInt(route.query.coreNum) || []),
   threadNum: [].concat(parseInt(route.query.threadNum) || []),
-  cache: [].concat(parseInt(route.query.cache) || [])
+  cache: [].concat(route.query.cache || [])
 });
 
 onMounted( async () => {
@@ -49,12 +55,13 @@ function updateFilters() {
     // Iterate over all filters managed by this component and update the query object.
     for (const key in selectedFilters.value) {
       const value = selectedFilters.value[key];
+      const queryKey = key === 'cache' ? 'cache.cacheL3' : key;
       // If the filter has a value, add it to the query.
       if (value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {
-          query[key] = value;
+        query[queryKey] = value;
       } else {
-          // Otherwise, remove it from the query.
-          delete query[key];
+        // Otherwise, remove it from the query.
+        delete query[queryKey];
       }
     }
 
@@ -107,6 +114,24 @@ function resetFilter() {
         </Transition>
       </div>
 
+      <div class="mb-4 brand-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">Socket</p>
+          <button type="button" class="toggle-btn" @click="isSocketFilterAvailable = !isSocketFilterAvailable">
+            {{ isSocketFilterAvailable ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+
+        <Transition name="slide-fade">
+          <div v-if="isSocketFilterAvailable" class="option-box">
+            <div class="input-option" v-for="socket in filters.socket" :key="socket">
+              <input type="checkbox" :id="socket" :value="socket" v-model="selectedFilters.socket" @change="updateFilters">
+              <label :for="socket" class="ml-2">{{ socket }}</label>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
       <div class="mb-4 generation-box">
         <div class="filter-header">
           <p class="fw-bold filter-tl">Generation</p>
@@ -120,6 +145,36 @@ function resetFilter() {
             <div class="input-option" v-for="generation in filters.generation" :key="generation">
               <input type="checkbox" name="generation" :id="generation" :value="generation" v-model="selectedFilters.generation" @change="updateFilters">
               <label :for="generation" class="ml-2">{{ generation }}</label>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <div class="mb-4 core-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">Code Name</p>
+          <button type="button" class="toggle-btn" @click="isCodenameFilterVisible = !isCodenameFilterVisible">{{ isCodenameFilterVisible ? 'Hide' : "Show" }}</button>
+        </div>
+        <Transition name="slide-fade">
+          <div class="option-box" v-if="isCodenameFilterVisible">
+            <div class="input-option" v-for="codename in filters.codename" :key="codename">
+              <input type="checkbox" name="codename" :id="codename" :value="codename" v-model="selectedFilters.codename" @change="updateFilters">
+              <label :for="codename" class="ml-2">{{ codename }}</label>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <div class="mb-4 core-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">Memory Types</p>
+          <button type="button" class="toggle-btn" @click="isMemSupportFilterVisible = !isMemSupportFilterVisible">{{ isMemSupportFilterVisible ? 'Hide' : "Show" }}</button>
+        </div>
+        <Transition name="slide-fade">
+          <div class="option-box" v-if="isMemSupportFilterVisible">
+            <div class="input-option" v-for="memory in filters.memorySupport" :key="memory">
+              <input type="checkbox" name="memory" :id="memory" :value="memory" v-model="selectedFilters.memorySupport" @change="updateFilters">
+              <label :for="memory" class="ml-2">{{ memory }}</label>
             </div>
           </div>
         </Transition>
@@ -143,6 +198,54 @@ function resetFilter() {
         </Transition>
       </div>
 
+      <div class="mb-4 core-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">CPU Threads</p>
+          <button type="button" class="toggle-btn" @click="isThreadFilterAvailable = !isThreadFilterAvailable">
+            {{ isThreadFilterAvailable ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+
+        <Transition name="slide-fade">
+          <div class="option-box" v-if="isThreadFilterAvailable">
+            <div class="input-option" v-for="threadNum in filters.threadNum" :key="threadNum">
+              <input type="checkbox" name="cores" :id="threadNum" :value="threadNum" v-model="selectedFilters.threadNum" @change="updateFilters">
+              <label :for="threadNum" class="ml-2">{{ threadNum }}</label>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <div class="mb-4 core-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">Memory Speeds</p>
+          <button type="button" class="toggle-btn" @click="isRatedSpeedsFilterVisible = !isRatedSpeedsFilterVisible">{{ isRatedSpeedsFilterVisible ? 'Hide' : "Show" }}</button>
+        </div>
+        <Transition name="slide-fade">
+          <div class="option-box" v-if="isRatedSpeedsFilterVisible">
+            <div class="input-option" v-for="speed in filters.ratedSpeeds" :key="speed">
+              <input type="checkbox" name="speed" :id="speed" :value="speed" v-model="selectedFilters.ratedSpeeds" @change="updateFilters">
+              <label :for="speed" class="ml-2">{{ speed }}MT/s</label>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <div class="mb-4 core-box">
+        <div class="filter-header">
+          <p class="fw-bold filter-tl">CPU Cache L3</p>
+          <button type="button" class="toggle-btn" @click="isCacheFilterAvailable = !isCacheFilterAvailable">{{ isCacheFilterAvailable ? 'Hide' : "Show" }}</button>
+        </div>
+        <Transition name="slide-fade">
+          <div class="option-box" v-if="isCacheFilterAvailable">
+            <div class="input-option" v-for="cache in filters.cache" :key="cache">
+              <input type="checkbox" name="speed" :id="cache" :value="cache" v-model="selectedFilters.cache" @change="updateFilters">
+              <label :for="cache" class="ml-2">{{ cache }}</label>
+            </div>
+          </div>
+        </Transition>
+      </div>
+      
     </div>
   </div>
 </template>

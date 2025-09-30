@@ -42,7 +42,7 @@ cpuRouter.get('/cpus', async (req, res) => {
 
                 if (values.length > 1) {
                     // Multiple values: use $in
-                    if (field === 'brand' || field === 'generation') {
+                    if (field === 'brand' || field === 'generation' || field === 'codename' || field === 'cache.cacheL3') {
                         // Use simple string matching for 'brand' since it's guaranteed lowercase
                         filter[field] = { $in: values };
                     } else {

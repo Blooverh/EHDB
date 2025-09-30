@@ -1,6 +1,7 @@
 <script setup>
 import '../assets/css/hardwareCollection.css';
 import CpuFilterBox from '@/components/CpuFilterBox.vue';
+import {cpuBrandFormatter} from '@/utils/formatCpuTitle.js';
 import { ref, watch, computed } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
@@ -90,7 +91,8 @@ watch(() => route.query, async (newQuery) => {
   <div class="cpu-collection">
     <CpuFilterBox/>
     <div class="collection-container">
-        <h1>cpu Collection</h1>
+      <!-- MISSING CPU SVG -->
+        <h1>CPU Collection</h1>
         <p>Browse our catalog of enterprise cpus.</p>
 
         <!-- Loading and Error State -->
@@ -102,10 +104,11 @@ watch(() => route.query, async (newQuery) => {
           <div v-if="cpus.length > 0" class="cpu-grid">
             <!-- cpu Card -->
             <div v-for="cpu in cpus" :key="cpu._id" class="cpu-card">
-            <h3 class="cpu-brand">{{ cpu.brand }}</h3>
-            <p class="cpu-model">{{ cpu.model }}</p>
-            <!-- You can add more cpu details here -->
-          </div>
+              <!-- CPU Card -->
+               <div class="title-tags">
+                <RouterLink :to="`/cpus/${cpu.brand}/${cpu.slug}`">{{ cpuBrandFormatter(cpu.brand )}} {{ cpu.model }}</RouterLink>
+               </div>
+            </div>
           </div>
           <div v-else class="no-results">
             <p>No cpus found matching your criteria.</p>
