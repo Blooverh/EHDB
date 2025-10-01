@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 // Importing Views
 import NotFound from '@/views/NotFound.vue'
 import Homepage from '@/views/Homepage.vue'
@@ -31,31 +32,7 @@ const router = createRouter({
       path: '/cpus/:brand/:slug',
       name: 'Individual CPU',
       component: IndividualCpu,
-      // this guard runs before the route is loaded, so before we mount the component itself
-      beforeEnter: async (to, from, next) => {
-        
-        try{
-          const {brand, slug} = to.params;
-          // we use fetch for looking to a relative URL since backend and frontend are different services
-          const response = await fetch(`/api/cpus/${brand}/${slug}`);
-
-          if(!response.ok){
-            return next({ name: 'Not Found' }); // redirect to 404 page if no cpu found
-          }
-
-          const cpu = await response.json();
-          // setting up meta title dynamically
-          to.meta.title = `CPU: ${cpu.brand} ${cpu.model}`;
-
-          next();
-
-        }catch(err){
-          console.error('Failed to fetch CPU data for title:', err)
-          // fallback title in case of API error
-          to.meta.title = 'CPU Details';
-          next(); // proceed to route anyway which will lead to 404 page
-        }
-      },
+      meta: { title: `CPU Individual`} // need to change to brand and model
     },
     {
       path: '/:pathMatch(.*)*', name: 'Not Found', component: NotFound,
