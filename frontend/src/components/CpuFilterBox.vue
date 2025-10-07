@@ -2,6 +2,7 @@
 import { ref, onMounted, Transition } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+import { cpuBrandFormatter } from '@/utils/formatCpuTitle.js';
 
 // State for toggling the brand filter visibility
 const isBrandFilterVisible = ref(false);
@@ -108,7 +109,7 @@ function resetFilter() {
           <div v-if="isBrandFilterVisible" class="option-box">
             <div class="input-option" v-for="brand in filters.brands" :key="brand">
               <input type="checkbox" :id="brand" :value="brand" v-model="selectedFilters.brand" @change="updateFilters">
-              <label :for="brand" class="ml-2">{{ brand }}</label>
+              <label :for="brand" class="ml-2">{{ cpuBrandFormatter(brand) }}</label>
             </div>
           </div>
         </Transition>

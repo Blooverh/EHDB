@@ -29,11 +29,22 @@
   border-radius: 8px;
   align-self: center;
   padding: 5px;
+  margin-bottom: 0px;
 }
 
 .solid-separation {
   border: 1px solid #1068a6;
 }
+
+.btn-box-left, .btn-box-right {
+  background: none;
+  border: none;
+}
+
+.btn-box-left > svg:hover, .btn-box-right > svg:hover {
+  stroke: #1AC6FF;
+}
+
 
 /* Filter component style */
 
@@ -110,11 +121,15 @@
 }
 
 .toggle-btn{
-    background-color: inherit;
-    border: none;
-    padding: 5px;
+  background-color: inherit;
+  border: none;
+  padding: 5px;
+}
+
+.toggle-btn:hover {
+  font-weight: 700;
 }
 
 .filter-tl {
-    margin: 0px;
+  margin: 0px;
 }

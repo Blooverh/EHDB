@@ -1,10 +1,14 @@
 <script setup>
 import '../assets/css/hardwareCollection.css';
 import CpuFilterBox from '@/components/CpuFilterBox.vue';
-import {cpuBrandFormatter} from '@/utils/formatCpuTitle.js';
+import {cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle.js';
 import { ref, watch, computed } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+
+//Lucide svg import
+import { ArrowBigRight } from 'lucide-vue-next';
+import { ArrowBigLeft } from 'lucide-vue-next';
 
 const router = useRouter();
 const route = useRoute();
@@ -91,69 +95,84 @@ watch(() => route.query, async (newQuery) => {
   <div class="cpu-collection">
     <CpuFilterBox/>
     <div class="collection-container">
-      <!-- MISSING CPU SVG -->
-        <h1>CPU Collection</h1>
-        <p>Browse our catalog of enterprise cpus.</p>
+      <div class="title-collection d-flex flex-row align-items-center">
+        <svg class="cpu-icon" width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.66675H3.99996C3.26358 2.66675 2.66663 3.2637 2.66663 4.00008V12.0001C2.66663 12.7365 3.26358 13.3334 3.99996 13.3334H12C12.7363 13.3334 13.3333 12.7365 13.3333 12.0001V4.00008C13.3333 3.2637 12.7363 2.66675 12 2.66675Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9.33333 6H6.66667C6.29848 6 6 6.29848 6 6.66667V9.33333C6 9.70152 6.29848 10 6.66667 10H9.33333C9.70152 10 10 9.70152 10 9.33333V6.66667C10 6.29848 9.70152 6 9.33333 6Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 1.33325V2.66659" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 13.3333V14.6666" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1.33337 10H2.66671" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1.33337 6H2.66671" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13.3334 10H14.6667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13.3334 6H14.6667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 1.33325V2.66659" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h1>Processor Collection</h1>
+      </div>
+      
+      <p>Browse our catalog of enterprise cpus.</p>
 
-        <!-- Loading and Error State -->
-        <div v-if="loading" class="loading-message">Loading cpus...</div>
-        <div v-if="error" class="error-message">{{ error }} <RouterLink to='/cpus'>Reset Filter</RouterLink></div>
+      <div v-if="loading" class="loading-message">
+        Loading cpus...
+      </div>
+      <div v-if="error" class="error-message">{{ error }} 
+        <RouterLink to='/cpus'>Reset Filter</RouterLink>
+      </div>
 
-        <!-- cpu Grid and No Results -->
-        <div v-if="!loading && !error">
-          <div v-if="cpus.length > 0" class="cpu-grid d-grid gap-3 m-3">
+      <div v-if="!loading && !error">
+        <div v-if="cpus.length > 0" class="cpu-grid d-grid gap-3 m-3">
             <!-- cpu Card -->
-            <div v-for="cpu in cpus" :key="cpu._id" class="cpu-card p-2">
-              <!-- CPU Card -->
-              <div class="title-tags d-flex flex-row gap-3 align-items-center">
-                <RouterLink class="cpu-title" :to="`/cpus/${cpu.brand}/${cpu.slug}`">{{ cpuBrandFormatter(cpu.brand )}} {{ cpu.model }}</RouterLink>
-                <div class="cpu-tags d-flex flex-row justify-content-between gap-2">
-                  <p class="tag">{{ cpu.generation }}</p>
-                  <p class="tag">{{ cpu.socket }}</p>
-                  <p class="tag">{{ cpu.tdp }}W</p>
-                  <p class="tag">{{  cpu.cache.cacheL3}}</p>
-                </div>
+          <div v-for="cpu in cpus" :key="cpu._id" class="cpu-card p-2">
+            <!-- CPU Card -->
+            <div class="title-tags d-flex flex-row gap-3 align-items-center mt-2">
+              <RouterLink class="cpu-title" :to="`/cpus/${cpu.brand}/${cpu.slug}`">{{ cpuBrandFormatter(cpu.brand )}} {{ formatModel(cpu.model) }}</RouterLink>
+              <div class="cpu-tags d-flex flex-row justify-content-between gap-2">
+                <p class="tag">{{ cpu.generation }}</p>
+                <p class="tag">{{ cpu.socket }}</p>
+                <p class="tag">{{ cpu.tdp }}W</p>
+                <p class="tag">{{  cpu.cache.cacheL3 }}</p>
               </div>
-              <div class="solid-separation"></div>
-              <div class="spec-boxes mt-2 d-flex flex-row justify-content-between gap-2">
-                <div class="spec-box d-flex flex-column">
-                  <span class="spec-tl">Cores</span>
-                  <span class="spec-info">{{ cpu.coreNum }}C</span>
-                </div>
-                <div class="spec-box d-flex flex-column">
-                  <span class="spec-tl">Threads</span>
-                  <span class="spec-info">{{ cpu.threadNum }}T</span>
-                </div>
-                <div class="spec-box d-flex flex-column">
-                  <span class="spec-tl">Max RAM Speed</span>
-                  <span class="spec-info">{{ cpu.ratedSpeeds }}MT/s</span>
-                </div>
-                <div class="spec-box d-flex flex-column">
-                  <span class="spec-tl">Base Clock</span>
-                  <span class="spec-info">{{ cpu.frequency }}GHz</span>
-                </div>
-                <div class="spec-box d-flex flex-column">
-                  <span class="spec-tl">Turbo Clock</span>
-                  <span class="spec-info">{{ cpu.turboFrequency }}GHz</span>
-                </div>
-                <div class="spec-box d-flex flex-column">
-                  <span class="spec-tl">MPN</span>
-                  <span class="spec-info">{{ cpu.partNum }}</span>
-                </div>
-              </div>
-              
             </div>
-          </div>
-          <div v-else class="no-results">
-            <p>No cpus found matching your criteria.</p>
+            <div class="solid-separation"></div>
+            <div class="spec-boxes mt-2 d-flex flex-row justify-content-between gap-2">
+              <div class="spec-box d-flex flex-column align-items-center">
+                <span class="spec-tl">Cores</span>
+                <span class="spec-info">{{ cpu.coreNum }}C</span>
+              </div>
+              <div class="spec-box d-flex flex-column align-items-center">
+                <span class="spec-tl">Threads</span>
+                <span class="spec-info">{{ cpu.threadNum }}T</span>
+              </div>
+              <div class="spec-box d-flex flex-column align-items-center">
+                <span class="spec-tl">Max RAM Speed</span>
+                <span class="spec-info">{{ cpu.ratedSpeeds }}MT/s</span>
+              </div>
+              <div class="spec-box d-flex flex-column align-items-center">
+                <span class="spec-tl">Base Clock</span>
+                <span class="spec-info">{{ cpu.frequency }}GHz</span>
+              </div>
+              <div class="spec-box d-flex flex-column align-items-center">
+                <span class="spec-tl">Turbo Clock</span>
+                <span class="spec-info">{{ cpu.turboFrequency }}GHz</span>
+              </div>
+              <div class="spec-box d-flex flex-column align-items-center">
+                <span class="spec-tl">MPN</span>
+                <span class="spec-info">{{ cpu.partNum }}</span>
+              </div>
+            </div>
+            
           </div>
         </div>
+        <div v-else class="no-results">
+          <p>No cpus found matching your criteria.</p>
+        </div>
+      </div>
 
       <!-- Pagination Controls -->
-      <div v-if="!loading && totalPages > 1" class="pagination-controls">
-        <button @click="prevPage" :disabled="currentPage <= 1">Previous</button>
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
-        <button @click="nextPage" :disabled="currentPage >= totalPages">Next</button>
+      <div v-if="!loading && totalPages > 1" class="pagination-controls d-flex justify-content-center">
+        <button @click="prevPage" :disabled="currentPage <= 1" class="btn-box-left p-2"><ArrowBigLeft /></button>
+        <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="currentPage >= totalPages" class="p-2 btn-box-right"><ArrowBigRight /></button>
       </div>
     </div>
   </div>
