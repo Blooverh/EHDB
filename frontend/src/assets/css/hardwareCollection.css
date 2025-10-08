@@ -1,5 +1,5 @@
 /* CPU Collection View */
-.cpu-collection {
+.part-collection {
   display: grid;
   grid-template-columns: 500px 1fr;
   margin: 30px 20px 20px 20px;

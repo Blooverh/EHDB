@@ -74,7 +74,7 @@ watch(() => route.query, async (newQuery) => {
         const response = await axios.get(`/api/cpus?${params.toString()}`);
         cpus.value = response.data.cpus;
         totalPages.value = response.data.totalPages;
-        totalCpus.value = response.data.totalCpus;
+        totalCpus.value = response.data.totalCPUs;
     } catch (err) {
       // Add different error messages depending on status code given by backend
       if(err.response.status === 404){
@@ -92,7 +92,7 @@ watch(() => route.query, async (newQuery) => {
 
 <template>
 
-  <div class="cpu-collection">
+  <div class="part-collection">
     <CpuFilterBox/>
     <div class="collection-container">
       <div class="title-collection d-flex flex-row align-items-center">
@@ -110,7 +110,7 @@ watch(() => route.query, async (newQuery) => {
           <h1>Processor Collection</h1>
       </div>
       
-      <p>Browse our catalog of enterprise cpus.</p>
+      <p v-if="totalCpus > 0">Browse our catalog of CPUs ({{ totalCpus }} CPUs)</p>
 
       <div v-if="loading" class="loading-message">
         Loading cpus...

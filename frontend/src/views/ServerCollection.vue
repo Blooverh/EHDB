@@ -3,6 +3,7 @@ import { ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 import '../assets/css/hardwareCollection.css';
+import ServerFilterBox from '@/components/ServerFilterBox.vue';
 
 // --- Router and Route instances ---
 const router = useRouter();
@@ -12,7 +13,7 @@ const route = useRoute();
 const servers = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(0);
-const totalDocuments = ref(0);
+const totalServers = ref(0);
 const filters = ref({
   brand: '',
   model: '',
@@ -41,7 +42,7 @@ const fetchServers = async () => {
     
     servers.value = response.data.servers;
     totalPages.value = response.data.totalPages;
-    totalDocuments.value = response.data.totalDocuments;
+    totalServers.value = response.data.totalDocs;
 
   } catch (err) {
     error.value = 'Failed to fetch servers. Please try again later.';
@@ -103,25 +104,31 @@ watch(() => route.query, (newQuery) => {
 </script>
 
 <template>
+  <div class="part-collection">
+    <ServerFilterBox />
     <div class="collection-container">
-         <h1>Server Collection</h1>
-         <p>Browse our catalog of enterprise servers.</p>
-    
-         <!-- Filter Controls -->
-         <div class="filter-controls">
-           <input type="text" v-model.lazy="filters.brand" placeholder="Filter by Brand..." class="filter-input" />
-           <input type="text" v-model.lazy="filters.model" placeholder="Filter by Model..." class="filter-input" />
-         </div>
-    
-         <!-- Loading and Error State -->
-         <div v-if="loading" class="loading-message">Loading servers...</div>
-         <div v-if="error" class="error-message">{{ error }}</div>
-    
-         <!-- Server Grid and No Results -->
-         <div v-if="!loading && !error">
-           <div v-if="servers.length > 0" class="server-grid">
-             <!-- Server Card -->
-             <div v-for="server in servers" :key="server._id" class="server-card">
+        <div class="title-collection d-flex flex-row align-items-center">
+          <!-- Missing Server SVG -->
+          <h1>Server Collection</h1>
+        </div>
+
+        <p v-if="totalServers > 0">Browse our catalog of Servers ({{ totalServers }} Servers)</p>
+  
+        <!-- Filter Controls -->
+        <div class="filter-controls">
+          <input type="text" v-model.lazy="filters.brand" placeholder="Filter by Brand..." class="filter-input" />
+          <input type="text" v-model.lazy="filters.model" placeholder="Filter by Model..." class="filter-input" />
+        </div>
+  
+        <!-- Loading and Error State -->
+        <div v-if="loading" class="loading-message">Loading servers...</div>
+        <div v-if="error" class="error-message">{{ error }}</div>
+  
+        <!-- Server Grid and No Results -->
+        <div v-if="!loading && !error">
+          <div v-if="servers.length > 0" class="server-grid">
+            <!-- Server Card -->
+            <div v-for="server in servers" :key="server._id" class="server-card">
               <h3 class="server-brand">{{ server.brand }}</h3>
               <p class="server-model">{{ server.model }}</p>
               <!-- You can add more server details here -->
@@ -131,12 +138,14 @@ watch(() => route.query, (newQuery) => {
             <p>No servers found matching your criteria.</p>
           </div>
         </div>
-   
-        <!-- Pagination Controls -->
-        <div v-if="!loading && totalPages > 1" class="pagination-controls">
-          <button @click="prevPage" :disabled="currentPage <= 1">Previous</button>
-          <span>Page {{ currentPage }} of {{ totalPages }}</span>
-          <button @click="nextPage" :disabled="currentPage >= totalPages">Next</button>
-        </div>
+  
+      <!-- Pagination Controls -->
+      <div v-if="!loading && totalPages > 1" class="pagination-controls">
+        <button @click="prevPage" :disabled="currentPage <= 1">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="currentPage >= totalPages">Next</button>
+      </div>
     </div>
+  </div>
+  
 </template>

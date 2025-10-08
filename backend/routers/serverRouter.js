@@ -8,7 +8,11 @@ export const serverRouter = express.Router();
 serverRouter.get('/servers', async (req, res) => {
 
     // array of fields for filtering 
-    const filterableFields = ['brand', 'model', 'socketInfo', 'compatibleCpuGen', 'memorySpecs.memory_type', 'memorySpecs.speeds', 'ssdInterfaces'];
+    const filterableFields = ['brand', 'socketInfo', 'compatibleCpuGen', 'memorySpecs.memory_type', 'memorySpecs.speeds', 'ssdInterfaces'];
+
+    /* numericFields allow change logic when adding parameter to URL by checking if property is the same on array
+    iteration */
+    const numericField = 'memorySpecs.speeds';
 
     // destructure query parameters with default values for pagination
     const { page = 1, limit = 20} = req.query;
@@ -17,15 +21,58 @@ serverRouter.get('/servers', async (req, res) => {
         const filter = {};
 
         filterableFields.forEach(field => {
-            if(req.query[field]){
-                // case insensitive regext for flexible searching
-                filter[field] = {$regex: req.query[field], $options: 'i'};
+            const queryParams = req.query[field]; // add field to query 
+
+            // skip if parameter does not exist 
+            if(!queryParams) return;
+
+            if(numericField == field){
+
+                /* (Note: If the URL was `?speeds=3200&speeds=4800`, some web frameworks would parse
+  `queryParams` as `['3200', '4800']` directly. This line handles both cases.) */
+                // ensure query parameters is always an array of strings regardless of how it is sent
+                // 1. check if queryparams is already an array, if not create an array of strings from queryParams
+                const values = Array.isArray(queryParams) ? queryParams : String(queryParams).split(',');
+                // any values in array of queryParams that are numeric parse them into a number type and filter the ones that are numbers (!isNaN(num))
+                const numericValues = values.map(val => parseInt(val, 10)).filter(num => !isNaN(num));
+
+                if(numericValues.length > 1){
+                    /* 
+                    If query parameter for a numeric filter fielter field, we use
+                    $in operator to query DB for all matching cases of values  in numeric values
+                    { 'memorySpecs.speeds': { $in: [3200, 4800] } } // matches servers that have both speeds
+                    Note: works when multiple numeric values for same filter field
+                    */
+                    filter[field] = { $in: numericValues }; 
+                } else if (numericValues.length === 1){ // if only 1 numeric value for that filter field
+                    filter[field] = numericValues[0];
+                }
+                // if no valid numbers do nothing
+            }else {
+                /* coerce comma-separated strings and arrays into a consistent array format */
+                const values = Array.isArray(queryParams) ? queryParams : String(queryParams).split(',');
+
+                if(values.length > 1){
+                    // Multiple values we use $in operator for DB querying 
+                    if(field === 'brand' || field === 'socketInfo' ){
+
+                        // use case-insensitive regex for other multiple-value string fields
+                        const regexArray = values.map(val => new RegExp(`^${val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i'));
+                        
+                        filter[field] = {$in : regexArray};
+                    }
+                }else if (values.length === 1 && values[0]){
+                    // single value: use $regex for case-insensitivity
+                    const escapedValue = values[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    filter[field] = { $regex: `^${escapedValue}$`, $options: 'i' };
+                }
+
+                 // If values is empty array after split (e.g. from an empty query param), do nothing.
             }
         });
 
         // total number of servers (server documents) that match the filter
         const totalDocs = await Server.countDocuments(filter);
-
         const totalPages = Math.ceil(totalDocs / limit);
 
         // fetch servers for current page 
@@ -34,11 +81,18 @@ serverRouter.get('/servers', async (req, res) => {
         .skip((page - 1) * limit)
         .exec();
 
+        // Only return 404 if no documents match the filter at all 
+        /* iF user requests a page that is out of bounds, they get a success response 
+        with an empty servers array */
+        if(totalDocs  === 0){
+            return res.status(404).json({message: 'No Servers Found'});
+        }
+
         // send response 
         res.json({servers, totalPages, currentPage: parseInt(page), totalDocs});
 
     }catch(error){
-        res.status(500).json({message: error.message});
+        res.status(500).json({message: 'Internal Server Error'});
     }
 
 });
