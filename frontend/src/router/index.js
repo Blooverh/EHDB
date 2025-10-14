@@ -32,7 +32,6 @@ const router = createRouter({
       path: '/cpus/:brand/:slug',
       name: 'Individual CPU',
       component: IndividualCpu,
-      meta: { title: `CPU Individual`} // need to change to brand and model
     },
     {
       path: '/:pathMatch(.*)*', name: 'Not Found', component: NotFound,

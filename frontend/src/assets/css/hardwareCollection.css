@@ -7,7 +7,7 @@
 }
 
 .cpu-card {
-  border: 1px solid #1AC6FF;
+  border: 2px solid #1AC6FF;
   border-radius: 8px;
   
 }
@@ -33,7 +33,7 @@
 }
 
 .solid-separation {
-  border: 1px solid #1068a6;
+  border: 2px solid #1AC6FF;
 }
 
 .btn-box-left, .btn-box-right {
@@ -41,8 +41,16 @@
   border: none;
 }
 
-.btn-box-left > svg:hover, .btn-box-right > svg:hover {
+.active svg:hover {
   stroke: #1AC6FF;
+}
+
+.spec-tl {
+  font-weight: 700;
+}
+
+.spec-info {
+  color: rgba(128, 128, 128, 0.669);
 }
 
 

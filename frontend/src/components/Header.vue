@@ -21,8 +21,8 @@ import SearchBar from './SearchBar.vue';
 
                         <ul class="dropdown-menu">
                             <li><RouterLink to="/cpus">All Processors</RouterLink></li>
-                            <li><RouterLink to="/amd">AMD Processors</RouterLink></li>
-                            <li><RouterLink to="/intel">Intel Processors</RouterLink></li>
+                            <li><RouterLink to="/cpus/amd">AMD Processors</RouterLink></li>
+                            <li><RouterLink to="/cpus/intel">Intel Processors</RouterLink></li>
                         </ul>
                     </li>
 
@@ -31,12 +31,12 @@ import SearchBar from './SearchBar.vue';
 
                         <ul class="dropdown-menu">
                             <li><RouterLink to="/servers">All Servers</RouterLink></li>
-                            <li><RouterLink to="/dell">Dell</RouterLink></li>
-                            <li><RouterLink to="/hpe">HPE</RouterLink></li>
-                            <li><RouterLink to="/supermicro">Supermicro</RouterLink></li>
-                            <li><RouterLink to="/gigabyte">Gigabyte</RouterLink></li>
-                            <li><RouterLink to="/asus">Asus</RouterLink></li>
-                            <li><RouterLink to="/cloud-ninjas">Cloud Ninjas</RouterLink></li>
+                            <li><RouterLink to="/servers/dell">Dell</RouterLink></li>
+                            <li><RouterLink to="/servers/hpe">HPE</RouterLink></li>
+                            <li><RouterLink to="/servers/supermicro">Supermicro</RouterLink></li>
+                            <li><RouterLink to="/servers/gigabyte">Gigabyte</RouterLink></li>
+                            <li><RouterLink to="/servers/asus">Asus</RouterLink></li>
+                            <li><RouterLink to="/servers/cloud-ninjas">Cloud Ninjas</RouterLink></li>
                             <!-- More to add -->
                         </ul>
                     </li>

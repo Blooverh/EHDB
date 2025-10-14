@@ -12,7 +12,6 @@ const isCodenameFilterVisible = ref(false);
 const isRatedSpeedsFilterVisible = ref(false);
 const isMemSupportFilterVisible = ref(false);
 const isSocketFilterAvailable = ref(false);
-const isThreadFilterAvailable = ref(false);
 const isCacheFilterAvailable = ref(false);
 
 const route = useRoute();
@@ -26,7 +25,6 @@ const filters = ref({
   ratedSpeeds: [],
   socket: [],
   coreNum: [],
-  threadNum: [],
   cache: []
 });
 
@@ -40,7 +38,6 @@ const selectedFilters = ref({
   ratedSpeeds: [].concat(parseInt(route.query.ratedSpeeds) || []),
   socket: [].concat(route.query.socket || []),
   coreNum: [].concat(parseInt(route.query.coreNum) || []),
-  threadNum: [].concat(parseInt(route.query.threadNum) || []),
   cache: [].concat(route.query.cache || [])
 });
 
@@ -81,7 +78,6 @@ function resetFilter() {
   selectedFilters.value.ratedSpeeds = [];
   selectedFilters.value.socket = [];
   selectedFilters.value.coreNum = [];
-  selectedFilters.value.threadNum = [];
   selectedFilters.value.cache = [];
 
   updateFilters();
@@ -194,24 +190,6 @@ function resetFilter() {
             <div class="input-option" v-for="coreNum in filters.coreNum" :key="coreNum">
               <input type="checkbox" name="cores" :id="coreNum" :value="coreNum" v-model="selectedFilters.coreNum" @change="updateFilters">
               <label :for="coreNum" class="ml-2">{{ coreNum }}</label>
-            </div>
-          </div>
-        </Transition>
-      </div>
-
-      <div class="mb-4 core-box">
-        <div class="filter-header">
-          <p class="fw-bold filter-tl">CPU Threads</p>
-          <button type="button" class="toggle-btn" @click="isThreadFilterAvailable = !isThreadFilterAvailable">
-            {{ isThreadFilterAvailable ? 'Hide' : 'Show' }}
-          </button>
-        </div>
-
-        <Transition name="slide-fade">
-          <div class="option-box" v-if="isThreadFilterAvailable">
-            <div class="input-option" v-for="threadNum in filters.threadNum" :key="threadNum">
-              <input type="checkbox" name="cores" :id="threadNum" :value="threadNum" v-model="selectedFilters.threadNum" @change="updateFilters">
-              <label :for="threadNum" class="ml-2">{{ threadNum }}</label>
             </div>
           </div>
         </Transition>

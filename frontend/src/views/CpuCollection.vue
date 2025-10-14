@@ -25,13 +25,14 @@ const totalCpus = ref(0);
 const loading = ref(true);
 const error = ref(null);
 
+
 // --- ACTIONS ---
 // Pagination actions now directly trigger a route change.
 const goToPage = (page) => {
     const query = { ...route.query, page }; // query retains query params and page number
     // if page number is less than 1 page query paramater is deleted
     if (page <= 1) {
-        delete query.page;
+      delete query.page;
     }
     router.push({ query }); // pass query to router
 };
@@ -47,6 +48,7 @@ const prevPage = () => {
         goToPage(currentPage.value - 1);
     }
 };
+
 
 // --- WATCHERS (SIDE EFFECTS) ---
 
@@ -106,11 +108,11 @@ watch(() => route.query, async (newQuery) => {
           <path d="M13.3334 10H14.6667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M13.3334 6H14.6667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M6 1.33325V2.66659" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <h1>Processor Collection</h1>
+        </svg>
+        <h1>Processor Collection</h1>
       </div>
       
-      <p v-if="totalCpus > 0">Browse our catalog of CPUs ({{ totalCpus }} CPUs)</p>
+      <p v-if="totalCpus > 0">Current List: ({{ totalCpus }} CPUs)</p>
 
       <div v-if="loading" class="loading-message">
         Loading cpus...
@@ -130,7 +132,7 @@ watch(() => route.query, async (newQuery) => {
                 <p class="tag">{{ cpu.generation }}</p>
                 <p class="tag">{{ cpu.socket }}</p>
                 <p class="tag">{{ cpu.tdp }}W</p>
-                <p class="tag">{{  cpu.cache.cacheL3 }}</p>
+                <p class="tag">{{ cpu.cache.cacheL3 }}</p>
               </div>
             </div>
             <div class="solid-separation"></div>
@@ -170,9 +172,9 @@ watch(() => route.query, async (newQuery) => {
 
       <!-- Pagination Controls -->
       <div v-if="!loading && totalPages > 1" class="pagination-controls d-flex justify-content-center">
-        <button @click="prevPage" :disabled="currentPage <= 1" class="btn-box-left p-2"><ArrowBigLeft /></button>
+        <button @click="prevPage" :disabled="currentPage <= 1" :class="{'active': currentPage > 1}" class="btn-box-left p-2"><ArrowBigLeft /></button>
         <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
-        <button @click="nextPage" :disabled="currentPage >= totalPages" class="p-2 btn-box-right"><ArrowBigRight /></button>
+        <button @click="nextPage" :disabled="currentPage >= totalPages" :class="{'active': currentPage <= totalPages}" class="p-2 btn-box-right"><ArrowBigRight /></button>
       </div>
     </div>
   </div>
