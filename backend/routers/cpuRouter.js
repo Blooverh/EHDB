@@ -191,13 +191,13 @@ cpuRouter.get('/cpus/:brand', async (req, res) => {
                 }
             }
         });
-
-        const totalCpus = await CPU.countDocuments(filter);
-        const totalPages = matchMedia.ceil(totalCpus/limit); // since each page should only contain 20 cpus we divide total num of CPUs by the limit (20) to get number of total pages
+        const query = { brand, ...filter };
+        const totalCpus = await CPU.countDocuments(query);
+        const totalPages = Math.ceil(totalCpus/limit); // since each page should only contain 20 cpus we divide total num of CPUs by the limit (20) to get number of total pages
 
         // when fetching the cpus based on filter, we limit based on limit value
         // we skip certain amount of documents based on limit when jumping to a certain page
-        const cpus = (await CPU.find(filter))
+        const cpus = await CPU.find(query)
         .limit(parseInt(limit))
         .skip((page - 1) * limit)
         .exec();
@@ -211,6 +211,23 @@ cpuRouter.get('/cpus/:brand', async (req, res) => {
     }catch(err){
         console.error(err);
         res.status(500).json({ message: 'Internal Server Error'});
+    }
+});
+
+cpuRouter.get('/cpus/:brand/cpu-length', async (req, res) => {
+    const cpuBrand = req.params.brand;
+
+    try{
+        const cpus = await CPU.find({brand: cpuBrand});
+
+        if(!cpus){
+            return res.status(404).json({message: `No CPUs found for ${cpuBrand}`});
+        }
+
+        res.json(cpus);
+    }catch(e){
+        console.error(e);
+        res.status(500).json({message: 'Internal Server Error'});
     }
 });
 

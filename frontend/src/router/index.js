@@ -6,6 +6,7 @@ import Homepage from '@/views/Homepage.vue'
 import ServerCollection from '@/views/ServerCollection.vue';
 import CpuCollection from '@/views/CpuCollection.vue';
 import IndividualCpu from '@/views/IndividualCpu.vue';
+import BrandedCpuCollection from '@/views/BrandedCpuCollection.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       name: 'CPU Collection',
       component: CpuCollection,
       meta: { title: 'CPU Collection'}
+    },
+    {
+      path: '/cpus/:brand',
+      name: 'Brand Collection', // change brand to the actual brand
+      component: BrandedCpuCollection,
     },
     {
       path: '/cpus/:brand/:slug',

@@ -23,7 +23,7 @@ const cpus = ref([]);
 const totalPages = ref(0);
 const totalCpus = ref(0);
 const loading = ref(true);
-const error = ref(null);
+const error = ref(false);
 
 
 // --- ACTIONS ---
