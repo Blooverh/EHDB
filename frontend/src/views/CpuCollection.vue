@@ -117,7 +117,8 @@ watch(() => route.query, async (newQuery) => {
       <div v-if="loading" class="loading-message">
         Loading cpus...
       </div>
-      <div v-if="error" class="error-message">{{ error }} 
+      <div v-if="error" class="error-message">
+        {{ error }} 
         <RouterLink to='/cpus'>Reset Filter</RouterLink>
       </div>
 

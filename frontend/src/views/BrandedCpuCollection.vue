@@ -1,9 +1,11 @@
 <script setup>
     import '../assets/css/hardwareCollection.css';
     import { cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle';
-    import {ref, watch, computed, TrackOpTypes} from 'vue';
+    import {ref, watch, computed} from 'vue';
     import axios from 'axios';
     import { useRoute, useRouter } from 'vue-router';
+    import CpuCard from '@/components/CpuCard.vue';
+    import CpuFilterBox from '@/components/CpuFilterBox.vue';
     
 
     // Lucide svg import 
@@ -46,7 +48,7 @@
         }
     };
 
-    const previousPage = () => {
+    const prevPage = () => {
         if(currentPage.value > 1){
             goToPage(currentPage.value - 1);
         }
@@ -64,7 +66,6 @@
         try{
 
             const params = new URLSearchParams(newQuery);
-            console.log(params.toString());
             const cpuBrand = route.params.brand;
 
             // since watcher changes immediate to avoid undefined we check if param exists
@@ -95,6 +96,8 @@
 <template>
     <div class="part-collection">
         <!-- CpuFilterBox for brands -->
+        <!-- <CpuFilterBox/> -->
+
         <div class="collection-container">
             <div class="title-collection d-flex flex-row align-items-center">
                 <svg class="cpu-icon" width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,10 +111,32 @@
                 <path d="M13.3334 6H14.6667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M6 1.33325V2.66659" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <h1>Processor Collection</h1>
+                <h1> {{ cpuBrandFormatter(brand_cpu) }} Processor Collection</h1>
             </div>
 
             <p v-if="totalCpus > 0">Current List of {{ cpuBrandFormatter(brand_cpu) }} CPUs: ({{ totalCpus }})</p>
+
+            <div v-if="loading" class="loading-message">Loading CPUs...</div>
+
+            <div v-if="error" class="error-message">
+                {{ error }}
+                <RouterLink :to="`/cpus/${brand_cpu}`">Reset Filter</RouterLink>
+            </div>
+
+            <div v-if="!loading && !error">
+                <div v-if="cpus.length > 0" class="cpu-grid d-grid gap-3 m-3">
+                    <CpuCard v-for="cpu in cpus" :key="cpu._id" :cpu="cpu" class="cpu-card p-2"/>
+                </div>
+                <div v-else class="no-results">
+                    <p>No cpus found matching your criteria.</p>
+                </div>
+            </div>
+            <!-- Pagination Controls -->
+            <div v-if="!loading && totalPages > 1" class="pagination-controls d-flex justify-content-center">
+                <button @click="prevPage" :disabled="currentPage <= 1" :class="{'active': currentPage > 1}" class="btn-box-left p-2"><ArrowBigLeft /></button>
+                <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
+                <button @click="nextPage" :disabled="currentPage >= totalPages" :class="{'active': currentPage <= totalPages}" class="p-2 btn-box-right"><ArrowBigRight /></button>
+            </div>
         </div>
     </div>
 </template>
