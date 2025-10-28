@@ -96,9 +96,9 @@ cpuRouter.get('/cpus-length', async (req, res) => {
         res.status(500).json({message: 'Internal Server Error'});
     }
 
-})
+});
 
-// route that sends all cpu properties used for filtering
+// route that sends all cpu properties used for filtering (all CPU filtering)
 cpuRouter.get('/cpus/filter-options', async (req, res) => {
     try{
         const brands = await CPU.distinct("brand");
@@ -108,10 +108,9 @@ cpuRouter.get('/cpus/filter-options', async (req, res) => {
         const ratedSpeeds = await CPU.distinct("ratedSpeeds");
         const socket = await CPU.distinct("socket");
         const coreNum = await CPU.distinct("coreNum");
-        const threadNum = await CPU.distinct("threadNum");
         const cache = await CPU.distinct("cache.cacheL3");
 
-        res.json({brands, codename, generation, memorySupport, ratedSpeeds, socket, coreNum, threadNum, cache});
+        res.json({brands, codename, generation, memorySupport, ratedSpeeds, socket, coreNum, cache});
     }catch(err){
         res.status(500).json({message: 'Internal Server Error'});
     }
@@ -119,11 +118,31 @@ cpuRouter.get('/cpus/filter-options', async (req, res) => {
 
 });
 
+cpuRouter.get('/cpus/:brand/filter-options', async (req, res) => {
+    const brand = req.params.brand;
+
+    try {
+
+        const codename = await CPU.distinct('codename', {brand: brand});
+        const generation = await CPU.distinct('generation', {brand: brand});
+        const memorySupport = await CPU.distinct('memorySupport', {brand: brand});
+        const ratedSpeeds = await CPU.distinct('ratedSpeeds', {brand: brand});
+        const socket = await CPU.distinct('socket', {brand: brand});
+        const coreNum = await CPU.distinct('coreNum', {brand: brand});
+        const cache = await CPU.distinct('cache.cacheL3', {brand: brand});
+
+        return res.json({codename, generation, memorySupport, ratedSpeeds, socket, coreNum, cache});
+
+    }catch(err) {
+        res.status(500).json({message: 'Internal Server Error'});
+    }
+});  
+
 // collection of cpus by brand 
 cpuRouter.get('/cpus/:brand', async (req, res) => {
 
     // add cpu schema properties that will be used as filter options to an array
-    const filterableItems = ['codename', 'generation', 'memorySupport', 'ratedSpeeds', 'socket', 'coreNum', 'threadNum', 'cache.cacheL3'];
+    const filterableItems = ['codename', 'generation', 'memorySupport', 'ratedSpeeds', 'socket', 'coreNum', 'cache.cacheL3'];
 
     const numericOptions = ['coreNum', 'ratedSpeeds'];
 

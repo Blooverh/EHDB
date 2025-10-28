@@ -5,7 +5,7 @@
     import axios from 'axios';
     import { useRoute, useRouter } from 'vue-router';
     import CpuCard from '@/components/CpuCard.vue';
-    import CpuFilterBox from '@/components/CpuFilterBox.vue';
+    import brandedCpuFilter from '@/components/brandedCpuFilter.vue';
     
 
     // Lucide svg import 
@@ -26,7 +26,57 @@
     const error = ref(false);
     const brand_cpu = ref(null);
 
+    // reactive objs for filter
+    const filters = ref({
+        codename: [],
+        generation: [],
+        memorySupport: [],
+        ratedSpeeds: [],
+        socket: [],
+        coreNum: [],
+        cache: []
+    });
+
+    const selectedFilters = ref({
+        codename: [].concat(route.query.codename || []),
+        generation: [].concat(route.query.generation || []),
+        memorySupport: [].concat(route.query.memorySupport || []),
+        ratedSpeeds: [].concat(parseInt(route.query.ratedSpeeds) || []),
+        socket: [].concat(route.query.socket || []),
+        coreNum: [].concat(parseInt(route.query.coreNum) || []),
+        cache: [].concat(route.query.cache || [])
+    });
+
     // Actions 
+    const updateFilters = (newFilters) => {
+        const query = { ...route.query };
+
+        // Iterate over the new filters and update the query object
+        for (const key in newFilters) {
+
+            const value = newFilters[key];
+            const queryKey = key === 'cache' ? 'cache.cacheL3' : key;
+            // If the filter has a value, add it to the query.
+            if (value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {
+                query[queryKey] = value;
+            } else {
+                // Otherwise, remove it from the query.
+                delete query[queryKey];
+            }
+        }
+
+        // When filters change, always reset to the first page
+        delete query.page;
+
+        router.push({ query });
+    };
+
+    const resetFilters = () => {
+        // remove all query params from URL
+        // resetting the filters and page number 
+        router.push({query: {}});
+    }
+
     // pagination actions now directly trigger a route change 
     const goToPage = (page) => {
         // query retains query params and page number
@@ -77,6 +127,20 @@
             totalPages.value = response.data.totalPages;
             brand_cpu.value = cpuBrand;
 
+            // Update selectedFilters from the URL to ensure consistency
+            selectedFilters.value = {
+                codename: [].concat(newQuery.codename || []),
+                generation: [].concat(newQuery.generation || []),
+                memorySupport: [].concat(newQuery.memorySupport || []),
+                ratedSpeeds: [].concat(parseInt(newQuery.ratedSpeeds) || []),
+                socket: [].concat(newQuery.socket || []),
+                coreNum: [].concat(parseInt(newQuery.coreNum) || []),
+                cache: [].concat(newQuery.cache || [])
+            };
+
+            const { data } = await axios.get(`/api/cpus/${cpuBrand}/filter-options`);
+            filters.value = data;
+
         }catch (err){
             if(err.response && err.response.status === 404){
                 error.value = 'No CPUs match this Brand selection';
@@ -88,7 +152,6 @@
             loading.value = false;
         }
     }, { immediate: true });
-    
 
 
 </script>
@@ -96,7 +159,12 @@
 <template>
     <div class="part-collection">
         <!-- CpuFilterBox for brands -->
-        <!-- <CpuFilterBox/> -->
+        <brandedCpuFilter
+            :filters="filters"
+            :selectedFilters="selectedFilters"
+            @filters-changed="updateFilters"
+            @reset-filter = "resetFilters"
+        />
 
         <div class="collection-container">
             <div class="title-collection d-flex flex-row align-items-center">
