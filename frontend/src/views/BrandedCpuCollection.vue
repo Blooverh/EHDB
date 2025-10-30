@@ -1,6 +1,6 @@
 <script setup>
     import '../assets/css/hardwareCollection.css';
-    import { cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle';
+    import { cpuBrandFormatter } from '@/utils/formatCpuTitle';
     import {ref, watch, computed} from 'vue';
     import axios from 'axios';
     import { useRoute, useRouter } from 'vue-router';
