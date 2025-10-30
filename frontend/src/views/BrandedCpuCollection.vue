@@ -135,7 +135,8 @@
                 ratedSpeeds: [].concat(parseInt(newQuery.ratedSpeeds) || []),
                 socket: [].concat(newQuery.socket || []),
                 coreNum: [].concat(parseInt(newQuery.coreNum) || []),
-                cache: [].concat(newQuery.cache || [])
+                // we need to specifyt cache.cacheL3 on new Query on writing so on reading it also works
+                cache: [].concat(newQuery['cache.cacheL3'] || [])
             };
 
             const { data } = await axios.get(`/api/cpus/${cpuBrand}/filter-options`);

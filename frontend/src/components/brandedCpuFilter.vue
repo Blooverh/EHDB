@@ -37,6 +37,11 @@
     const handleFilterChange = (filterType, value) => {
       // Create a deep copy of the selected filters to avoid mutating the prop directly
       const newFilters = JSON.parse(JSON.stringify(props.selectedFilters));
+
+      // Ensure that array exists
+      if(!Array.isArray(newFilters[filterType])){
+        newFilters[filterType] = [];
+      }
    
       // Get the specific array of filters (e.g., the 'codename' array)
       const filterArray = newFilters[filterType];
