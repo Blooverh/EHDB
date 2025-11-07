@@ -1,6 +1,6 @@
 <script setup>
 
-
+    import { Search } from 'lucide-vue-next';
 
 </script>
 
@@ -22,14 +22,26 @@
                     <span class="sub-title">Enterprise Hardware Database</span>
                 </div>
             </div>
-            <div class="notFound-alert d-flex flex-column gap-3 align-items-center">
+            <div class="notFound-alert d-flex flex-column gap-3 align-items-center mb-2">
                 <span class="status-code">404</span>
                 <span class="status-msg">Page Not Found</span>
                 <span class="status-sub-msg">The hardware part you're looking for does not exist in our Database YET!</span>
             </div>
-            <div class="notFound-btns">
+            <div class="d-flex flex-row gap-3 notFound-btns">
                 <!-- Create 2 buttons: home page buttons and search page button -->
-                 <RouterLink to="/">Return Home</RouterLink>
+                 <RouterLink class="d-flex flex-row justify-content-center align-items-center homebutton gap-2" to="/">
+                    <svg width="25" height="25" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 14V8.66667C10 8.48986 9.92976 8.32029 9.80474 8.19526C9.67971 8.07024 9.51014 8 9.33333 8H6.66667C6.48986 8 6.32029 8.07024 6.19526 8.19526C6.07024 8.32029 6 8.48986 6 8.66667V14" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 6.66673C1.99995 6.47277 2.04222 6.28114 2.12386 6.1052C2.20549 5.92927 2.32453 5.77326 2.47267 5.64806L7.13933 1.64873C7.37999 1.44533 7.6849 1.33374 8 1.33374C8.3151 1.33374 8.62001 1.44533 8.86067 1.64873L13.5273 5.64806C13.6755 5.77326 13.7945 5.92927 13.8761 6.1052C13.9578 6.28114 14 6.47277 14 6.66673V12.6667C14 13.0203 13.8595 13.3595 13.6095 13.6095C13.3594 13.8596 13.0203 14.0001 12.6667 14.0001H3.33333C2.97971 14.0001 2.64057 13.8596 2.39052 13.6095C2.14048 13.3595 2 13.0203 2 12.6667V6.66673Z" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>    
+                    <span>Return Home</span>
+                </RouterLink>
+
+                <RouterLink class="d-flex flex-row justify-content-center align-items-center search-part gap-2" to="/search">
+                    <Search style="stroke: black;"/>
+                    <span>Search Database</span>
+                </RouterLink>
+
             </div>
         </div>
     </div>
@@ -68,6 +80,45 @@
         font-size: 1.2rem;
         text-align: center;
         color: rgb(128, 128, 128);
+    }
+
+    .notFoundBtns {
+        text-decoration: none;
+    }
+
+    .homebutton{
+        background: linear-gradient(to right, cyan, blue);
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .search-part {
+        padding: 10px;
+        border-radius: 8px;
+        background: rgba(160, 160, 160, 0.682);
+    }
+
+    .homebutton > span, .search-part > span {
+        color: white;
+        font-size: 1.3em;
+        font-weight: 700;
+    }
+
+    .search-part > span {
+        color: black;
+    }
+
+    .homebutton:hover, .search-part:hover {
+        text-decoration: none !important;
+        
+    }
+
+    .homebutton:hover {
+        background: linear-gradient(to right, rgba(0, 255, 255, 0.434), rgba(0, 0, 255, 0.512));
+    }
+
+    .search-part:hover{
+        background: rgba(128, 128, 128, 0.88);
     }
 
 </style>
