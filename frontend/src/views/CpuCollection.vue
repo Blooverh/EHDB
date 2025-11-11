@@ -50,7 +50,7 @@ const prevPage = () => {
 };
 
 
-// --- WATCHERS (SIDE EFFECTS) ---
+// --- WATCHERS ---
 
 // When the URL changes, fetch new data. This is the single source of truth for API calls.
 /* 

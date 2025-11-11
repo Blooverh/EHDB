@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 import '../assets/css/hardwareCollection.css';
@@ -11,95 +11,110 @@ const route = useRoute();
 
 // --- State Management ---
 const servers = ref([]);
-const currentPage = ref(1);
+// current page is now a computed property derived from the URL
+const currentPage = computed(() => parseInt(route.query.page) || 1);
 const totalPages = ref(0);
 const totalServers = ref(0);
-const filters = ref({
-  brand: '',
-  model: '',
-  // need to add more filters when server is populated like pricing
-});
 const loading = ref(true);
-const error = ref(null);
+const error = ref(false);
 
-// --- Data Fetching ---
-const fetchServers = async () => {
-  loading.value = true;
+
+const filters = ref({
+  brand: [],
+  socketInfo: [],
+  compatibleCpuGen: [],
+  memory_type: [],
+  memory_speeds: [],
+  ssdInterfaces: []
+});
+
+// default is empty array that is populated when watcher checks for new query parameters that are set by the filter component
+const selectedFilters = ref({
+  brand: [].concat(route.query.brand || []),
+  socketInfo: [].concat(route.query.socketInfo || []),
+  compatibleCpuGen: [].concat(route.query.compatibleCpuGen || []),
+  memory_type: [].concat(route.query.memory_type || []),
+  memory_speeds: [].concat(route.query.memory_speeds || []),
+  ssdInterfaces: [].concat(route.query.ssdInterfaces || [])
+});
+
+
+// ACTIONS
+const updateFilters = (newFilters) => {
+  const query = { ...route.query };
+
+  for (const key in newFilters){
+    const value = newFilters[key];
+    // const queryKey = (key === 'memory_type' ? 'memorySpecs.memory_type' : key ) ||
+
+  }
+}
+
+const resetFilters = () => {
+  router.push({ query: {} }); // push empty query router when reset button clicked
+}
+
+// PAGINATION
+const goToPage = (page) => {
+  const query = { ...route.query, page}; // query retains the query params and the page number
+  console.log(query);
+
+  // if page number is less than 1 all query parameter for page is deleted
+  if(page <=1){
+    delete query.page;
+  }
+
+  // if page is different from 0 and 1 we pass to router the route with query parameters and page
+  router.push({ query });
+}
+
+// pagination function for next page and previous page 
+const nextPage = () => {
+  // if current page is less than total page based on query we allow next page navigation
+  if(currentPage. value < totalPages.value){
+    goToPage(currentPage.value +1);
+  }
+};
+
+const previousPage = () => {
+  //if current page is more than 1 
+  if(currentPage.value > 1 ){
+    goToPage(currentPage.value - 1);
+  }
+};
+
+// Watcher 
+
+/*
+  When URL changes we fetch new data, no side effects as we use the old value for comparison to avoid refetching certain servers
+
+*/
+
+watch(() => route.query, async (newQuery) => {
+  loading.value = true; 
   error.value = null;
-  try {
-    const params = new URLSearchParams({
-      page: currentPage.value,
-      limit: 20,
-    });
 
-    if (filters.value.brand) {
-      params.append('brand', filters.value.brand);
-    }
+  try{
 
-    // more filters based on server schema
-
+    const params = new URLSearchParams(newQuery); // this turns to a string like brand=dell&socket=am5
+    // fetch data with the new query params
     const response = await axios.get(`/api/servers?${params.toString()}`);
-    
     servers.value = response.data.servers;
     totalPages.value = response.data.totalPages;
-    totalServers.value = response.data.totalDocs;
+    totalServers.value = response.data.totalServers;
 
-  } catch (err) {
-    error.value = 'Failed to fetch servers. Please try again later.';
-    console.error(err);
-  } finally {
+  }catch(err){
+    if(err.response.status === 404){
+      error.value = 'No Servers Match Your Selection';
+    }else {
+      error.value = 'Failed to fetch servers. Please Try Again later.'
+    }
+  }finally{
     loading.value = false;
   }
-};
+}, { immediate: true, deep: true});
 
-// --- URL Update Logic ---
-const updateUrl = () => {
-  const query = {};
-  // Only add parameters to the URL if they have a value
-  if (currentPage.value > 1) {
-    query.page = currentPage.value;
-  }
-  if (filters.value.brand) {
-    query.brand = filters.value.brand;
-  }
-  if (filters.value.model) {
-    query.model = filters.value.model;
-  }
-  router.push({ query });
-};
 
-// --- Pagination Handlers ---
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++;
-    updateUrl();
-  }
-};
-
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-    updateUrl();
-  }
-};
-
-// --- Reactivity ---
-// Watch for user input on filters and update the URL
-watch(filters, () => {
-  currentPage.value = 1; // Reset page to 1 on any filter change
-  updateUrl();
-}, { deep: true });
-
-// Watch the URL query and treat it as the source of truth
-watch(() => route.query, (newQuery) => {
-  // Update component state from the URL
-  currentPage.value = parseInt(newQuery.page) || 1;
-  filters.value.brand = newQuery.brand || '';
-  filters.value.model = newQuery.model || '';
-  
-  // Fetch data based on the state derived from the URL
-  fetchServers();
-}, { immediate: true }); // immediate: true ensures it runs on component load
 
 </script>
 
@@ -107,44 +122,32 @@ watch(() => route.query, (newQuery) => {
   <div class="part-collection">
     <ServerFilterBox />
     <div class="collection-container">
-        <div class="title-collection d-flex flex-row align-items-center">
-          <!-- Missing Server SVG -->
-          <h1>Server Collection</h1>
-        </div>
-
-        <p v-if="totalServers > 0">Browse our catalog of Servers ({{ totalServers }} Servers)</p>
-  
-        <!-- Filter Controls -->
-        <div class="filter-controls">
-          <input type="text" v-model.lazy="filters.brand" placeholder="Filter by Brand..." class="filter-input" />
-          <input type="text" v-model.lazy="filters.model" placeholder="Filter by Model..." class="filter-input" />
-        </div>
-  
-        <!-- Loading and Error State -->
-        <div v-if="loading" class="loading-message">Loading servers...</div>
-        <div v-if="error" class="error-message">{{ error }}</div>
-  
-        <!-- Server Grid and No Results -->
-        <div v-if="!loading && !error">
-          <div v-if="servers.length > 0" class="server-grid">
-            <!-- Server Card -->
-            <div v-for="server in servers" :key="server._id" class="server-card">
-              <h3 class="server-brand">{{ server.brand }}</h3>
-              <p class="server-model">{{ server.model }}</p>
-              <!-- You can add more server details here -->
-            </div>
-          </div>
-          <div v-else class="no-results">
-            <p>No servers found matching your criteria.</p>
-          </div>
-        </div>
-  
-      <!-- Pagination Controls -->
-      <div v-if="!loading && totalPages > 1" class="pagination-controls">
-        <button @click="prevPage" :disabled="currentPage <= 1">Previous</button>
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
-        <button @click="nextPage" :disabled="currentPage >= totalPages">Next</button>
+      <div class="title-collection d-flex flex-row align-items-center">
+        <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.3334 1.33325H2.66671C1.93033 1.33325 1.33337 1.93021 1.33337 2.66659V5.33325C1.33337 6.06963 1.93033 6.66659 2.66671 6.66659H13.3334C14.0698 6.66659 14.6667 6.06963 14.6667 5.33325V2.66659C14.6667 1.93021 14.0698 1.33325 13.3334 1.33325Z" stroke="#082D5E" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13.3334 9.33325H2.66671C1.93033 9.33325 1.33337 9.93021 1.33337 10.6666V13.3333C1.33337 14.0696 1.93033 14.6666 2.66671 14.6666H13.3334C14.0698 14.6666 14.6667 14.0696 14.6667 13.3333V10.6666C14.6667 9.93021 14.0698 9.33325 13.3334 9.33325Z" stroke="#082D5E" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 4H4.00667" stroke="#082D5E" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 12H4.00667" stroke="#082D5E" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Server Collection</h1>
       </div>
+
+      <p v-if="totalServers > 0">Current List: ({{ totalServers }} Servers)</p>
+
+      <div v-if="loading" class="loading-message">
+        Loading Servers
+      </div>
+
+      <div v-if="error" class="error-message">
+        {{ error }}
+        <RouterLink to="/servers">Reset Filter</RouterLink>
+      </div>
+
+      <!-- if loading is completed and there is no error add Server Card -->
+      <div v-if="!loading && !error">
+
+      </div>
+      
     </div>
   </div>
   

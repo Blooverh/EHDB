@@ -7,6 +7,7 @@ import ServerCollection from '@/views/ServerCollection.vue';
 import CpuCollection from '@/views/CpuCollection.vue';
 import IndividualCpu from '@/views/IndividualCpu.vue';
 import BrandedCpuCollection from '@/views/BrandedCpuCollection.vue';
+import SearchPage from '@/views/SearchPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/cpus/:brand/:slug',
       name: 'Individual CPU',
       component: IndividualCpu,
+    },
+    { // might need to add query URI (?)
+      path: '/search',
+      name: 'Search For Part',
+      component: SearchPage
     },
     {
       path: '/:pathMatch(.*)*', name: 'Not Found', component: NotFound,

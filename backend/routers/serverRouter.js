@@ -54,12 +54,13 @@ serverRouter.get('/servers', async (req, res) => {
 
                 if(values.length > 1){
                     // Multiple values we use $in operator for DB querying 
-                    if(field === 'brand' || field === 'socketInfo' ){
-
+                    if(field === 'brand' || field === 'socketInfo' || 'compatibleCpuGen' || 'memorySpecs.memory_type' || 'memorySpecs.speeds', 'ssdInterfaces'){
+                        
+                        filter[field] = {$in : values};
+                    }else {
                         // use case-insensitive regex for other multiple-value string fields
                         const regexArray = values.map(val => new RegExp(`^${val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i'));
-                        
-                        filter[field] = {$in : regexArray};
+                        filter[field] = { $in: regexArray}
                     }
                 }else if (values.length === 1 && values[0]){
                     // single value: use $regex for case-insensitivity
@@ -72,8 +73,8 @@ serverRouter.get('/servers', async (req, res) => {
         });
 
         // total number of servers (server documents) that match the filter
-        const totalDocs = await Server.countDocuments(filter);
-        const totalPages = Math.ceil(totalDocs / limit);
+        const totalServers = await Server.countDocuments(filter);
+        const totalPages = Math.ceil(totalServers / limit);
 
         // fetch servers for current page 
         const servers = await Server.find(filter)
@@ -84,14 +85,15 @@ serverRouter.get('/servers', async (req, res) => {
         // Only return 404 if no documents match the filter at all 
         /* iF user requests a page that is out of bounds, they get a success response 
         with an empty servers array */
-        if(totalDocs  === 0){
+        if(totalServers  === 0){
             return res.status(404).json({message: 'No Servers Found'});
         }
 
         // send response 
-        res.json({servers, totalPages, currentPage: parseInt(page), totalDocs});
+        res.json({servers, totalPages, currentPage: parseInt(page), totalServers});
 
     }catch(error){
+        console.log(error);
         res.status(500).json({message: 'Internal Server Error'});
     }
 

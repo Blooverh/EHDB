@@ -58,4 +58,8 @@ import SearchBar from './SearchBar.vue';
     .home-img{
         max-width: 5rem;
     }
+
+    .dropdown-menu > li{
+        padding: 5px;
+    }
 </style>
