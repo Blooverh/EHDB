@@ -6,20 +6,20 @@
   gap: 20px;
 }
 
-.cpu-card {
+.cpu-card, .server-card {
   border: 2px solid #1AC6FF;
   border-radius: 8px;
   
 }
 
-.cpu-title{
+.cpu-title, .server-title{
   text-decoration: none;
   font-size: 2rem;
   color: #1AC6FF;
   font-weight: 700;
 }
 
-.cpu-title:hover{
+.cpu-title:hover, .server-title:hover {
   color: #1068a6;
   text-decoration: none;
 }

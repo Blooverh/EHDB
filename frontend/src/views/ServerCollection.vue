@@ -4,6 +4,8 @@ import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 import '../assets/css/hardwareCollection.css';
 import ServerFilterBox from '@/components/ServerFilterBox.vue';
+import { ArrowBigLeft, ArrowBigRight } from 'lucide-vue-next';
+import ServerCard from '@/components/serverCard.vue';
 
 // --- Router and Route instances ---
 const router = useRouter();
@@ -41,13 +43,31 @@ const selectedFilters = ref({
 
 // ACTIONS
 const updateFilters = (newFilters) => {
-  const query = { ...route.query };
+  const query = { ...route.query }; // get filters 
 
+  // iterate over each key in new filters
   for (const key in newFilters){
+    // iterate over each key and variable will return the value associated with the key
     const value = newFilters[key];
-    // const queryKey = (key === 'memory_type' ? 'memorySpecs.memory_type' : key ) ||
+
+    // check if key has a relation to the keys in the DB that are properties of another object (Server property) if it is not value is the key
+    const queryKey = (key === 'memory_type' ? 'memorySpecs.memory_type' : key ) || (key === 'memory_speeds' ? 'memorySpecs.speeds' : key);
+
+    // check if value is a value, a non empty string or an array with at least 1 index
+    // if its true we assign the value to the query based on that key
+    if(value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)){
+      query[queryKey] = value;
+    }else { // otherwise if one of the conditions is false we delete the query
+      delete query[queryKey];
+    }
 
   }
+
+  // When filters change, we always reset to the first page 
+  delete query.page;
+
+  // and we push the new built query
+  router.push({ query });
 }
 
 const resetFilters = () => {
@@ -120,7 +140,9 @@ watch(() => route.query, async (newQuery) => {
 
 <template>
   <div class="part-collection">
+
     <ServerFilterBox />
+
     <div class="collection-container">
       <div class="title-collection d-flex flex-row align-items-center">
         <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -145,10 +167,23 @@ watch(() => route.query, async (newQuery) => {
 
       <!-- if loading is completed and there is no error add Server Card -->
       <div v-if="!loading && !error">
+        
+        <div v-if="servers.length > 0" class="d-grid gap-3 m-3">
+          <ServerCard v-for="server in servers" :key="server._id" :server="server" class="server-card p-2"/>
+        </div>
+
+        <div v-else class="no-results">
+          <p>No Servers matching your criteria.</p>
+        </div>
 
       </div>
-      
+
+      <!-- Pagination Controls -->
+      <div v-if="!loading && totalPages  > 1" class="pagination-controls d-flex justify-content-center">
+        <button @click="previousPage" :disabled="currentPage <= 1" :class="{'active' : currentPage > 1}" class="btn-box-left p-2"><ArrowBigLeft /></button>
+        <span class="p-2 fw-bold">Page {{  currentPage }} of {{  totalPages }}</span>
+        <button class="btn-box-right p-2" @click="nextPage" :disabled="currentPage >= totalPages" :class="{'active': currentPage <= totalPages}"><ArrowBigRight /></button>
+      </div>
     </div>
   </div>
-  
 </template>

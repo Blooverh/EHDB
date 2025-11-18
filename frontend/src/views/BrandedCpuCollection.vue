@@ -193,7 +193,7 @@
             </div>
 
             <div v-if="!loading && !error">
-                <div v-if="cpus.length > 0" class="cpu-grid d-grid gap-3 m-3">
+                <div v-if="cpus.length > 0" class="d-grid gap-3 m-3">
                     <CpuCard v-for="cpu in cpus" :key="cpu._id" :cpu="cpu" class="cpu-card p-2"/>
                 </div>
                 <div v-else class="no-results">
