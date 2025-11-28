@@ -57,7 +57,7 @@
                             <path d="M4 12H4.00667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         <span class="box-span">Servers</span>
-                        <span class="parts-in-db"> {{ servers.length }}</span>
+                        <span class="parts-in-db" v-if="servers.length > 100"> 100+</span>
                     </div>
                     <div v-else>
                         <p>Loading Servers</p>
@@ -80,7 +80,7 @@
                             <path d="M6 1.33325V2.66659" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         <span class="box-span">Processors</span>
-                        <span class="parts-in-db"> {{ cpus.length }}</span>
+                        <span class="parts-in-db" v-if="cpus.length > 400"> 400+</span>
                     </div>
                     <div v-else>
                         <p>Loading Processors</p>
