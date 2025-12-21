@@ -27,7 +27,7 @@
                 </p>
 
                 <span class="created-by">
-                    Created By: <strong>Diogo Aires </strong>
+                    Created By: <strong>Blooverh</strong>
                 </span>
             </div>
 
