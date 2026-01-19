@@ -8,6 +8,7 @@ import path from 'path';
 // Routers for each hardware part
 import { cpuRouter } from './routers/cpuRouter.js';
 import { serverRouter } from './routers/serverRouter.js';
+import { searchRouter } from './routers/searchRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,6 +44,7 @@ mongoose.connect(MONGO_URI).then(() => {
 
 app.use('/api', cpuRouter);
 app.use('/api', serverRouter);
+app.use('/api', searchRouter);
 
 
 // All remaining requests return the Vue app, so it can handle routing

@@ -43,4 +43,13 @@ const cpuSchema = new mongoose.Schema({
     }
 });
 
+/* 
+    .index() - used for indexing in a pre-sorted list the follow properties of cpus for fast search like indexing a book by indexing each cpu document based on
+    brand, model, codename, generation, etc... (can add more indexing properties if possible)
+    by indexing to 'text' allows handling of word variations like pluralism, ignores filler words like 'a', 'the', 'in' etc...
+    Helps pre-organizing our database documents (objects) based on text matching for fast look up
+*/
+
+cpuSchema.index({ brand: 'text', model: 'text', codename: 'text', generation: 'text' }); 
+
 export const CPU = mongoose.model('CPU', cpuSchema);

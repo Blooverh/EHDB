@@ -11,6 +11,7 @@ const cpus = ref(0); // individual cpu entries
 const servers = ref(0); // individual server entries 
 const hardwareEntries = ref(0); // all hardware entries
 
+// need to find how to use loading reactive obj for components who fetch database data
 const loading = ref(true);
 const error = ref(false);
 

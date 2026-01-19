@@ -15,7 +15,7 @@
 
 <template>
     <div class="custom-box mb-5">
-        <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-row justify-content-between flex-wrap">
             <!-- Contains SVG and arrow with link -->
             <div :class="`${ svgTypeClass }`">
                 <svg v-if="hardwareType == 'Processors'" width="50" height="50" viewBox="-4 -4 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
