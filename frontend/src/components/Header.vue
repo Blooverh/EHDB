@@ -1,5 +1,5 @@
 <script setup>
-import SearchBar from './SearchBar.vue';
+
 </script>
 
 <template>
@@ -48,7 +48,8 @@ import SearchBar from './SearchBar.vue';
                     </li>
                 </ul>
 
-                <SearchBar />
+                <!-- Search Button -->
+                 
             </div>
         </div>
     </nav>
