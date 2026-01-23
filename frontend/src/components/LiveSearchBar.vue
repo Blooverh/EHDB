@@ -76,6 +76,16 @@
     }, 300); // 300ms debounce delay
   };
 
+  // implements on click of search button, redirect to search page with input string stored for automatic search on search page
+  const searchRedirect = () => {
+    // only redirect if there is a non-empty string search term on input element
+    if(searchTerm.value.trim() !== ''){
+      router.push({name: 'Search For Part', query: { q: searchTerm.value }});
+    }
+
+    closeResults();
+  };
+
   // Handles keyboard navigation for the search results dropdown.
   const onKeydown = (e) => {
     if (!showResults.value || flatResults.value.length === 0) return; // Only navigate if results are visible and exist
@@ -182,9 +192,10 @@
         v-model="searchTerm"
         @input="onInput"
         @keydown="onKeydown"
+        @keyup.enter="searchRedirect"
       />
       <!-- The search button is kept for consistency but the primary search is live -->
-      <button type="button" class="search-btn">Search</button>
+      <button type="button" class="search-btn" @click="searchRedirect" >Search</button>
     </div>
     <!-- Search Results Dropdown -->
     <div v-if="showResults" class="search-results">

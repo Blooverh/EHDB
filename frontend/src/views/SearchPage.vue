@@ -21,7 +21,7 @@
     error.value = null;
     try {
       const response = await axios.get(`/api/full-search?q=${searchTerm}`);
-      results.value = response.data;
+      results.value = response.data.results;
     } catch (err) {
       console.error('Error fetching search results:', err);
       error.value = 'Failed to fetch search results. Please try again later.';

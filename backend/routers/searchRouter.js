@@ -56,24 +56,52 @@ router.get('/full-search', async (req, res) => {
         return res.status(400).json({ message: 'Search query is empty and it is required'});
     }
 
+    // page query paramters to add pagination to search page
+    const {page = 1, limit = 10} = req.query;
+
     try{
 
         const searchQuery = { $text: { $search: q }}; // mongoose parameters based on text index searching for matches with query q
         const scoreProjection = { score: { $meta: 'textScore'}}; // score property for matching score of query term to document 
 
         const cpuResults = await CPU.find(searchQuery, scoreProjection)
-        .sort({ score: { $meta: 'textScore'}}); // sort documents by textScore using meta operator
+        .sort({ score: { $meta: 'textScore'}}) // sort documents by textScore using meta operator
+        .limit(parseInt(limit))
+        .skip((page - 1) * limit); 
         
 
         const serverResults = await Server.find(searchQuery, scoreProjection)
-        .sort( {score: {$meta: 'textScore'}}); // sort documents by textScore using meta operator
+        .sort( {score: {$meta: 'textScore'}}) // sort documents by textScore using meta operator
+        .limit(parseInt(limit)) // limit display to 10 documents per page for pagination
+        .skip((page - 1) * limit);
 
         const results = {
             cpus: cpuResults, 
             servers: serverResults
         };
 
-        res.json(results);
+        const totalCPUs_by_query = await CPU.countDocuments(searchQuery, scoreProjection);
+        console.log(totalCPUs_by_query);
+
+        const totalServers_by_query = await Server.countDocuments(searchQuery, scoreProjection);
+        console.log(totalServers_by_query);
+
+        const total_parts_by_query = totalCPUs_by_query + totalServers_by_query;
+
+        const totalPages = Math.ceil(total_parts_by_query/limit);
+        console.log(totalPages);
+
+        let totalParts = 0;
+        const parts = Object.keys(results).length;
+        
+        for(const key of Object.keys(results)){
+            totalParts += key.length;
+        }
+        
+        
+
+        // res.json(results);
+        res.json({results, totalParts, total_parts_by_query, totalPages, currentPage: parseInt(page)})
 
     }catch(err){
         console.error('Search error: ', err);

@@ -1,5 +1,5 @@
 <script setup>
-
+    
 </script>
 
 <template>
@@ -49,7 +49,7 @@
                 </ul>
 
                 <!-- Search Button -->
-                 
+                <RouterLink class="search-btn" :to="`/search`">Search Hardware</RouterLink>
             </div>
         </div>
     </nav>
@@ -62,5 +62,29 @@
 
     .dropdown-menu > li{
         padding: 5px;
+    }
+
+    .search-btn {
+       padding: 10px;
+       border-radius: 8px;
+       background: linear-gradient(to right, cyan, blue); 
+       font-weight: bold;
+       color: white;
+       text-decoration: none;
+       transition: background-position 0.5s ease-in-out;
+       cursor: pointer;
+       background-size: 200% 100%; /* Make background twice as wide */
+       background-position: 0% 0%;  /* Start at the beginning of the gradient */
+    }
+
+    .search-btn:hover {
+        background-position: 100% 0%;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px); 
+    }
+
+    .search-btn:active {
+        transform: translateY(0); /* Press down effect */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)
     }
 </style>
