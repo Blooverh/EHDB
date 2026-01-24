@@ -1,27 +1,34 @@
 <script setup>
-  import { ref, onMounted, watch, computed } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { ref, watch, computed } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
   import axios from 'axios';
   import CpuCard from '@/components/CpuCard.vue';
   import serverCard from '@/components/serverCard.vue';
   import '../assets/css/hardwareCollection.css';
+  import { ArrowBigRight, ArrowBigLeft } from 'lucide-vue-next';
 
   const route = useRoute();
-  const query = ref(route.query.q || '');
+  const router = useRouter();
+  const query = ref('');
   const results = ref({ cpus: [], servers: [] });
   const isLoading = ref(false);
   const error = ref(null);
+  const totalPages = ref(0);
+  const currentPage = ref(1);
 
-  const fetchResults = async (searchTerm) => {
+  const fetchResults = async (searchTerm, page = 1) => {
     if (!searchTerm) {
       results.value = { cpus: [], servers: [] };
+      totalPages.value = 0;
       return;
     }
     isLoading.value = true;
     error.value = null;
     try {
-      const response = await axios.get(`/api/full-search?q=${searchTerm}`);
+      const response = await axios.get(`/api/full-search?q=${searchTerm}&page=${page}`);
       results.value = response.data.results;
+      totalPages.value = response.data.totalPages;
+      currentPage.value = response.data.currentPage;
     } catch (err) {
       console.error('Error fetching search results:', err);
       error.value = 'Failed to fetch search results. Please try again later.';
@@ -30,18 +37,28 @@
     }
   };
 
-  onMounted(() => {
-    fetchResults(query.value);
-  });
-
-  watch(() => route.query.q, (newQuery) => {
-    query.value = newQuery;
-    fetchResults(newQuery);
-  });
+  watch(() => route.query, (newQuery) => {
+    query.value = newQuery.q || '';
+    const page = parseInt(newQuery.page || '1', 10);
+    fetchResults(query.value, page);
+  }, { immediate: true });
 
   const hasResults = computed(() => {
       return (results.value.cpus && results.value.cpus.length > 0) || (results.value.servers && results.value.servers.length > 0)
   })
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages.value) {
+        router.push({ query: { ...route.query, page } });
+    }
+  };
+
+  const newSearch = () => {
+      if (query.value) {
+        router.push({ query: { q: query.value, page: 1 } });
+      }
+  };
+
 </script>
 
 
@@ -55,9 +72,9 @@
           class="search-input"
           placeholder="Search for servers, processors, SSDs etc..."
           v-model="query"
-          @keydown.enter="fetchResults(query)"
+          @keydown.enter="newSearch"
         />
-        <button type="button" class="search-btn" @click="fetchResults(query)">Search</button>
+        <button type="button" class="search-btn" @click="newSearch">Search</button>
       </div>
     </div>
     <div v-if="isLoading" class="loading">Loading...</div>
@@ -66,19 +83,24 @@
       <div v-if="results.cpus && results.cpus.length" class="cpu-results">
         <h2>CPUs</h2>
         <div class="d-grid gap-3 m-3">
-          <CpuCard v-for="cpu in results.cpus" :key="cpu._id" :cpu="cpu" />
+          <CpuCard class="cpu-card p-2" v-for="cpu in results.cpus" :key="cpu._id" :cpu="cpu" />
         </div>
       </div>
       <div v-if="results.servers && results.servers.length" class="server-results">
         <h2>Servers</h2>
         <div class="d-grid gap-3 m-3">
-          <serverCard v-for="server in results.servers" :key="server._id" :server="server" />
+          <serverCard class="server-card p-2" v-for="server in results.servers" :key="server._id" :server="server" />
         </div>
       </div>
     </div>
     <div v-else class="no-results">
       <h2>Looking for "{{ query }}"</h2>
       <p>If no hardware displayed, try another term.</p>
+    </div>
+    <div v-if="totalPages > 1" class="pagination-controls d-flex justify-content-center">
+        <button class="p-2 btn-box-left" :class="{'active': currentPage > 1}" @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"><ArrowBigLeft /></button>
+        <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="p-2 btn-box-right" :class="{'active': currentPage <= totalPages}" @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"><ArrowBigRight /></button>
     </div>
   </div>
 </template>
@@ -140,10 +162,17 @@ h1, h2 {
   margin-bottom: 1rem;
 }
 
+.server-results > h2, .cpu-results > h2 {
+  font-weight: bold;
+  color: #007bff;
+  font-size: 40px;
+}
+
 .loading, .error, .no-results {
   text-align: center;
   font-size: 1.2rem;
   color: #666;
   margin-top: 4rem;
 }
+
 </style>
