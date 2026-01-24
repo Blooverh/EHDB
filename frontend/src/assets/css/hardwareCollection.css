@@ -11,7 +11,7 @@
 } */
 
 .cpu-card, .server-card {
-  border: 2px solid #1AC6FF;
+  border: 2px solid #007bff;
   border-radius: 8px;
   
 }
@@ -19,7 +19,7 @@
 .cpu-title, .server-title{
   text-decoration: none;
   font-size: 2rem;
-  color: #1AC6FF;
+  color: #007bff;
   font-weight: 700;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .solid-separation {
-  border: 2px solid #1AC6FF;
+  border: 2px solid #007bff;
 }
 
 .btn-box-left, .btn-box-right {
@@ -46,7 +46,7 @@
 }
 
 .active svg:hover {
-  stroke: #1AC6FF;
+  stroke: #007bff;
 }
 
 .spec-tl {
@@ -75,15 +75,16 @@
 }
 
 .reset{
-  background-color: #1AC6FF;
+  background-color: #007bff;
   font-weight: 700;
   border-radius: 8px;
   border: none;
   padding: 5px;
+  color: white;
 }
 
 .reset:hover {
-  background-color: #1ac6ffb6;
+  background-color: #007bffb6;
 }
 
 .filter-header{
@@ -97,7 +98,7 @@
   flex-direction: column;
   justify-content: space-between;
   border-radius: 8px;
-  border: solid 1px #1AC6FF;
+  border: solid 1px #007bff;
 }
 
 .option-box {
@@ -127,7 +128,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1AC6FF;
+  background-color: #007bff;
   border-radius: 8px;
   padding: 5px;
 }
@@ -136,6 +137,7 @@
   background-color: inherit;
   border: none;
   padding: 5px;
+  color: white;
 }
 
 .toggle-btn:hover {
@@ -144,4 +146,9 @@
 
 .filter-tl {
   margin: 0px;
+  color: white;
+}
+
+.input-option > label {
+  cursor: pointer;
 }

@@ -65,7 +65,7 @@
     }
 
     .browse-link {
-        color: #1AC6FF;
+        color: #007bff;
     }
 
     .svg-box-servers {
@@ -82,7 +82,7 @@
     }
 
     .lucide-arrow-right:hover {
-        stroke: #1AC6FF !important;
+        stroke: #007bff !important;
     }
 
 </style>

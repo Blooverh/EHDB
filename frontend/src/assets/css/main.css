@@ -1,4 +1,8 @@
 /* General Reset */
+:root {
+  --primary-color: #007bff;
+}
+
 *,
 *::before,
 *::after {

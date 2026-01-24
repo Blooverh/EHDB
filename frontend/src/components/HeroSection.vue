@@ -161,7 +161,7 @@
     }
 
     .cpu-box:hover .cpu-icon, .server-box:hover .server-icon {
-        color: #1AC6FF;
+        color: #007bff;
     }
 
     .box-align{
