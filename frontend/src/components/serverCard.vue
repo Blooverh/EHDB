@@ -15,7 +15,7 @@
             <RouterLink class="server-title" :to="`/servers/${server.brand.toLowerCase()}/${server.slug}`">{{ server.brand }} {{ server.model }}</RouterLink>
             <div class="server-tags d-flex flex-row justify-content-center gap-2">
                 <p class="tag">{{ server.socketInfo }}</p>
-                <p class="tag">{{ server.compatibleCpuGen }}</p>
+                <p class="tag">{{ server.compatibleCpuGen[0] }}</p>
                 <p class="tag">{{ server.motherboardType }}</p>
             </div>
         </div>

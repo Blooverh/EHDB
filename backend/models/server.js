@@ -13,27 +13,27 @@ const serverSchema = new mongoose.Schema({
         websiteLink: {type: String, default: defVal}
     }],
     socketInfo: {type: String, default: defVal},
-    compatibleCpuGen: {type: String, default: defVal},
+    compatibleCpuGen: [{type: String, default: defVal}],
     motherboardType: {type: String, default: defVal},
     memorySpecs: {
-        memory_type: [{type: [String], default: [defVal]}],
-        speeds: [{type: [Number], default: [0]}],
-        max_configs:[{type: [String], default: [defVal]}] 
+        memory_type: [{type: String, default: defVal}],
+        speeds: [{type: Number, default: 0}],
+        max_configs:[{type: String, default: defVal}] 
     },
-    ssdInterfaces: [{type: [String], default: [defVal]}],
-    expansionSlots: [{type: [String], default: [defVal]}],
-    compatibleRaids: [{type: [String], default: [defVal]}],
-    compatibleOs: [{type: [String], default: [defVal]}],
-    compatibleNics: [{type: [String], default: [defVal]}],
-    nicInterfaces: [{type: [String], default: [defVal]}],
-    compatiblePSU: [{type: [String], default: [defVal]}],
+    ssdInterfaces: [{type: String, default: defVal}],
+    expansionSlots: [{type: String, default: defVal}],
+    compatibleRaids: [{type: String, default: defVal}],
+    compatibleOs: [{type: String, default: defVal}],
+    compatibleNics: [{type: String, default: defVal}],
+    nicInterfaces: [{type: String, default: defVal}],
+    compatiblePSU: [{type: String, default: defVal}],
     releaseDate: {
         type: Date,
         set: (val) => new Date(val)
     },
     userManual: {type: String, default: defVal},
     techSpecs: {type: String, default: defVal},
-    sysManagement: [{type: [String], default: [defVal]}],
+    sysManagement: [{type: String, default: defVal}],
     slug: {type: String, default: defVal},
 
 });

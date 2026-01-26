@@ -99,6 +99,25 @@ serverRouter.get('/servers', async (req, res) => {
 
 });
 
+// All Server Collection Filter, give all values for server properties in server model we use for filtering
+serverRouter.get('/servers/filter-options', async (req, res) => {
+    // use .distinct() to find all distinct values for a specific field in model
+    try{
+        const brands = await Server.distinct("brand");
+        const socket = await Server.distinct("socketInfo"); 
+        const cpuGen = await Server.distinct("compatibleCpuGen");
+        const moboType = await Server.distinct("motherboardType");
+        const memoryType = await Server.distinct("memorySpecs.memory_type");
+        const speeds = await Server.distinct("memorySpecs.speeds");
+
+        res.json({ brands, socket, cpuGen, moboType, memoryType, speeds });
+
+
+    }catch(err){
+        res.status(500).json({message: 'Internal Server Error'});
+    }
+});
+
 serverRouter.get('/servers-length', async (req, res) => {
 
     try{
