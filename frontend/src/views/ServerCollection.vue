@@ -11,6 +11,9 @@ import ServerCard from '@/components/serverCard.vue';
 const router = useRouter();
 const route = useRoute();
 
+// --- Template Refs ---
+const filterBoxRef = ref(null);
+
 // --- State Management ---
 const servers = ref([]);
 // current page is now a computed property derived from the URL
@@ -47,6 +50,13 @@ const previousPage = () => {
   //if current page is more than 1 
   if(currentPage.value > 1 ){
     goToPage(currentPage.value - 1);
+  }
+};
+
+// --- Error Handling ---
+const handleErrorReset = () => {
+  if (filterBoxRef.value) {
+    filterBoxRef.value.resetFilter();
   }
 };
 
@@ -88,7 +98,7 @@ watch(() => route.query, async (newQuery) => {
 <template>
   <div class="part-collection">
 
-    <ServerFilterBox />
+    <ServerFilterBox ref="filterBoxRef" />
 
     <div class="collection-container">
       <div class="title-collection d-flex flex-row align-items-center">
@@ -109,7 +119,7 @@ watch(() => route.query, async (newQuery) => {
 
       <div v-if="error" class="error-message">
         {{ error }}
-        <RouterLink to="/servers">Reset Filter</RouterLink>
+        <button @click="handleErrorReset" class="btn btn-primary mt-2">Clear Filters</button>
       </div>
 
       <!-- if loading is completed and there is no error add Server Card -->
@@ -117,10 +127,6 @@ watch(() => route.query, async (newQuery) => {
         
         <div v-if="servers.length > 0" class="d-grid gap-3 m-3">
           <ServerCard v-for="server in servers" :key="server._id" :server="server" class="server-card p-2"/>
-        </div>
-
-        <div v-else class="no-results">
-          <p>No Servers matching your criteria.</p>
         </div>
 
       </div>

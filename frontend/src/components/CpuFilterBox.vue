@@ -15,7 +15,7 @@ const isSocketFilterAvailable = ref(false);
 const isCacheFilterAvailable = ref(false);
 
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
 
 const filters = ref({
   brands: [],
@@ -53,6 +53,7 @@ function updateFilters() {
     // Iterate over all filters managed by this component and update the query object.
     for (const key in selectedFilters.value) {
       const value = selectedFilters.value[key];
+      // query key to route cpu model property correctly to allow url to have correct filtering URI
       const queryKey = key === 'cache' ? 'cache.cacheL3' : key;
       // If the filter has a value, add it to the query.
       if (value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {

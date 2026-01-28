@@ -8,7 +8,7 @@ export const serverRouter = express.Router();
 serverRouter.get('/servers', async (req, res) => {
 
     // array of fields for filtering 
-    const filterableFields = ['brand', 'socketInfo', 'compatibleCpuGen', 'memorySpecs.memory_type', 'memorySpecs.speeds', 'ssdInterfaces'];
+    const filterableFields = ['brand', 'socketInfo', 'compatibleCpuGen', 'motherboardType', 'memorySpecs.memory_type', 'memorySpecs.speeds', 'ssdInterfaces'];
 
     /* numericFields allow change logic when adding parameter to URL by checking if property is the same on array
     iteration */
@@ -54,7 +54,7 @@ serverRouter.get('/servers', async (req, res) => {
 
                 if(values.length > 1){
                     // Multiple values we use $in operator for DB querying 
-                    if(field === 'brand' || field === 'socketInfo' || 'compatibleCpuGen' || 'memorySpecs.memory_type' || 'memorySpecs.speeds', 'ssdInterfaces'){
+                    if(field === 'brand' || field === 'socketInfo' || 'compatibleCpuGen' || 'memorySpecs.memory_type' || 'memorySpecs.speeds' || 'ssdInterfaces' || 'motherboardType'){
                         
                         filter[field] = {$in : values};
                     }else {
@@ -109,8 +109,9 @@ serverRouter.get('/servers/filter-options', async (req, res) => {
         const moboType = await Server.distinct("motherboardType");
         const memoryType = await Server.distinct("memorySpecs.memory_type");
         const speeds = await Server.distinct("memorySpecs.speeds");
+        const ssdInterfaces = await Server.distinct("ssdInterfaces");
 
-        res.json({ brands, socket, cpuGen, moboType, memoryType, speeds });
+        res.json({ brands, socket, cpuGen, moboType, memoryType, speeds, ssdInterfaces });
 
 
     }catch(err){
