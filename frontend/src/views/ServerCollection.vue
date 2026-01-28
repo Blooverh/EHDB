@@ -128,7 +128,6 @@ watch(() => route.query, async (newQuery) => {
         <div v-if="servers.length > 0" class="d-grid gap-3 m-3">
           <ServerCard v-for="server in servers" :key="server._id" :server="server" class="server-card p-2"/>
         </div>
-
       </div>
 
       <!-- Pagination Controls -->

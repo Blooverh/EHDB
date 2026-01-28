@@ -139,7 +139,7 @@
 
                 <Transition name="slide-fade">
                     <div v-if="isBrandFilterVisible" class="option-box">
-                        <div class="input-option" v-for="brand in filters.brands" :key="brand">
+                        <div class="input-option d-flex gap-2" v-for="brand in filters.brands" :key="brand">
                             <input type="checkbox" :id="brand" :value="brand" v-model="selectedFilters.brand" @change="updateFilters">
                             <label :for="brand" class="ml-2">{{ brand }}</label>
                         </div>
@@ -157,7 +157,7 @@
 
                 <Transition name="slide-fade">
                     <div v-if="isSocketFilterVisible" class="option-box">
-                        <div class="input-option" v-for="socket in filters.socket" :key="socket">
+                        <div class="input-option d-flex gap-2" v-for="socket in filters.socket" :key="socket">
                             <input type="checkbox" :id="socket" :value="socket" v-model="selectedFilters.socket" @change="updateFilters">
                             <label :for="socket" class="ml-2">{{ socket }}</label>
                         </div>
@@ -175,7 +175,7 @@
 
                 <Transition name="slide-fade">
                     <div v-if="isCpuGenFilterVisible" class="option-box">
-                        <div class="input-option" v-for="cpuGen in filters.cpuGen" :key="cpuGen">
+                        <div class="input-option d-flex gap-2" v-for="cpuGen in filters.cpuGen" :key="cpuGen">
                             <input type="checkbox" :id="cpuGen" :value="cpuGen" v-model="selectedFilters.cpuGen" @change="updateFilters">
                             <label :for="cpuGen" class="ml-2">{{ cpuGen }}</label>
                         </div>
@@ -193,7 +193,7 @@
 
                 <Transition name="slide-fade">
                     <div v-if="isStorageFilterVisible" class="option-box">
-                        <div class="input-option" v-for="ssd in filters.ssdInterfaces" :key="ssd">
+                        <div class="input-option d-flex gap-2" v-for="ssd in filters.ssdInterfaces" :key="ssd">
                             <input type="checkbox" :id="ssd" :value="ssd" v-model="selectedFilters.ssdInterfaces" @change="updateFilters">
                             <label :for="ssd" class="ml-2">{{ ssd }}</label>
                         </div>
@@ -211,7 +211,7 @@
 
                 <Transition name="slide-fade">
                     <div v-if="isMotherboardTypeFilterVisible" class="option-box">
-                        <div class="input-option" v-for="mobo in filters.moboType" :key="mobo">
+                        <div class="input-option d-flex gap-2" v-for="mobo in filters.moboType" :key="mobo">
                             <input type="checkbox" :id="mobo" :value="mobo" v-model="selectedFilters.moboType" @change="updateFilters">
                             <label :for="mobo" class="ml-2">{{ mobo }}</label>
                         </div>
@@ -219,6 +219,41 @@
                 </Transition>
             </div>
 
+            <div class="mb-4 brand-box">
+                <div class="filter-header">
+                    <p class="fw-bold filter-tl">Compatible Memory Speeds</p>
+                    <button type="button" class="toggle-btn" @click="isSpeedsFilterVisible = !isSpeedsFilterVisible">
+                        {{ isSpeedsFilterVisible ? 'Hide' : 'Show' }}
+                    </button>
+                </div>
+
+                <Transition name="slide-fade">
+                    <div v-if="isSpeedsFilterVisible" class="option-box">
+                        <div class="input-option d-flex gap-2" v-for="speed in filters.speeds" :key="speed">
+                            <input type="checkbox" :id="speed" :value="speed" v-model="selectedFilters.speeds" @change="updateFilters">
+                            <label :for="speed" class="ml-2">{{ speed }}MT/s</label>
+                        </div>
+                    </div>
+                </Transition>
+            </div>
+
+            <div class="mb-4 brand-box">
+                <div class="filter-header">
+                    <p class="fw-bold filter-tl">Compatible Memory Types</p>
+                    <button type="button" class="toggle-btn" @click="isMemoryTypeFilterVisible = !isMemoryTypeFilterVisible">
+                        {{ isMemoryTypeFilterVisible ? 'Hide' : 'Show' }}
+                    </button>
+                </div>
+
+                <Transition name="slide-fade">
+                    <div v-if="isMemoryTypeFilterVisible" class="option-box">
+                        <div class="input-option d-flex gap-2" v-for="memType in filters.memoryType" :key="memType">
+                            <input type="checkbox" :id="memType" :value="memType" v-model="selectedFilters.memoryType" @change="updateFilters">
+                            <label :for="memType" class="ml-2">{{ memType }}</label>
+                        </div>
+                    </div>
+                </Transition>
+            </div>
 
         </div>
     </div>

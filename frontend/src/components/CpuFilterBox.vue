@@ -104,7 +104,7 @@ function resetFilter() {
 
         <Transition name="slide-fade">
           <div v-if="isBrandFilterVisible" class="option-box">
-            <div class="input-option" v-for="brand in filters.brands" :key="brand">
+            <div class="input-option d-flex gap-2" v-for="brand in filters.brands" :key="brand">
               <input type="checkbox" :id="brand" :value="brand" v-model="selectedFilters.brand" @change="updateFilters">
               <label :for="brand" class="ml-2">{{ cpuBrandFormatter(brand) }}</label>
             </div>
@@ -122,7 +122,7 @@ function resetFilter() {
 
         <Transition name="slide-fade">
           <div v-if="isSocketFilterAvailable" class="option-box">
-            <div class="input-option" v-for="socket in filters.socket" :key="socket">
+            <div class="input-option d-flex gap-2" v-for="socket in filters.socket" :key="socket">
               <input type="checkbox" :id="socket" :value="socket" v-model="selectedFilters.socket" @change="updateFilters">
               <label :for="socket" class="ml-2">{{ socket }}</label>
             </div>
@@ -140,7 +140,7 @@ function resetFilter() {
 
         <Transition name="slide-fade">
           <div class="option-box" v-if="isGenFilterVisible">
-            <div class="input-option" v-for="generation in filters.generation" :key="generation">
+            <div class="input-option d-flex gap-2" v-for="generation in filters.generation" :key="generation">
               <input type="checkbox" name="generation" :id="generation" :value="generation" v-model="selectedFilters.generation" @change="updateFilters">
               <label :for="generation" class="ml-2">{{ generation }}</label>
             </div>
@@ -155,7 +155,7 @@ function resetFilter() {
         </div>
         <Transition name="slide-fade">
           <div class="option-box" v-if="isCodenameFilterVisible">
-            <div class="input-option" v-for="codename in filters.codename" :key="codename">
+            <div class="input-option d-flex gap-2" v-for="codename in filters.codename" :key="codename">
               <input type="checkbox" name="codename" :id="codename" :value="codename" v-model="selectedFilters.codename" @change="updateFilters">
               <label :for="codename" class="ml-2">{{ codename }}</label>
             </div>
@@ -170,7 +170,7 @@ function resetFilter() {
         </div>
         <Transition name="slide-fade">
           <div class="option-box" v-if="isMemSupportFilterVisible">
-            <div class="input-option" v-for="memory in filters.memorySupport" :key="memory">
+            <div class="input-option d-flex gap-2" v-for="memory in filters.memorySupport" :key="memory">
               <input type="checkbox" name="memory" :id="memory" :value="memory" v-model="selectedFilters.memorySupport" @change="updateFilters">
               <label :for="memory" class="ml-2">{{ memory }}</label>
             </div>
@@ -188,7 +188,7 @@ function resetFilter() {
 
         <Transition name="slide-fade">
           <div class="option-box" v-if="isCoreFilterVisible">
-            <div class="input-option" v-for="coreNum in filters.coreNum" :key="coreNum">
+            <div class="input-option d-flex gap-2" v-for="coreNum in filters.coreNum" :key="coreNum">
               <input type="checkbox" name="cores" :id="coreNum" :value="coreNum" v-model="selectedFilters.coreNum" @change="updateFilters">
               <label :for="coreNum" class="ml-2">{{ coreNum }}</label>
             </div>
@@ -203,7 +203,7 @@ function resetFilter() {
         </div>
         <Transition name="slide-fade">
           <div class="option-box" v-if="isRatedSpeedsFilterVisible">
-            <div class="input-option" v-for="speed in filters.ratedSpeeds" :key="speed">
+            <div class="input-option d-flex gap-2" v-for="speed in filters.ratedSpeeds" :key="speed">
               <input type="checkbox" name="speed" :id="speed" :value="speed" v-model="selectedFilters.ratedSpeeds" @change="updateFilters">
               <label :for="speed" class="ml-2">{{ speed }}MT/s</label>
             </div>
@@ -218,7 +218,7 @@ function resetFilter() {
         </div>
         <Transition name="slide-fade">
           <div class="option-box" v-if="isCacheFilterAvailable">
-            <div class="input-option" v-for="cache in filters.cache" :key="cache">
+            <div class="input-option d-flex gap-2" v-for="cache in filters.cache" :key="cache">
               <input type="checkbox" name="speed" :id="cache" :value="cache" v-model="selectedFilters.cache" @change="updateFilters">
               <label :for="cache" class="ml-2">{{ cache }}</label>
             </div>
