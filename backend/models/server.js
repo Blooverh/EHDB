@@ -27,10 +27,7 @@ const serverSchema = new mongoose.Schema({
     compatibleNics: [{type: String, default: defVal}],
     nicInterfaces: [{type: String, default: defVal}],
     compatiblePSU: [{type: String, default: defVal}],
-    releaseDate: {
-        type: Date,
-        set: (val) => new Date(val)
-    },
+    serverType: {type: String, default: defVal},
     userManual: {type: String, default: defVal},
     techSpecs: {type: String, default: defVal},
     sysManagement: [{type: String, default: defVal}],
