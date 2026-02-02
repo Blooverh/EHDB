@@ -10,7 +10,7 @@
   max-width: 1440px;
 } */
 
-.cpu-card, .server-card {
+.cpu-card {
   border: 2px solid #007bff;
   border-radius: 8px;
   
@@ -18,9 +18,16 @@
 
 .cpu-title, .server-title{
   text-decoration: none;
-  font-size: 2rem;
   color: #007bff;
   font-weight: 700;
+}
+
+.server-title {
+  font-size: 16px;
+}
+
+.cpu-title {
+  font-size: 2rem;
 }
 
 .cpu-title:hover, .server-title:hover {

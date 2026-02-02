@@ -6,6 +6,8 @@ import '../assets/css/hardwareCollection.css';
 import ServerFilterBox from '@/components/ServerFilterBox.vue';
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-vue-next';
 import ServerCard from '@/components/serverCard.vue';
+import serverVerticalCard from '@/components/serverVerticalCard.vue';
+import ServerVerticalCard from '@/components/serverVerticalCard.vue';
 
 // --- Router and Route instances ---
 const router = useRouter();
@@ -125,8 +127,9 @@ watch(() => route.query, async (newQuery) => {
       <!-- if loading is completed and there is no error add Server Card -->
       <div v-if="!loading && !error">
         
-        <div v-if="servers.length > 0" class="d-grid gap-3 m-3">
-          <ServerCard v-for="server in servers" :key="server._id" :server="server" class="server-card p-2"/>
+        <div v-if="servers.length > 0" class="d-flex flex-wrap flex-row  justify-content-center gap-5 m-3 algin-items-center">
+          <!-- <ServerCard v-for="server in servers" :key="server._id" :server="server" class="server-card p-2"/> -->
+          <ServerVerticalCard v-for="server in servers" :key ="server._id" :server="server" />
         </div>
       </div>
 

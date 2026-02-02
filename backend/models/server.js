@@ -31,6 +31,7 @@ const serverSchema = new mongoose.Schema({
     userManual: {type: String, default: defVal},
     techSpecs: {type: String, default: defVal},
     sysManagement: [{type: String, default: defVal}],
+    featureImg: {type: String, default: defVal},
     slug: {type: String, default: defVal},
 
 });
