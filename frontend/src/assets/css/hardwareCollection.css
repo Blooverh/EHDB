@@ -159,3 +159,7 @@
 .input-option > label {
   cursor: pointer;
 }
+
+/* Media Query Styles
+  - Justify content center for flex box on server collection 
+*/

@@ -3,9 +3,10 @@
   import { useRoute, useRouter } from 'vue-router';
   import axios from 'axios';
   import CpuCard from '@/components/CpuCard.vue';
-  import serverCard from '@/components/serverCard.vue';
+  import serverVerticalCard from '@/components/serverVerticalCard.vue';
   import '../assets/css/hardwareCollection.css';
   import { ArrowBigRight, ArrowBigLeft } from 'lucide-vue-next';
+import ServerVerticalCard from '@/components/serverVerticalCard.vue';
 
   const route = useRoute();
   const router = useRouter();
@@ -88,8 +89,8 @@
       </div>
       <div v-if="results.servers && results.servers.length" class="server-results">
         <h2>Servers</h2>
-        <div class="d-grid gap-3 m-3">
-          <serverCard class="server-card p-2" v-for="server in results.servers" :key="server._id" :server="server" />
+        <div class="d-flex flex-wrap flex-row  gap-5 m-3 algin-items-center justify-content-center">
+          <ServerVerticalCard v-for="server in results.servers" :key="server._id" :server="server" />
         </div>
       </div>
     </div>
@@ -108,7 +109,7 @@
 <style scoped>
 .search-page {
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 90%;
   margin: 0 auto;
 }
 
