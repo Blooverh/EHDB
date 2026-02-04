@@ -9,6 +9,7 @@ import IndividualCpu from '@/views/IndividualCpu.vue';
 import BrandedCpuCollection from '@/views/BrandedCpuCollection.vue';
 import SearchPage from '@/views/SearchPage.vue';
 import IndividualServer from '@/views/IndividualServer.vue';
+import BrandedServerCollection from '@/views/BrandedServerCollection.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,29 +20,34 @@ const router = createRouter({
       component: Homepage,
       meta: { title: 'EHDB Home Page'}
     },
-    {
+    { // general Server collection
       path: '/servers',
       name: 'Server Collection',
       component: ServerCollection,
       meta: {title: 'Server Collection'}
     },
-    {
-      path: '/cpus',
+    { // general CPU collection
+      path: '/cpus', 
       name: 'CPU Collection',
       component: CpuCollection,
       meta: { title: 'CPU Collection'}
     },
-    {
+    { // CPU By Brand collection
       path: '/cpus/:brand',
       name: 'Brand Collection', // change brand to the actual brand
       component: BrandedCpuCollection,
     },
-    {
-      path: '/cpus/:brand/:slug',
+    { // Branded Server Collection
+      path: '/servers/:brand',
+      name: 'Branded Server Collection',
+      component: BrandedServerCollection
+    },
+    { // Individual CPU page
+      path: '/cpus/:brand/:slug', 
       name: 'Individual CPU',
       component: IndividualCpu,
     },
-    {
+    { // Individual server page
       path: '/servers/:brand/:slug',
       name: 'Individual Server',
       component: IndividualServer

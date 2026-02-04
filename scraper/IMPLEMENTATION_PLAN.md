@@ -56,7 +56,8 @@ scraper/
 │   ├── ProductMatcher.js                    # Brand/Model + AI matching
 │   ├── AIExtractor.js                       # AI specs extraction (disable-able)
 │   ├── PriceHistory.js                      # Tracks previous prices
-│   └── NotificationService.js               # Console logging
+│   ├── NotificationService.js               # Console logging
+│   └── DiscoveryLogger.js                   # JSON logs for debugging
 ├── scrapers/
 │   ├── priceUpdater/                        # Lightweight - runs every Saturday
 │   │   ├── CloudNinjasPriceUpdater.js
@@ -90,29 +91,29 @@ scraper/
                                  ▼
 ┌────────────────────────────────────────────────────────────────────┐
 │  1. PRICE UPDATE PHASE                                             │
-│     ├─ Scrape listing pages (lightweight)                         │
-│     ├─ Match products by: brand + normalized model (primary)      │
-│     ├─ AI fallback for uncertain matches                          │
+│     ├─ Scrape listing pages (lightweight)                          │
+│     ├─ Match products by: brand + normalized model (primary)       │
+│     ├─ AI fallback for uncertain matches                           │
 │     └─ For each product:                                           │
-│         ├─ Existing: Save old price → Update new price            │
+│         ├─ Existing: Save old price → Update new price             │
 │         └─ New: Queue for DISCOVERY PHASE                          │
 └────────────────────────────────────────────────────────────────────┘
                                  │
                                  ▼
 ┌────────────────────────────────────────────────────────────────────┐
-│  2. AUTO DISCOVERY PHASE (for queued new products)                │
-│     ├─ Visit detail pages                                         │
-│     ├─ AI extract full specifications                             │
-│     ├─ AI cross-reference existing products                      │
+│  2. AUTO DISCOVERY PHASE (for queued new products)                 │
+│     ├─ Visit detail pages                                          │
+│     ├─ AI extract full specifications                              │
+│     ├─ AI cross-reference existing products                        │
 │     └─ Create new product in DB                                    │
 └────────────────────────────────────────────────────────────────────┘
                                  │
                                  ▼
 ┌────────────────────────────────────────────────────────────────────┐
-│  3. NOTIFICATION PHASE                                            │
-│     ├─ Log new products discovered                                │
-│     ├─ Log significant price changes                              │
-│     └─ Log any errors/issues                                      │
+│  3. NOTIFICATION PHASE                                             │
+│     ├─ Log new products discovered                                 │
+│     ├─ Log significant price changes                               │
+│     └─ Log any errors/issues                                       │
 └────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -265,6 +266,75 @@ async updatePrice(product, vendor, newPrice) {
 
 ---
 
+### 5. DiscoveryLogger.js
+
+**Purpose:** Log all discovered products to JSON files for debugging and auditing.
+
+**Features:**
+
+- Creates one JSON file per scrape date
+- Logs timestamp, vendor, product details, and match status
+- Non-critical (doesn't affect main scraper flow)
+- Minimal async file I/O overhead
+
+**Log Format:**
+
+```javascript
+// logs/discovery_2026-02-03.json
+{
+  "scrapeDate": "2026-02-03T02:00:00Z",
+  "summary": {
+    "totalDiscovered": 12,
+    "totalNew": 8,
+    "totalMatched": 4
+  },
+  "products": [
+    {
+      "timestamp": "2026-02-03T02:15:23Z",
+      "vendor": "cloudninjas",
+      "category": "cpu",
+      "brand": "AMD",
+      "model": "EPYC 7763",
+      "price": 1299.99,
+      "isNewProduct": true,
+      "aiConfidence": 0.95,
+      "sourceUrl": "https://..."
+    }
+  ]
+}
+```
+
+**Configuration:**
+
+```javascript
+// config/settings.js
+logging: {
+  discovery: {
+    enabled: true,
+    directory: 'logs/discovery',
+    retentionDays: 90,  // Keep logs for 90 days
+    filenameFormat: 'discovery_YYYY-MM-DD.json'
+  }
+}
+```
+
+**Usage:**
+
+```javascript
+// Called after each product discovery
+await discoveryLogger.log({
+  vendor: "cloudninjas",
+  brand: "AMD",
+  model: "EPYC 7763",
+  isNewProduct: true,
+  aiConfidence: 0.95,
+});
+```
+
+**Note:** These logs are for debugging only. Discovered products are always saved to the database regardless of logging status.
+
+---
+
 ## Configuration
 
 ### config/settings.js
@@ -305,6 +375,12 @@ export default {
     notifyOnNewProduct: true,
     notifyOnPriceChange: true,
     notifyOnErrors: true,
+    // Discovery logging (for debugging)
+    discovery: {
+      enabled: true,
+      directory: "logs/discovery",
+      retentionDays: 90, // Keep logs for 90 days
+    },
   },
 
   // Database (shared instance)
@@ -365,6 +441,7 @@ No new schema required!
 | Notification Service    | `services/NotificationService.js` | 1 hour  |
 | Price History Service   | `services/PriceHistory.js`        | 1 hour  |
 | Product Matcher (Basic) | `services/ProductMatcher.js`      | 4 hours |
+| Discovery Logger        | `services/DiscoveryLogger.js`     | 1 hour  |
 
 ### Phase 3: AI Integration (Week 2)
 
@@ -520,23 +597,43 @@ CONFIG_PATH=/path/to/config.js node main.js
 
 ---
 
-## Hosting
+## Hosting (Direct Node.js Execution)
 
-### Recommended: Standalone Process
+The scraper runs as a **direct Node.js process** with built-in cron scheduling. No Docker containerization needed.
 
-**Why Standalone:**
+### How Cron Jobs Work (Direct Approach)
 
-- Scraping is resource-intensive (Puppeteer)
-- Runs only once per week (Saturday 2 AM)
-- Won't burden the web server
-- Easy to scale independently
+The `node-cron` library runs **inside** the Node.js process:
 
-**Setup:**
+```javascript
+// scheduler/cron-jobs.js
+const cron = require("node-cron");
 
-1. **Create systemd service** (Linux):
+// This runs continuously in the background
+const job = cron.schedule("0 2 * * 6", async () => {
+  console.log("Saturday 2AM - Running scraper...");
+  await runScraper();
+});
+```
+
+**Process Flow:**
+
+1. You start the scraper once: `node main.js`
+2. Process stays alive in background
+3. `node-cron` triggers automatically every Saturday at 2AM
+4. Logs output to console/log file
+
+### Deployment Options
+
+#### Option A: systemd Service (Linux - Recommended)
+
+**1. Create service file:**
 
 ```bash
-# /etc/systemd/system/ehdb-scraper.service
+sudo nano /etc/systemd/system/ehdb-scraper.service
+```
+
+```ini
 [Unit]
 Description=EHDB Web Scraper
 After=network.target
@@ -555,38 +652,70 @@ EnvironmentFile=/path/to/scraper/.env
 WantedBy=multi-user.target
 ```
 
-2. **Enable and start:**
+**2. Enable and start:**
 
 ```bash
+sudo systemctl daemon-reload
 sudo systemctl enable ehdb-scraper
 sudo systemctl start ehdb-scraper
 sudo systemctl status ehdb-scraper
 ```
 
-3. **View logs:**
+**3. View logs:**
 
 ```bash
+# Real-time logs
 journalctl -u ehdb-scraper -f
+
+# Last 100 lines
+journalctl -u ehdb-scraper -n 100
 ```
 
-### Alternative: Docker
-
-```dockerfile
-FROM node:20-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-CMD ["node", "main.js"]
-```
+#### Option B: PM2 (Cross-Platform)
 
 ```bash
-# Build and run
-docker build -t ehdb-scraper .
-docker run -d --name ehdb-scraper \
-  -e MONGODB_URI="mongodb://host:27017/ehdb" \
-  ehdb-scraper
+# Install PM2 globally
+npm install -g pm2
+
+# Start scraper
+pm2 start main.js --name ehdb-scraper
+
+# Save PM2 config
+pm2 save
+pm2 startup
+
+# Monitor
+pm2 logs ehdb-scraper
+pm2 monit
+
+# Restart/Stop
+pm2 restart ehdb-scraper
+pm2 stop ehdb-scraper
 ```
+
+#### Option C: Background Process (Simple)
+
+```bash
+# Run in background with nohup
+nohup node main.js > scraper.log 2>&1 &
+
+# Check if running
+ps aux | grep main.js
+
+# View logs
+tail -f scraper.log
+
+# Stop
+kill <PID>
+```
+
+### Why Direct Execution?
+
+✅ **Simpler** - No Docker complexity
+✅ **Lower overhead** - No container runtime
+✅ **Easier debugging** - Direct access to logs/process
+✅ **Resource efficient** - Less memory/CPU usage
+✅ **Same scheduling** - `node-cron` works identically
 
 ---
 
@@ -682,6 +811,7 @@ LOG_LEVEL=info
 | **Hosting**           | Standalone Node.js process                                       |
 | **Database**          | Shared MongoDB instance                                          |
 | **Notifications**     | Console logs                                                     |
+| **Discovery Logging** | JSON files in `logs/discovery/` (for debugging)                  |
 | **High-Traffic Skip** | Enabled (skip if server load > 50%)                              |
 | **Data Retention**    | Uses existing `info` array (currPrice, oldPrice, priceChange)    |
 
@@ -698,12 +828,26 @@ LOG_LEVEL=info
    - Create `.env` file
    - Install new dependencies
 4. **Begin Phase 1 implementation**
+5. **Create logs directory:**
+   - `mkdir logs/discovery`
 
 ---
 
-_Document Version: 1.1_
+_Document Version: 1.3_
 _Created: February 2026_
 _Last Updated: February 3, 2026_
+
+**Version 1.3 Updates:**
+
+- Added DiscoveryLogger service for JSON file-based discovery logging
+- Logs stored in `logs/discovery/discovery_YYYY-MM-DD.json`
+- Non-critical debugging feature (products always saved to DB)
+
+**Version 1.2 Updates:**
+
+- Changed hosting from Docker to direct Node.js execution
+- Added detailed systemd/PM2/background process setup instructions
+- Removed Docker containerization (can be added later if needed)
 
 **Version 1.1 Updates:**
 
