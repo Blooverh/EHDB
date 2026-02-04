@@ -148,6 +148,7 @@ watch(
       // Add different error messages depending on status code given by backend
       if (err.response.status === 404) {
         error.value = 'No CPUs Match Your Selection'
+        totalCpus.value = 0
       } else {
         error.value = 'Failed to fetch CPUs. Please try again later.'
       }
