@@ -117,11 +117,6 @@ const previousPage = () => {
   }
 }
 
-// --- Error Handling ---
-const handleErrorReset = () => {
-  resetFilters()
-}
-
 // Watcher
 
 /*
@@ -135,6 +130,20 @@ watch(
     loading.value = true
     error.value = null
 
+    // Always sync selectedFilters with URL first (outside try-catch)
+    selectedFilters.value = {
+      brand: [].concat(newQuery.brand || []),
+      socket: [].concat(newQuery.socket || []),
+      cpuGen: [].concat(newQuery.cpuGen || []),
+      moboType: [].concat(newQuery.moboType || []),
+      memoryType: [].concat(newQuery.memoryType || []),
+      // Only parse to integer if value exists, otherwise return empty array
+      // This prevents [NaN] when URL has no query params (e.g., when resetting filters)
+      // parseInt(undefined) returns NaN, and [].concat(NaN) creates [NaN] which breaks checkbox logic
+      speeds: newQuery.speeds ? [].concat(parseInt(newQuery.speeds)) : [],
+      ssdInterfaces: [].concat(newQuery.ssdInterfaces || []),
+    }
+
     try {
       const params = new URLSearchParams(newQuery) // this turns to a string like brand=dell&socket=am5
       // fetch data with the new query params
@@ -142,17 +151,6 @@ watch(
       servers.value = response.data.servers
       totalPages.value = response.data.totalPages
       totalServers.value = response.data.totalServers
-
-      // Update selectedFilters from the URL to ensure consistency
-      selectedFilters.value = {
-        brand: [].concat(newQuery.brand || []),
-        socket: [].concat(newQuery.socket || []),
-        cpuGen: [].concat(newQuery.cpuGen || []),
-        moboType: [].concat(newQuery.moboType || []),
-        memoryType: [].concat(newQuery.memoryType || []),
-        speeds: [].concat(newQuery.speeds || []),
-        ssdInterfaces: [].concat(newQuery.ssdInterfaces || []),
-      }
 
       const { data } = await axios.get('/api/servers/filter-options')
       filters.value = data
@@ -227,7 +225,7 @@ watch(
 
       <div v-if="error" class="error-message">
         {{ error }}
-        <button @click="handleErrorReset" class="btn btn-primary mt-2">Clear Filters</button>
+        <RouterLink to="/servers">Reset Filter</RouterLink>
       </div>
 
       <!-- if loading is completed and there is no error add Server Card -->

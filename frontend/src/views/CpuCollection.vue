@@ -122,25 +122,29 @@ watch(
   async (newQuery) => {
     loading.value = true
     error.value = null
+
+    // Always sync selectedFilters with URL first (outside try-catch)
+    selectedFilters.value = {
+      brand: [].concat(newQuery.brand || []),
+      codename: [].concat(newQuery.codename || []),
+      generation: [].concat(newQuery.generation || []),
+      memorySupport: [].concat(newQuery.memorySupport || []),
+      // Only parse to integer if value exists, otherwise return empty array
+      // This prevents [NaN] when URL has no query params (e.g., when resetting filters)
+      // parseInt(undefined) returns NaN, and [].concat(NaN) creates [NaN] which breaks checkbox logic
+      ratedSpeeds: newQuery.ratedSpeeds ? [].concat(parseInt(newQuery.ratedSpeeds)) : [],
+      socket: [].concat(newQuery.socket || []),
+      coreNum: newQuery.coreNum ? [].concat(parseInt(newQuery.coreNum)) : [],
+      // we need to specify cache.cacheL3 on new Query on writing so on reading it also works
+      cache: [].concat(newQuery['cache.cacheL3'] || []),
+    }
+
     try {
       const params = new URLSearchParams(newQuery)
       const response = await axios.get(`/api/cpus?${params.toString()}`)
       cpus.value = response.data.cpus
       totalPages.value = response.data.totalPages
       totalCpus.value = response.data.totalCPUs
-
-      // Update selectedFilters from the URL to ensure consistency
-      selectedFilters.value = {
-        brand: [].concat(newQuery.brand || []),
-        codename: [].concat(newQuery.codename || []),
-        generation: [].concat(newQuery.generation || []),
-        memorySupport: [].concat(newQuery.memorySupport || []),
-        ratedSpeeds: [].concat(parseInt(newQuery.ratedSpeeds) || []),
-        socket: [].concat(newQuery.socket || []),
-        coreNum: [].concat(parseInt(newQuery.coreNum) || []),
-        // we need to specify cache.cacheL3 on new Query on writing so on reading it also works
-        cache: [].concat(newQuery['cache.cacheL3'] || []),
-      }
 
       const { data } = await axios.get('/api/cpus/filter-options')
       filters.value = data

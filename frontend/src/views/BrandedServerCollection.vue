@@ -115,11 +115,6 @@ const prevPage = () => {
   }
 }
 
-// --- Error Handling ---
-const handleErrorReset = () => {
-  resetFilters()
-}
-
 // WATCHERS (SIDE EFFECTS)
 /* 
     - we pass query as argument and will watch based on new query if we need to update query in URL 
@@ -130,6 +125,19 @@ watch(
   async (newQuery) => {
     loading.value = true
     error.value = false
+
+    // Always sync selectedFilters with URL first (outside try-catch)
+    selectedFilters.value = {
+      socket: [].concat(newQuery.socket || []),
+      cpuGen: [].concat(newQuery.cpuGen || []),
+      moboType: [].concat(newQuery.moboType || []),
+      memoryType: [].concat(newQuery.memoryType || []),
+      // Only parse to integer if value exists, otherwise return empty array
+      // This prevents [NaN] when URL has no query params (e.g., when resetting filters)
+      // parseInt(undefined) returns NaN, and [].concat(NaN) creates [NaN] which breaks checkbox logic
+      speeds: newQuery.speeds ? [].concat(parseInt(newQuery.speeds)) : [],
+      ssdInterfaces: [].concat(newQuery.ssdInterfaces || []),
+    }
 
     try {
       const params = new URLSearchParams(newQuery)
@@ -143,16 +151,6 @@ watch(
       totalServers.value = response.data.totalServers
       totalPages.value = response.data.totalPages
       brand_server.value = serverBrand
-
-      // Update selectedFilters from the URL to ensure consistency
-      selectedFilters.value = {
-        socket: [].concat(newQuery.socket || []),
-        cpuGen: [].concat(newQuery.cpuGen || []),
-        moboType: [].concat(newQuery.moboType || []),
-        memoryType: [].concat(newQuery.memoryType || []),
-        speeds: [].concat(newQuery.speeds || []),
-        ssdInterfaces: [].concat(newQuery.ssdInterfaces || []),
-      }
 
       const { data } = await axios.get(`/api/servers/${serverBrand}/filter-options`)
       filters.value = data

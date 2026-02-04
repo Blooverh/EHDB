@@ -54,7 +54,7 @@ serverRouter.get('/servers', async (req, res) => {
 
                 if(values.length > 1){
                     // Multiple values we use $in operator for DB querying 
-                    if(field === 'brand' || field === 'socketInfo' || 'compatibleCpuGen' || 'memorySpecs.memory_type' || 'memorySpecs.speeds' || 'ssdInterfaces' || 'motherboardType'){
+                    if(field === 'brand' || field === 'socketInfo' || field === 'compatibleCpuGen' || field === 'memorySpecs.memory_type' || field === 'memorySpecs.speeds' || field === 'ssdInterfaces' || field === 'motherboardType'){
                         
                         filter[field] = {$in : values};
                     }else {
@@ -182,7 +182,7 @@ serverRouter.get('/servers/:brand', async (req, res) => {
             // skip if parameter does not exist 
             if(!queryParams) return;
 
-            if(numericField == field){
+            if(numericalField == field){
 
                 /* (Note: If the URL was `?speeds=3200&speeds=4800`, some web frameworks would parse
                 `queryParams` as `['3200', '4800']` directly. This line handles both cases.) */
@@ -210,7 +210,7 @@ serverRouter.get('/servers/:brand', async (req, res) => {
 
                 if(values.length > 1){
                     // Multiple values we use $in operator for DB querying 
-                    if( field === 'socketInfo' || 'compatibleCpuGen' || 'memorySpecs.memory_type' || 'memorySpecs.speeds' || 'ssdInterfaces' || 'motherboardType'){
+                    if( field === 'socketInfo' || field === 'compatibleCpuGen' || field === 'memorySpecs.memory_type' || field === 'memorySpecs.speeds' || field === 'ssdInterfaces' || field === 'motherboardType'){
                         
                         filter[field] = {$in : values};
                     }else {

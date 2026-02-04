@@ -113,6 +113,21 @@ watch(
     loading.value = true
     error.value = false
 
+    // Always sync selectedFilters with URL first (outside try-catch)
+    selectedFilters.value = {
+      codename: [].concat(newQuery.codename || []),
+      generation: [].concat(newQuery.generation || []),
+      memorySupport: [].concat(newQuery.memorySupport || []),
+      // Only parse to integer if value exists, otherwise return empty array
+      // This prevents [NaN] when URL has no query params (e.g., when resetting filters)
+      // parseInt(undefined) returns NaN, and [].concat(NaN) creates [NaN] which breaks checkbox logic
+      ratedSpeeds: newQuery.ratedSpeeds ? [].concat(parseInt(newQuery.ratedSpeeds)) : [],
+      socket: [].concat(newQuery.socket || []),
+      coreNum: newQuery.coreNum ? [].concat(parseInt(newQuery.coreNum)) : [],
+      // we need to specify cache.cacheL3 on new Query on writing so on reading it also works
+      cache: [].concat(newQuery['cache.cacheL3'] || []),
+    }
+
     try {
       const params = new URLSearchParams(newQuery)
       const cpuBrand = route.params.brand
@@ -125,18 +140,6 @@ watch(
       totalCpus.value = response.data.totalCpus
       totalPages.value = response.data.totalPages
       brand_cpu.value = cpuBrand
-
-      // Update selectedFilters from the URL to ensure consistency
-      selectedFilters.value = {
-        codename: [].concat(newQuery.codename || []),
-        generation: [].concat(newQuery.generation || []),
-        memorySupport: [].concat(newQuery.memorySupport || []),
-        ratedSpeeds: [].concat(parseInt(newQuery.ratedSpeeds) || []),
-        socket: [].concat(newQuery.socket || []),
-        coreNum: [].concat(parseInt(newQuery.coreNum) || []),
-        // we need to specify cache.cacheL3 on new Query on writing so on reading it also works
-        cache: [].concat(newQuery['cache.cacheL3'] || []),
-      }
 
       const { data } = await axios.get(`/api/cpus/${cpuBrand}/filter-options`)
       filters.value = data
