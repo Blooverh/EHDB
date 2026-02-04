@@ -255,7 +255,7 @@ watch(
       <div v-if="loading" class="loading-message">Loading cpus...</div>
       <div v-if="error" class="error-message">
         {{ error }}
-        <RouterLink to="/cpus">Reset Filter</RouterLink>
+        Reset Filters !
       </div>
 
       <div v-if="!loading && !error">

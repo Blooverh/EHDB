@@ -221,11 +221,11 @@ watch(
 
       <p v-if="totalServers > 0">Current List: ({{ totalServers }} Servers)</p>
 
-      <div v-if="loading" class="loading-message">Loading Servers</div>
+      <div v-if="loading" class="loading-message">Loading Servers...</div>
 
       <div v-if="error" class="error-message">
         {{ error }}
-        <RouterLink to="/servers">Reset Filter</RouterLink>
+        Reset Filters !
       </div>
 
       <!-- if loading is completed and there is no error add Server Card -->

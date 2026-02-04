@@ -229,7 +229,7 @@ watch(
 
       <div v-if="error" class="error-message">
         {{ error }}
-        <RouterLink :to="`/servers/${brand_server}`">Reset Filter</RouterLink>
+        Reset Filters !
       </div>
 
       <div v-if="!loading && !error">

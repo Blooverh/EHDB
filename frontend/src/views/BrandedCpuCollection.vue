@@ -254,7 +254,7 @@ watch(
 
       <div v-if="error" class="error-message">
         {{ error }}
-        <RouterLink :to="`/cpus/${brand_cpu}`">Reset Filter</RouterLink>
+        Reset Filters !
       </div>
 
       <div v-if="!loading && !error">
