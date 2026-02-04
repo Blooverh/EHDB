@@ -11,9 +11,6 @@ import ServerVerticalCard from '@/components/serverVerticalCard.vue'
 const router = useRouter()
 const route = useRoute()
 
-// --- Template Refs ---
-const filterBoxRef = ref(null)
-
 // --- State Management ---
 const servers = ref([])
 // current page is now a computed property derived from the URL
@@ -22,6 +19,74 @@ const totalPages = ref(0)
 const totalServers = ref(0)
 const loading = ref(true)
 const error = ref(false)
+
+// Reactive objects for filter
+const filters = ref({
+  brands: [],
+  socket: [],
+  cpuGen: [],
+  moboType: [],
+  memoryType: [],
+  speeds: [],
+  ssdInterfaces: [],
+})
+
+const selectedFilters = ref({
+  brand: [].concat(route.query.brand || []),
+  socket: [].concat(route.query.socket || []),
+  cpuGen: [].concat(route.query.cpuGen || []),
+  moboType: [].concat(route.query.moboType || []),
+  memoryType: [].concat(route.query.memoryType || []),
+  speeds: [].concat(route.query.speeds || []),
+  ssdInterfaces: [].concat(route.query.ssdInterfaces || []),
+})
+
+// --- ACTIONS ---
+const updateFilters = (newFilters) => {
+  const query = { ...route.query }
+
+  // Iterate over the new filters and update the query object
+  for (const key in newFilters) {
+    const value = newFilters[key]
+    let keyChecker = ''
+
+    // get correct model properties for filtering
+    if (key === 'memoryType') {
+      keyChecker = 'memorySpecs.memory_type'
+    } else if (key === 'speeds') {
+      keyChecker = 'memorySpecs.speeds'
+    } else if (key === 'socket') {
+      keyChecker = 'socketInfo'
+    } else if (key === 'cpuGen') {
+      keyChecker = 'compatibleCpuGen'
+    } else if (key === 'moboType') {
+      keyChecker = 'motherboardType'
+    } else if (key === 'ssdInterfaces') {
+      keyChecker = 'ssdInterfaces'
+    } else {
+      keyChecker = key
+    }
+
+    // If the filter has a value, add it to the query.
+    if (value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {
+      query[keyChecker] = value
+    } else {
+      // Otherwise, remove it from the query.
+      delete query[keyChecker]
+    }
+  }
+
+  // When filters change, always reset to the first page
+  delete query.page
+
+  router.push({ query })
+}
+
+const resetFilters = () => {
+  // remove all query params from URL
+  // resetting the filters and page number
+  router.push({ query: {} })
+}
 
 // PAGINATION
 const goToPage = (page) => {
@@ -54,9 +119,7 @@ const previousPage = () => {
 
 // --- Error Handling ---
 const handleErrorReset = () => {
-  if (filterBoxRef.value) {
-    filterBoxRef.value.resetFilter()
-  }
+  resetFilters()
 }
 
 // Watcher
@@ -79,6 +142,20 @@ watch(
       servers.value = response.data.servers
       totalPages.value = response.data.totalPages
       totalServers.value = response.data.totalServers
+
+      // Update selectedFilters from the URL to ensure consistency
+      selectedFilters.value = {
+        brand: [].concat(newQuery.brand || []),
+        socket: [].concat(newQuery.socket || []),
+        cpuGen: [].concat(newQuery.cpuGen || []),
+        moboType: [].concat(newQuery.moboType || []),
+        memoryType: [].concat(newQuery.memoryType || []),
+        speeds: [].concat(newQuery.speeds || []),
+        ssdInterfaces: [].concat(newQuery.ssdInterfaces || []),
+      }
+
+      const { data } = await axios.get('/api/servers/filter-options')
+      filters.value = data
     } catch (err) {
       if (err.response.status === 404) {
         error.value = 'No Servers Match Your Selection'
@@ -96,7 +173,12 @@ watch(
 
 <template>
   <div class="part-collection">
-    <ServerFilterBox ref="filterBoxRef" />
+    <ServerFilterBox
+      :filters="filters"
+      :selectedFilters="selectedFilters"
+      @filters-changed="updateFilters"
+      @reset-filter="resetFilters"
+    />
 
     <div class="collection-container">
       <div class="title-collection d-flex flex-row align-items-center">
