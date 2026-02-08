@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const defaultVal = "N/A";
+const defaultIMG = "https://ik.imagekit.io/blooverh/EHDB/div.bg-muted.png";
 
 // Creating schema that defines the structure of cpu documents within a mongo DB collection
 // includes fields, data types, and any constraints
@@ -27,7 +28,7 @@ const cpuSchema = new mongoose.Schema({
         cacheL2: {type: String, default: defaultVal},
         cacheL3: {type: String, default: defaultVal},
     },
-    // mpn: {type: String, default: defaultVal},
+    image: {type: String, default: defaultIMG},
     pcieGen: {type: String, default: defaultVal},
     info: [{
         website: {type: String},

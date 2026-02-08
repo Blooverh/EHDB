@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const defVal = 'N/A';
+const defaultIMG = "https://ik.imagekit.io/blooverh/EHDB/div.bg-muted.png";
 
 const serverSchema = new mongoose.Schema({
     brand: {type: String, default: defVal},
@@ -31,7 +32,7 @@ const serverSchema = new mongoose.Schema({
     userManual: {type: String, default: defVal},
     techSpecs: {type: String, default: defVal},
     sysManagement: [{type: String, default: defVal}],
-    featureImg: {type: String, default: defVal},
+    featureImg: {type: String, default: defaultIMG},
     slug: {type: String, default: defVal},
 
 });
