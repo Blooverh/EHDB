@@ -23,7 +23,7 @@ const props = defineProps({
 // Field mappings for each hardware type to handle different property names
 const fieldMappings = {
   cpu: {
-    image: 'image',
+    image: 'featureImg',
     prices: 'info',
     model: 'model',
     brand: 'brand',
@@ -48,6 +48,9 @@ const displayData = computed(() => {
     brand: part[mapping.brand],
   }
 })
+
+// alt name for image
+let altName = `${displayData.value.brand} ${displayData.value.model}`;
 
 // breadcrumb
 // Computed property
@@ -102,5 +105,12 @@ const breadcrumbs = computed(() => {
         </li>
       </ol>
     </nav>
+
+    <!-- Hero main info section -->
+    <div class="d-flex flex-row gap-2 flex-wrap">
+        <div class="part-image">
+            <img :src="displayData.image" :alt="altName">
+        </div>
+    </div>
   </div>
 </template>

@@ -28,7 +28,7 @@ const cpuSchema = new mongoose.Schema({
         cacheL2: {type: String, default: defaultVal},
         cacheL3: {type: String, default: defaultVal},
     },
-    image: {type: String, default: defaultIMG},
+    featureImg: {type: String, default: defaultIMG},
     pcieGen: {type: String, default: defaultVal},
     info: [{
         website: {type: String},
