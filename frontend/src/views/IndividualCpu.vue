@@ -1,11 +1,13 @@
 <script setup>
 // Component import
 import HeroPart from '@/components/IndividualPage_Components/Hero_part.vue' // hero component for individual parts
-
+import '../assets/css/individual-parts.css';
 import { ref, watch, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle'
+import { Store } from 'lucide-vue-next'
+
 const route = useRoute()
 const router = useRouter()
 
@@ -56,7 +58,29 @@ watch(cpu, (newCPU) => {
 
 <template>
   <div>
-    <HeroPart v-if="cpu" :part="cpu" type="cpu" />
+    <div v-if="cpu">
+        <HeroPart :part="cpu" type="cpu" />
+
+        <div class="container d-flex flex-column">
+            <div class="d-flex flex-row align-items-center gap-2">
+                <Store />
+                <h2 class="fw-bold mb-0">Where To Buy</h2>
+            </div>
+
+            <ol class="d-flex flex-row gap-2">
+                <li class="buy-item" v-for="listings in cpu.info">
+                    <!-- svg or image of website -->
+
+                    <!-- name of website -->
+                    <span class="website-item fw-bold">{{ listings.website }}</span>
+                    <!-- current Price -->
+                    <span class="price-item">${{ listings.currPrice }}</span>
+                    <!-- anchor to link with small svg -->
+                    <span class="link-item"></span>
+                </li>
+            </ol>
+        </div>
+    </div>
     <div v-else-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
   </div>

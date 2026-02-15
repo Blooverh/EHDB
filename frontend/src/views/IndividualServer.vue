@@ -1,4 +1,5 @@
 <script setup>
+import '../assets/css/individual-parts.css';
 import HeroPart from '@/components/IndividualPage_Components/Hero_part.vue'
 import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'

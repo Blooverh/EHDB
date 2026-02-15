@@ -1,6 +1,4 @@
 <script setup>
-import '../../assets/css/individual-parts.css'
-
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { formatModel, cpuBrandFormatter } from '@/utils/formatCpuTitle'
@@ -36,6 +34,9 @@ const fieldMappings = {
     info2: 'threadNum',
     info3: 'frequency',
     info4: 'turboFrequency', 
+    info5: ['partNum'], 
+    info6: ['ratedSpeeds'], 
+    info7: 'memorySupport'
   },
   server: {
     image: 'featureImg',
@@ -49,7 +50,11 @@ const fieldMappings = {
     info1: 'ssdInterfaces',
     info2: 'nicInterfaces',
     info3: 'compatibleRaids',
-    info4: 'compatibleCpuGen'
+    info4: 'compatibleCpuGen', 
+    info5: ['memorySpecs', 'memory_type'], 
+    info6: ['memorySpecs', 'speeds'], 
+    info7: 'expansionSlots'
+
   },
 }
 
@@ -71,7 +76,10 @@ const displayData = computed(() => {
     info1: part[mapping.info1],
     info2: part[mapping.info2],
     info3: part[mapping.info3],
-    info4: part[mapping.info4]
+    info4: part[mapping.info4], 
+    info5: mapping.info5.reduce((obj, key) => obj?.[key], part), 
+    info6: mapping.info6.reduce((obj, key) => obj?.[key], part), 
+    info7: part[mapping.info7]
   }
 })
 
@@ -97,6 +105,18 @@ const statLabels = {
             label: 'Turbo Clock Speeds',
             result: `${displayData.value.info4}GHz`
         },
+        info5: {
+            label: 'Part #:',
+            result: displayData.value.info5
+        },
+        info6: {
+            label: 'Max RAM Speed: ',
+            result: `${displayData.value.info6}MT/s`
+        }, 
+        info7: {
+            label: 'Supported Memory: ',
+            result: displayData.value.info7?.join?.(', ')
+        }
     },
     server: {
         info1: {
@@ -114,6 +134,18 @@ const statLabels = {
         info4: {
             label: 'Compatible CPU Generations',
             result: displayData.value.info4.length
+        },
+        info5: {
+            label: 'Memory Type:',
+            result: displayData.value.info5?.join?.(', ')
+        }, 
+        info6: {
+            label: 'Compatible RAM Speeds (MT/s): ', 
+            result: displayData.value.info6?.join?.(', ')
+        }, 
+        info7: {
+            label: 'Expansion Slots:', 
+            result: displayData.value.info7[0]
         }
     }
 }
@@ -215,25 +247,20 @@ const breadcrumbs = computed(() => {
           </div>
         </div>
 
-        <!-- Specs Row
         <div class="specs-row">
           <div class="spec-item">
-            <span class="spec-label">Base Clock:</span>
-            <span class="spec-value">{{ part.clock?.baseClock }} GHz</span>
+            <span class="spec-label">{{ currentLabels.info5.label }}</span>
+            <span class="spec-value">{{ currentLabels.info5.result }}</span>
           </div>
           <div class="spec-item">
-            <span class="spec-label">Memory:</span>
-            <span class="spec-value">{{ part.memory?.supportedMemory }}</span>
+            <span class="spec-label">{{currentLabels.info6.label}}</span>
+            <span class="spec-value">{{ currentLabels.info6.result }}</span>
           </div>
           <div class="spec-item">
-            <span class="spec-label">Max RAM:</span>
-            <span class="spec-value">{{ part.memory?.maxMemory }} GB</span>
+            <span class="spec-label">{{ currentLabels.info7.label }}</span>
+            <span class="spec-value">{{ currentLabels.info7.result }}</span>
           </div>
-          <div class="spec-item">
-            <span class="spec-label">Released:</span>
-            <span class="spec-value">{{ part.releaseDate }}</span>
-          </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
