@@ -166,6 +166,22 @@
     
 }
 
+.price-item {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.link-item {
+    color: gray;
+    opacity: 80%;
+}
+
+.website_favicons {
+    width: 22px;
+    height: 22px;
+}
+
 @media (max-width: 768px) {
   .hero-content {
     flex-direction: column;

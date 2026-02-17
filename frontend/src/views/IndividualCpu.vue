@@ -6,7 +6,7 @@ import { ref, watch, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle'
-import { Store } from 'lucide-vue-next'
+import { Store, SquareArrowOutUpRight } from 'lucide-vue-next'
 
 const route = useRoute()
 const router = useRouter()
@@ -43,6 +43,14 @@ onMounted(async () => {
   }
 })
 
+const favicon_links = {
+    "Cloud Ninjas": "https://ik.imagekit.io/blooverh/EHDB/cloud_ninjas_favicon.webp",
+    "Server Monkey" : "https://ik.imagekit.io/blooverh/EHDB/ServerMonkey_Logo_Head_3.png",
+    "xByte": "https://ik.imagekit.io/blooverh/EHDB/xbyte-favicon-96x96.png"
+}
+
+const getFavicon = (website) => favicon_links[website] || '';
+
 // default document title
 document.title = 'Individual CPU'
 
@@ -61,22 +69,25 @@ watch(cpu, (newCPU) => {
     <div v-if="cpu">
         <HeroPart :part="cpu" type="cpu" />
 
-        <div class="container d-flex flex-column">
+        <div class="container d-flex flex-column gap-2">
             <div class="d-flex flex-row align-items-center gap-2">
-                <Store />
+                <Store :size="30"/>
                 <h2 class="fw-bold mb-0">Where To Buy</h2>
             </div>
 
-            <ol class="d-flex flex-row gap-2">
-                <li class="buy-item" v-for="listings in cpu.info">
+            <ol class="d-flex flex-row gap-3 p-0">
+                <li class="buy-item" v-for="listing in cpu.info">
                     <!-- svg or image of website -->
-
+                    <img class="website_favicons" :src="getFavicon(listing.website)" :alt="`${cpu.brand} ${cpu.model} - ${listing.website}`">
                     <!-- name of website -->
-                    <span class="website-item fw-bold">{{ listings.website }}</span>
+                    <span class="website-item fw-bold">{{ listing.website }}</span>
                     <!-- current Price -->
-                    <span class="price-item">${{ listings.currPrice }}</span>
+                    <span class="price-item">${{ listing.currPrice }}</span>
                     <!-- anchor to link with small svg -->
-                    <span class="link-item"></span>
+                    <a class="link-item d-flex flex-row gap-1 align-items-center" target="_blank" :href="listing.link">
+                        <span>Visit</span>
+                        <SquareArrowOutUpRight :size="16" :stroke-width="2" />
+                    </a>
                 </li>
             </ol>
         </div>
