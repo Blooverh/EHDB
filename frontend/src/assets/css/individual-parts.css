@@ -98,7 +98,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Stats Section */
+/* Stats Section & Specs list in specs box */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -180,6 +180,19 @@
 .website_favicons {
     width: 22px;
     height: 22px;
+}
+
+/* Specs Box */
+
+.specs-box {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px 16px;
+}
+
+.label-text {
+  color: #6c757d;
 }
 
 @media (max-width: 768px) {

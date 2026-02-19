@@ -194,7 +194,7 @@
         @keydown="onKeydown"
         @keyup.enter="searchRedirect"
       />
-      <!-- The search button is kept for consistency but the primary search is live -->
+      
       <button type="button" class="search-btn" @click="searchRedirect" >Search</button>
     </div>
     <!-- Search Results Dropdown -->
@@ -273,11 +273,16 @@
 
 .search-btn {
     background-color: #007bff; /* Primary blue color */
+    border: solid 2px #007bff;
     color: white;
-    border: none;
     border-radius: 20px;
     padding: 10px 20px;
     cursor: pointer;
+}
+
+.search-btn:hover {
+  background-color: white;
+  color: #007bff;
 }
 
 .search-results {
