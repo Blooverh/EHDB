@@ -45,7 +45,7 @@ const isLinkProperty = (key) => {
           <!-- if statement for checking whether its an URL property, non array property value, or an array property value -->
           <a
             v-if="isLinkProperty(prop.key)"
-            class="fw-bold text-decoration-none"
+            class="fw-bold"
             :href="getValue(prop.key)"
             target="_blank"
             rel="noopener noreferrer"

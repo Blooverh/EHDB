@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { formatModel, cpuBrandFormatter } from '@/utils/formatCpuTitle'
-import { Cpu, Server } from 'lucide-vue-next';
+import { Cpu, Server, HardDrive } from 'lucide-vue-next'
 
 const route = useRoute()
 
@@ -30,13 +30,13 @@ const fieldMappings = {
     tag2: 'socket',
     tag3: ['cache', 'cacheL3'],
     tag4: 'processSize',
-    info1: 'coreNum', 
+    info1: 'coreNum',
     info2: 'threadNum',
     info3: 'frequency',
-    info4: 'turboFrequency', 
-    info5: ['partNum'], 
-    info6: ['ratedSpeeds'], 
-    info7: 'memorySupport'
+    info4: 'turboFrequency',
+    info5: ['partNum'],
+    info6: ['ratedSpeeds'],
+    info7: 'memorySupport',
   },
   server: {
     image: 'featureImg',
@@ -50,11 +50,10 @@ const fieldMappings = {
     info1: 'ssdInterfaces',
     info2: 'nicInterfaces',
     info3: 'compatibleRaids',
-    info4: 'compatibleCpuGen', 
-    info5: ['memorySpecs', 'memory_type'], 
-    info6: ['memorySpecs', 'speeds'], 
-    info7: 'expansionSlots'
-
+    info4: 'compatibleCpuGen',
+    info5: ['memorySpecs', 'memory_type'],
+    info6: ['memorySpecs', 'speeds'],
+    info7: 'expansionSlots',
   },
 }
 
@@ -76,81 +75,89 @@ const displayData = computed(() => {
     info1: part[mapping.info1],
     info2: part[mapping.info2],
     info3: part[mapping.info3],
-    info4: part[mapping.info4], 
-    info5: mapping.info5.reduce((obj, key) => obj?.[key], part), 
-    info6: mapping.info6.reduce((obj, key) => obj?.[key], part), 
-    info7: part[mapping.info7]
+    info4: part[mapping.info4],
+    info5: mapping.info5.reduce((obj, key) => obj?.[key], part),
+    info6: mapping.info6.reduce((obj, key) => obj?.[key], part),
+    info7: part[mapping.info7],
   }
 })
 
 // alt name for image
-let altName = `${displayData.value.brand} ${displayData.value.model}`;
+let altName = `${displayData.value.brand} ${displayData.value.model}`
 
 // computed property for labels and elements of the page that change depending on the prop type (cpu, server, ssd, etc...)
 const statLabels = {
-    cpu: {
-        info1: {
-            label: 'Cores',
-            result: displayData.value.info1
-        },
-        info2: {
-            label: 'Threads',
-            result: displayData.value.info2
-        },
-        info3: {
-            label: 'Clock Speeds',
-            result: `${displayData.value.info3}GHz`
-        },
-        info4: {
-            label: 'Turbo Clock Speeds',
-            result: `${displayData.value.info4}GHz`
-        },
-        info5: {
-            label: 'Part #:',
-            result: displayData.value.info5
-        },
-        info6: {
-            label: 'Max RAM Speed: ',
-            result: `${displayData.value.info6}MT/s`
-        }, 
-        info7: {
-            label: 'Supported Memory: ',
-            result: displayData.value.info7?.join?.(', ')
-        }
+  cpu: {
+    info1: {
+      label: 'Cores',
+      result: displayData.value.info1,
     },
-    server: {
-        info1: {
-            label: '# SSD Interfaces',
-            result: displayData.value.info1.length
-        },
-        info2: {
-            label: '# Network Interfaces',
-            result: displayData.value.info2.length
-        },
-        info3: {
-            label: '# Compatible RAIDs',
-            result: displayData.value.info3.length
-        },
-        info4: {
-            label: 'CPU Generations',
-            result: displayData.value.info4.length
-        },
-        info5: {
-            label: 'Memory Type:',
-            result: displayData.value.info5?.join?.(', ')
-        }, 
-        info6: {
-            label: 'Compatible RAM Speeds (MT/s): ', 
-            result: displayData.value.info6?.join?.(', ')
-        }, 
-        info7: {
-            label: 'Expansion Slots:', 
-            result: displayData.value.info7[0]
-        }
-    }
+    info2: {
+      label: 'Threads',
+      result: displayData.value.info2,
+    },
+    info3: {
+      label: 'Clock Speeds',
+      result: `${displayData.value.info3}GHz`,
+    },
+    info4: {
+      label: 'Turbo Clock Speeds',
+      result: `${displayData.value.info4}GHz`,
+    },
+    info5: {
+      label: 'Part #:',
+      result: displayData.value.info5,
+    },
+    info6: {
+      label: 'Max RAM Speed: ',
+      result: `${displayData.value.info6}MT/s`,
+    },
+    info7: {
+      label: 'Supported Memory: ',
+      result: displayData.value.info7?.join?.(', '),
+    },
+  },
+  server: {
+    info1: {
+      label: '# SSD Interfaces',
+      result: displayData.value.info1.length,
+    },
+    info2: {
+      label: '# Network Interfaces',
+      result: displayData.value.info2.length,
+    },
+    info3: {
+      label: '# Compatible RAIDs',
+      result: displayData.value.info3.length,
+    },
+    info4: {
+      label: 'CPU Generations',
+      result: displayData.value.info4.length,
+    },
+    info5: {
+      label: 'Memory Type:',
+      result: displayData.value.info5?.join?.(', '),
+    },
+    info6: {
+      label: 'Compatible RAM Speeds (MT/s): ',
+      result: displayData.value.info6?.join?.(', '),
+    },
+    info7: {
+      label: 'Expansion Slots:',
+      result: displayData.value.info7[0],
+    },
+  },
 }
 
-const currentLabels = computed(() => statLabels[displayData.value.type]);
+const currentLabels = computed(() => statLabels[displayData.value.type])
+
+const typeIcon = computed(() => {
+  const icons = {
+    cpu: Cpu,
+    server: Server,
+  }
+  return icons[props.type]
+})
 
 // breadcrumb
 // Computed property
@@ -213,9 +220,12 @@ const breadcrumbs = computed(() => {
       </div>
       <div class="part-information d-flex flex-column gap-2">
         <div class="d-flex flex-row gap-2 align-items-center">
-            <!-- Need to change the svg based on the type of hardware -->
-          <div></div>
-          <h1>{{ displayData.brand }} {{displayData.model}}</h1>
+          <!-- Need to change the svg based on the type of hardware -->
+          <component :is="typeIcon" class="svg-type" :size="34" />
+          <h1 v-if="displayData.type === 'cpu'">
+            {{ cpuBrandFormatter(displayData.brand) }} {{ formatModel(displayData.model) }}
+          </h1>
+          <h1 v-else>{{ displayData.brand }} {{ displayData.model }}</h1>
         </div>
 
         <div class="part-tags d-flex gap-2">
@@ -253,7 +263,7 @@ const breadcrumbs = computed(() => {
             <span class="spec-value">{{ currentLabels.info5.result }}</span>
           </div>
           <div class="spec-item">
-            <span class="spec-label">{{currentLabels.info6.label}}</span>
+            <span class="spec-label">{{ currentLabels.info6.label }}</span>
             <span class="spec-value">{{ currentLabels.info6.result }}</span>
           </div>
           <div class="spec-item">
