@@ -132,7 +132,7 @@ const statLabels = {
             result: displayData.value.info3.length
         },
         info4: {
-            label: 'Compatible CPU Generations',
+            label: 'CPU Generations',
             result: displayData.value.info4.length
         },
         info5: {
@@ -215,7 +215,7 @@ const breadcrumbs = computed(() => {
         <div class="d-flex flex-row gap-2 align-items-center">
             <!-- Need to change the svg based on the type of hardware -->
           <div></div>
-          <h1>{{ cpuBrandFormatter(displayData.brand) }} {{ formatModel(displayData.model) }}</h1>
+          <h1>{{ displayData.brand }} {{displayData.model}}</h1>
         </div>
 
         <div class="part-tags d-flex gap-2">

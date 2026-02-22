@@ -114,6 +114,11 @@
   text-align: center;
 }
 
+.stat-card:hover {
+  background-color: white;
+  transition: all 0.3s;
+}
+
 .stat-label {
   color: #6c757d;
   font-size: 0.75rem;
@@ -152,34 +157,43 @@
   color: #6c757d;
 }
 
+.spec-title {
+  color: var(--primary-color);
+}
+
 .buy-item {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    align-items: center;
-    gap: 10px;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    width: 150px;
-    height: 150px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+  gap: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  width: 150px;
+  height: 150px;
     
 }
 
+.buy-item:hover {
+  background-color: white;
+  transition: all 0.3s;
+}
+
 .price-item {
-    color: var(--primary-color);
-    font-weight: 700;
-    font-size: 20px;
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 20px;
 }
 
 .link-item {
-    color: gray;
-    opacity: 80%;
+  color: gray;
+  opacity: 80%;
 }
 
 .website_favicons {
-    width: 22px;
-    height: 22px;
+  width: 22px;
+  height: 22px;
 }
 
 /* Specs Box */

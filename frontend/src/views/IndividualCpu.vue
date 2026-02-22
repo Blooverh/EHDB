@@ -79,9 +79,6 @@ const memoryProps = [
   { key: 'cache.cacheL3', label: 'L3 Cache (MB)' },
 ]
 
-// default document title
-document.title = 'Individual CPU'
-
 // on a change of cpu for this view, we change the document title depending on the current cpu page
 watch(cpu, (newCPU) => {
   if (newCPU) {
@@ -105,17 +102,16 @@ watch(cpu, (newCPU) => {
 
         <ol class="d-flex flex-row gap-3 p-0">
           <li class="buy-item" v-for="listing in cpu.info">
-            <!-- svg or image of website -->
+            
             <img
               class="website_favicons"
               :src="getFavicon(listing.website)"
               :alt="`${cpu.brand} ${cpu.model} - ${listing.website}`"
             />
-            <!-- name of website -->
+            
             <span class="website-item fw-bold">{{ listing.website }}</span>
-            <!-- current Price -->
+            
             <span class="price-item">${{ listing.currPrice }}</span>
-            <!-- anchor to link with small svg -->
             <a
               class="link-item d-flex flex-row gap-1 align-items-center"
               target="_blank"
