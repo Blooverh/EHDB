@@ -307,6 +307,7 @@ serverRouter.get("/servers/:brand", async (req, res) => {
       totalServers,
       totalPages,
       currentPage: parseInt(page),
+      brand
     });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });

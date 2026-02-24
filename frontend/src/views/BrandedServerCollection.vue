@@ -150,7 +150,7 @@ watch(
       servers.value = response.data.servers
       totalServers.value = response.data.totalServers
       totalPages.value = response.data.totalPages
-      brand_server.value = serverBrand
+      brand_server.value = response.data.brand
 
       const { data } = await axios.get(`/api/servers/${serverBrand}/filter-options`)
       filters.value = data

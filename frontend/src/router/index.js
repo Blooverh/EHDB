@@ -10,6 +10,8 @@ import BrandedCpuCollection from '@/views/BrandedCpuCollection.vue';
 import SearchPage from '@/views/SearchPage.vue';
 import IndividualServer from '@/views/IndividualServer.vue';
 import BrandedServerCollection from '@/views/BrandedServerCollection.vue';
+import About from '@/views/About.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +21,12 @@ const router = createRouter({
       name: 'Home Page',
       component: Homepage,
       meta: { title: 'EHDB Home Page'}
+    },
+    {
+      path: '/about',
+      name: 'About EHDB',
+      meta: {title: 'EHDB About'}, 
+      component: About
     },
     { // general Server collection
       path: '/servers',
