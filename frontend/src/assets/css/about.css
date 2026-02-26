@@ -1,0 +1,78 @@
+.about-page {
+  min-height: 80vh;
+}
+
+.breadcrumb-nav {
+  --bs-breadcrumb-divider: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='black'/%3E%3C/svg%3E");
+}
+
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.breadcrumb-item a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--primary-color);
+  opacity: 50%;
+  font-weight: bold;
+}
+
+.breadcrumb-item.active {
+  color: gray;
+  font-weight: bold;
+}
+
+.feature-card,
+.hardware-card,
+.contact-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.feature-card:hover,
+.hardware-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.icon-wrapper {
+  display: inline-flex;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+}
+
+.hardware-icon {
+  flex-shrink: 0;
+}
+
+.about-intro {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-left: 4px solid var(--primary-color);
+}
+
+.intro-accent {
+  width: 60px;
+  height: 4px;
+  background: var(--primary-color);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.coming-soon {
+  opacity: 0.7;
+  background: #fafafa;
+}
+
+.coming-soon:hover {
+  transform: none;
+  box-shadow: none;
+}

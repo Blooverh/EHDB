@@ -1,5 +1,6 @@
 <script setup>
-import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, EthernetPort } from 'lucide-vue-next'
+  import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, EthernetPort, Gpu } from 'lucide-vue-next';
+  import '../assets/css/about.css';
 </script>
 
 <template>
@@ -21,7 +22,7 @@ import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, Ethernet
         <div class="about-intro p-5 rounded-4">
           <div class="intro-accent mb-3"></div>
           <p class="mb-0 fs-5 text-center">
-            EHDB is a comprehensive database dedicated to enterprise hardware, providing detailed
+            <strong>EHDB</strong> is a comprehensive database dedicated to enterprise hardware, providing detailed
             specifications and pricing information for servers and server components. Our goal is to
             help IT professionals, system administrators, and hardware enthusiasts make informed
             decisions when purchasing enterprise equipment.
@@ -42,8 +43,8 @@ import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, Ethernet
           </div>
           <h3 class="h5 fw-bold">Comprehensive Data</h3>
           <p class="text-muted mb-0">
-            Detailed specifications for servers, processors, and hardware components all in one
-            place.
+            Detailed specifications for servers, processors, and most hardware components all in one
+            place. If you have a infrastrucuture or a homelab we provide the specs for your study.
           </p>
         </div>
       </div>
@@ -56,7 +57,7 @@ import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, Ethernet
           <h3 class="h5 fw-bold">Price Tracking</h3>
           <p class="text-muted mb-0">
             Real-time pricing from multiple enterprise hardware vendors to help you find the best
-            deals.
+            deals. Every week we check vendors pricing to show you. We track all prices over a period of time (Coming Soon...)
           </p>
         </div>
       </div>
@@ -64,11 +65,11 @@ import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, Ethernet
       <div class="col-md-4 mb-3">
         <div class="feature-card h-100 p-4 border rounded-3 text-center">
           <div class="icon-wrapper mb-3">
-            <Search :size="48" class="text-info" />
+            <Search :size="48" class="text-primary" />
           </div>
           <h3 class="h5 fw-bold">Easy Comparison</h3>
           <p class="text-muted mb-0">
-            Compare specifications and prices across different vendors quickly and easily.
+            Compare prices across different vendors quickly and check where you can get the best prices, we try our best to include all vendors that offer each component.
           </p>
         </div>
       </div>
@@ -157,6 +158,21 @@ import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, Ethernet
           </div>
         </div>
       </div>
+
+      <div class="col-md-6 mb-3">
+        <div
+          class="hardware-card h-100 p-4 border rounded-3 d-flex align-items-center gap-3 coming-soon"
+        >
+          <div class="hardware-icon">
+            <Gpu :size="40" />
+          </div>
+          <div>
+            <h3 class="h5 fw-bold mb-1">GPUs</h3>
+            <p class="text-muted mb-0">GPUs from NVIDIA, AMD and Intel, we have the information.</p>
+            <span class="badge bg-secondary mt-2">Coming Soon</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row justify-content-center">
@@ -164,8 +180,8 @@ import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, Ethernet
         <div class="contact-card p-4 border rounded-3 text-center">
           <h3 class="fw-bold mb-3">Want to Contribute?</h3>
           <p class="text-muted mb-0">
-            EHDB is continuously growing. If you're a vendor or have suggestions for improvements,
-            we'd love to hear from you. Contact us to learn how you can help make this resource even
+            EHDB is continuously growing. If you have suggestions for improvements,
+            We'd love to hear from you. Contact us to learn how you can help make this resource even
             better.
           </p>
         </div>
@@ -174,83 +190,3 @@ import { Database, Server, Cpu, HardDrive, Search, DollarSign, Package, Ethernet
   </div>
 </template>
 
-<style scoped>
-.about-page {
-  min-height: 80vh;
-}
-
-.breadcrumb-nav {
-  --bs-breadcrumb-divider: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='black'/%3E%3C/svg%3E");
-}
-
-.breadcrumb {
-  background: transparent;
-  padding: 0;
-  margin-bottom: 30px;
-}
-
-.breadcrumb-item a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.breadcrumb-item a:hover {
-  color: var(--primary-color);
-  opacity: 50%;
-  font-weight: bold;
-}
-
-.breadcrumb-item.active {
-  color: gray;
-  font-weight: bold;
-}
-
-.feature-card,
-.hardware-card,
-.contact-card {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.feature-card:hover,
-.hardware-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.icon-wrapper {
-  display: inline-flex;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 50%;
-}
-
-.hardware-icon {
-  flex-shrink: 0;
-}
-
-.about-intro {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-left: 4px solid var(--primary-color);
-}
-
-.intro-accent {
-  width: 60px;
-  height: 4px;
-  background: var(--primary-color);
-  margin: 0 auto;
-  border-radius: 2px;
-}
-
-.coming-soon {
-  opacity: 0.7;
-  background: #fafafa;
-}
-
-.coming-soon:hover {
-  transform: none;
-  box-shadow: none;
-}
-</style>

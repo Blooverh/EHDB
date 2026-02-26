@@ -20,10 +20,7 @@
                     </div>
                 </div>
                 <p class="sm-description">EHDB is a comprehensive database of enterprise 
-                    hardware systems and components, such as, servers, CPUs, GPUs, Storage etc...
-                    <br>
-                    Whether you're an IT professional or a fan of computer hardware I hope I can 
-                    help you show the specifications of each component or system. Thank you!
+                    hardware systems and components, such as, servers, CPUs, GPUs, Storage, etc...
                 </p>
 
                 <span class="created-by">
@@ -33,8 +30,8 @@
 
             <div class="quick-links d-flex flex-column">
                 <p class="subtl"><strong>Quick Links</strong></p>
-                <span class="link"><a href="">Browse Hardware</a></span>
-                <span class="link"><a href="">About EHDB</a></span>
+                <span class="link"><a href="/search">Browse Hardware</a></span>
+                <span class="link"><a href="/about">About EHDB</a></span>
             </div>
 
             <div class="social-box">

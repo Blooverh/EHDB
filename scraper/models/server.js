@@ -10,7 +10,11 @@ const serverSchema = new mongoose.Schema({
         oldPrice: {type: Number, default: 0},
         chassis: {type: String, default: defVal},
         priceChange: {type: Number, default: 0},
-        websiteLink: {type: String, default: defVal}
+        websiteLink: {type: String, default: defVal}, 
+        priceHistory: [{
+            oldPrice: {type: Number}, 
+            timestamp: {type: Date, defautl: Date.now}
+        }]
     }],
     socketInfo: {type: String, default: defVal},
     compatibleCpuGen: {type: String, default: defVal},

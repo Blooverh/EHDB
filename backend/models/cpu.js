@@ -35,7 +35,11 @@ const cpuSchema = new mongoose.Schema({
         currPrice: {type: Number, default: 0},
         oldPrice: {type: Number, default: 0},
         priceChange: {type: Number, default: 0},
-        link: {type: String, default: defaultVal}
+        link: {type: String, default: defaultVal}, 
+        priceHistory: [{
+            oldPrice: {type: Number}, 
+            timestamp: {type: Date, defautl: Date.now}
+        }]
     }],
     slug: {
         type: String,
