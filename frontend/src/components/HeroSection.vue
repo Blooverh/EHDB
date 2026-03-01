@@ -2,6 +2,7 @@
     import { onMounted, ref } from 'vue';
     import axios from 'axios';
     import LiveSearchBar from './LiveSearchBar.vue';
+    import '../assets/css/hero-homepage.css'
 
     const error = ref(null);
     const servers = ref(null);
@@ -86,104 +87,3 @@
 
     </div>
 </template>
-
-<style scoped>
-
-    .hero-section {
-        background: linear-gradient(to right, rgba(8, 45, 94, 0.9), /* 90% */ rgba(8, 45, 94, 0.7), /* 70% */ rgba(8, 45, 94, 0.5)  /* 50% */), url('../assets/images/Enterprise-Hardware.png');
-        background-repeat: no-repeat;
-        background-size: cover;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-    }
-
-    .hero-box {
-        max-width: 1170px;
-    }
-
-    .hero-titles {
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-        align-items: center;
-        
-    }
-
-    .title-a {
-        color: white;
-        font-size: 5rem;
-        font-weight:  600;
-    }
-
-    .title-b {
-        background: linear-gradient(to right, cyan, blue);
-        font-weight: 600;
-        font-size: 5rem;
-        background-clip: text;
-        color: transparent;
-    }
-
-    .sub-hero-title{
-        color: white;
-        font-size: 1.5rem;
-        text-align: center;
-
-    }
-
-    /* Hero Section Number of parts */
-
-    .hardware-info-box{
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-        margin-top: 20px;
-        justify-content: center;
-    }
-
-        /* Need to add other parts attribute when done */
-    .server-box, .cpu-box {
-        background-color: #ffffffd0;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-radius: 8px;
-        width: 200px;
-        transition: background-color 0.3s ease;
-    }
-
-    .server-box:hover, .cpu-box:hover{
-        background-color: white;
-    }
-
-    .cpu-box:hover .cpu-icon, .server-box:hover .server-icon {
-        color: #007bff;
-    }
-
-    .box-align{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .cpu-icon, .server-icon {
-        width: 20px;
-        color: #082D5E;
-        transition: color 0.3s ease;
-    }
-
-    .box-span {
-        font-weight: 700;
-    }
-
-    .parts-in-db{
-        font-size: 18px;
-        color: #767676;
-    }
-
-</style>

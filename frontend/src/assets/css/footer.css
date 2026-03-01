@@ -1,0 +1,120 @@
+p,
+span {
+  color: gray;
+}
+
+.subtl {
+  color: black;
+}
+
+.created-by > strong {
+  color: black;
+}
+
+.footer-bg {
+  background-color: #d1d1d134;
+  padding: 20px;
+}
+
+.top-footer {
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
+  justify-items: anchor-center;
+}
+
+.solid {
+  border: solid gray 1px;
+  margin: 20px;
+}
+
+.logo-box {
+  background: linear-gradient(to right, cyan, blue);
+  border-radius: 8px;
+  align-self: center;
+  padding: 10px;
+}
+.logo-title {
+  font-size: 1rem;
+  color: black;
+  font-weight: 700;
+}
+
+.sm-description {
+  max-width: 280px;
+}
+
+.link a,
+.contact-email a {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link a:hover,
+.contact-email a:hover {
+  color: #0066cc !important;
+}
+
+@media (max-width: 992px) {
+  .top-footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .ehdb-box {
+    grid-column: span 2;
+    text-align: center;
+  }
+
+  .ehdb-logo {
+    justify-content: center;
+  }
+
+  .sm-description {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-bg {
+    padding: 15px;
+  }
+
+  .top-footer {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .ehdb-box {
+    grid-column: span 1;
+  }
+
+  .logo-title {
+    font-size: 0.9rem;
+  }
+
+  .logo-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .subtl {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .link a,
+  .contact-email a {
+    font-size: 0.85rem;
+  }
+
+  .sm-description {
+    font-size: 0.85rem;
+  }
+
+  .created-by {
+    font-size: 0.8rem;
+  }
+
+  .sub-footer span {
+    font-size: 0.75rem;
+  }
+}

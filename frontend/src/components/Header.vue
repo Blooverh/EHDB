@@ -1,90 +1,84 @@
 <script setup>
-    
+    import '../assets/css/header.css';
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary ">
-        <div class="container-fluid px-5 justify-content-between">
-            <RouterLink class="navbar-brand home-img" to="/"><img src="../assets/images/EHDB-logo.png" alt="EHDB"></RouterLink>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid px-5 justify-content-between">
+      <RouterLink class="navbar-brand home-img" to="/"
+        ><img src="../assets/images/EHDB-logo.png" alt="EHDB"
+      /></RouterLink>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <div class="collapse navbar-collapse gap-5 justify-content-center align-content-center" id="navbarNavDropdown">
-                <ul class="navbar-nav gap-5">
-                    <li class="nav-item">
-                        <RouterLink class="nav-link" to="/">Home</RouterLink>
-                    </li>
+      <div
+        class="collapse navbar-collapse gap-5 justify-content-center align-content-center"
+        id="navbarNavDropdown"
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/">Home</RouterLink>
+          </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Processors</a>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              to="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              >Processors</a
+            >
 
-                        <ul class="dropdown-menu">
-                            <li><RouterLink to="/cpus">All Processors</RouterLink></li>
-                            <li><RouterLink to="/cpus/amd">AMD Processors</RouterLink></li>
-                            <li><RouterLink to="/cpus/intel">Intel Processors</RouterLink></li>
-                        </ul>
-                    </li>
+            <ul class="dropdown-menu">
+              <li><RouterLink to="/cpus">All Processors</RouterLink></li>
+              <li><RouterLink to="/cpus/amd">AMD Processors</RouterLink></li>
+              <li><RouterLink to="/cpus/intel">Intel Processors</RouterLink></li>
+            </ul>
+          </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Servers</a>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              to="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              >Servers</a
+            >
 
-                        <ul class="dropdown-menu">
-                            <li><RouterLink to="/servers">All Servers</RouterLink></li>
-                            <li><RouterLink to="/servers/dell">Dell</RouterLink></li>
-                            <li><RouterLink to="/servers/hpe">HPE</RouterLink></li>
-                            <li><RouterLink to="/servers/supermicro">Supermicro</RouterLink></li>
-                            <li><RouterLink to="/servers/gigabyte">Gigabyte</RouterLink></li>
-                            <li><RouterLink to="/servers/asus">Asus</RouterLink></li>
-                            <li><RouterLink to="/servers/cloud-ninjas">Cloud Ninjas</RouterLink></li>
-                            <!-- More to add -->
-                        </ul>
-                    </li>
+            <ul class="dropdown-menu">
+              <li><RouterLink to="/servers">All Servers</RouterLink></li>
+              <li><RouterLink to="/servers/dell">Dell</RouterLink></li>
+              <li><RouterLink to="/servers/hpe">HPE</RouterLink></li>
+              <li><RouterLink to="/servers/supermicro">Supermicro</RouterLink></li>
+              <li><RouterLink to="/servers/gigabyte">Gigabyte</RouterLink></li>
+              <li><RouterLink to="/servers/asus">Asus</RouterLink></li>
+              <li><RouterLink to="/servers/cloud-ninjas">Cloud Ninjas</RouterLink></li>
+              <!-- More to add -->
+            </ul>
+          </li>
 
-                    <!-- More hardware parts to add -->
+          <!-- More hardware parts to add -->
 
-                    <li class="nav-item align-self-center">
-                        <RouterLink to="/about">About</RouterLink>
-                    </li>
-                </ul>
+          <li class="nav-item align-self-center">
+            <RouterLink to="/about">About</RouterLink>
+          </li>
+        </ul>
 
-                <!-- Search Button -->
-                <RouterLink class="search-btn" :to="`/search`">Search Hardware</RouterLink>
-            </div>
-        </div>
-    </nav>
+        <!-- Search Button -->
+        <RouterLink class="search-btn" :to="`/search`">Search Hardware</RouterLink>
+      </div>
+    </div>
+  </nav>
 </template>
 
-<style scoped>
-    .home-img{
-        max-width: 5rem;
-    }
-
-    .dropdown-menu > li{
-        padding: 5px;
-    }
-
-    .search-btn {
-       padding: 10px;
-       border-radius: 8px;
-       background: linear-gradient(to right, cyan, blue); 
-       font-weight: bold;
-       color: white;
-       text-decoration: none;
-       transition: background-position 0.5s ease-in-out;
-       cursor: pointer;
-       background-size: 200% 100%; /* Make background twice as wide */
-       background-position: 0% 0%;  /* Start at the beginning of the gradient */
-    }
-
-    .search-btn:hover {
-        background-position: 100% 0%;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        transform: translateY(-2px); 
-    }
-
-    .search-btn:active {
-        transform: translateY(0); /* Press down effect */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)
-    }
-</style>
