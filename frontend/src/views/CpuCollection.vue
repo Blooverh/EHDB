@@ -9,9 +9,13 @@ import { useRoute, useRouter } from 'vue-router'
 //Lucide svg import
 import { ArrowBigRight } from 'lucide-vue-next'
 import { ArrowBigLeft } from 'lucide-vue-next'
+import { SlidersHorizontal } from 'lucide-vue-next'
 
 const router = useRouter()
 const route = useRoute()
+
+// Filter visibility state - hidden by default on mobile
+const showFilters = ref(window.innerWidth > 768)
 
 // --- STATE ---
 // The current page is now a computed property derived from the URL.
@@ -99,6 +103,10 @@ const prevPage = () => {
   }
 }
 
+const toggleFilters = () => {
+  showFilters.value = !showFilters.value
+}
+
 // --- WATCHERS ---
 
 // When the URL changes, fetch new data. This is the single source of truth for API calls.
@@ -167,7 +175,12 @@ watch(
 
 <template>
   <div class="part-collection">
+    <button class="filter-toggle" @click="toggleFilters">
+      <SlidersHorizontal :size="20" />
+      {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+    </button>
     <CpuFilterBox
+      v-show="showFilters"
       :filters="filters"
       :selectedFilters="selectedFilters"
       @filters-changed="updateFilters"

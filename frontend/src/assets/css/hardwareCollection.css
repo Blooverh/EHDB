@@ -167,12 +167,43 @@
 
 /* ==================== RESPONSIVE STYLES ==================== */
 
+/* Filter Toggle Button */
+.filter-toggle {
+  display: none;
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(to right, cyan, blue);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-position 0.5s ease;
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+}
+
+.filter-toggle:hover {
+  background-position: 100% 0%;
+}
+
+.filter-toggle svg {
+  margin-right: 8px;
+}
+
 /* Tablet (max-width: 992px) */
 @media (max-width: 992px) {
   .part-collection {
     grid-template-columns: 1fr;
     margin: 20px 15px;
     gap: 15px;
+  }
+
+  .filter-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .filter-box {

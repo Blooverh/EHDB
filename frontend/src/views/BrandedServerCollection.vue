@@ -5,10 +5,14 @@ import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import BrandedServerFilterBox from '@/components/BrandedServerFilterBox.vue'
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-vue-next'
+import { SlidersHorizontal } from 'lucide-vue-next'
 import ServerVerticalCard from '@/components/serverVerticalCard.vue'
 
 const router = useRouter()
 const route = useRoute()
+
+// Filter visibility state - hidden by default on mobile
+const showFilters = ref(window.innerWidth > 768)
 
 // current page is computed property derived from url
 const currentPage = computed(() => parseInt(route.query.page) || 1)
@@ -115,6 +119,10 @@ const prevPage = () => {
   }
 }
 
+const toggleFilters = () => {
+  showFilters.value = !showFilters.value
+}
+
 // WATCHERS (SIDE EFFECTS)
 /* 
     - we pass query as argument and will watch based on new query if we need to update query in URL 
@@ -172,8 +180,13 @@ watch(
 
 <template>
   <div class="part-collection">
+    <button class="filter-toggle" @click="toggleFilters">
+      <SlidersHorizontal :size="20" />
+      {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+    </button>
     <!-- ServerFilterBox for brands -->
     <BrandedServerFilterBox
+      v-show="showFilters"
       :filters="filters"
       :selectedFilters="selectedFilters"
       @filters-changed="updateFilters"

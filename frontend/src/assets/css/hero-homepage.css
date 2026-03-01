@@ -148,16 +148,21 @@
   .server-box,
   .cpu-box {
     width: 100%;
-    max-width: 200px;
-    padding: 12px;
+    max-width: 280px;
+    padding: 20px;
+  }
+
+  .server-icon,
+  .cpu-icon {
+    width: 28px;
+    height: 28px;
   }
 
   .box-span {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 
   .parts-in-db {
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
 }
-

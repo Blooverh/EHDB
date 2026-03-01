@@ -5,11 +5,15 @@ import axios from 'axios'
 import '../assets/css/hardwareCollection.css'
 import ServerFilterBox from '@/components/ServerFilterBox.vue'
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-vue-next'
+import { SlidersHorizontal } from 'lucide-vue-next'
 import ServerVerticalCard from '@/components/serverVerticalCard.vue'
 
 // --- Router and Route instances ---
 const router = useRouter()
 const route = useRoute()
+
+// Filter visibility state - hidden by default on mobile
+const showFilters = ref(window.innerWidth > 768)
 
 // --- State Management ---
 const servers = ref([])
@@ -117,6 +121,10 @@ const previousPage = () => {
   }
 }
 
+const toggleFilters = () => {
+  showFilters.value = !showFilters.value
+}
+
 // Watcher
 
 /*
@@ -171,7 +179,12 @@ watch(
 
 <template>
   <div class="part-collection">
+    <button class="filter-toggle" @click="toggleFilters">
+      <SlidersHorizontal :size="20" />
+      {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+    </button>
     <ServerFilterBox
+      v-show="showFilters"
       :filters="filters"
       :selectedFilters="selectedFilters"
       @filters-changed="updateFilters"
