@@ -161,6 +161,10 @@
   color: var(--primary-color);
 }
 
+ol.d-flex.flex-row.gap-3.p-0 {
+  justify-content: center;
+}
+
 .buy-item {
   display: flex;
   flex-direction: column;
@@ -241,6 +245,31 @@
     font-size: 1.8rem;
   }
 
+  /* Center the SVG and h1 */
+  .d-flex.flex-row.gap-2.align-items-center {
+    justify-content: center !important;
+    text-align: center;
+  }
+
+  .d-flex.flex-row.gap-2.align-items-center h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+
+  /* Make part-tags a 2x2 grid */
+  .part-tags {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    justify-items: center;
+  }
+
+  .tag-indi {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    text-align: center;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
@@ -310,9 +339,24 @@
     margin-bottom: 15px;
   }
 
+  /* Ensure SVG and h1 stay centered */
+  .d-flex.flex-row.gap-2.align-items-center {
+    gap: 10px !important;
+  }
+
+  /* Keep part-tags as 2x2 */
+  .part-tags {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    justify-items: center;
+  }
+
   .tag-indi {
     padding: 6px 10px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
   }
 
   .stats-grid {

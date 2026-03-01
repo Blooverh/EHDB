@@ -16,10 +16,8 @@
             cpus.value = cpuRes.data;
 
         }catch(err){
-            error.value = err.message
+            error.value = err.message;
         }
-
-
     });
 
 

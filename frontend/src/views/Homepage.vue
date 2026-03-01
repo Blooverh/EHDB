@@ -37,7 +37,7 @@ onMounted(async () => {
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
-    <p>Loading hardware data...</p>
+    <p>Loading data...</p>
   </div>
 
   <div v-else-if="error" class="error-state">
