@@ -71,7 +71,7 @@
 }
 
 .part-image > img {
-    align-self: center;
+  align-self: center;
 }
 
 .part-information {
@@ -164,15 +164,33 @@
 .buy-item {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 10px;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background-color: #f8f9fa;
   border: 1px solid #dee2e6;
   border-radius: 8px;
   width: 150px;
-  height: 150px;
-    
+  min-height: 150px;
+}
+
+.buy-item:hover {
+  background-color: white;
+  transition: all 0.3s;
+}
+
+.price-item {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 20px;
+  margin: auto 0;
+}
+
+.link-item {
+  color: gray;
+  opacity: 80%;
+  margin-top: auto;
 }
 
 .buy-item:hover {
@@ -238,6 +256,152 @@
 
   .specs-row {
     justify-content: center;
+    align-content: center;
     gap: 16px;
   }
+
+  .buy-item {
+    width: 130px;
+    min-height: 150px;
+    padding: 8px;
+  }
+
+  .website_favicons {
+    width: 18px;
+    height: 18px;
+  }
+
+  .price-item {
+    font-size: 16px;
+  }
+
+  .hero-individualPart {
+    padding: 15px;
+  }
+
+  .breadcrumb {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-individualPart {
+    padding: 10px;
+    min-height: 200px;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero-image {
+    width: 150px;
+    padding: 15px;
+  }
+
+  .part-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-model {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+
+  .tag-indi {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .stat-card {
+    padding: 12px 8px;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+  }
+
+  .stat-value {
+    font-size: 1.1rem;
+  }
+
+  .specs-row {
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 15px;
+  }
+
+  .spec-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .spec-label,
+  .spec-value {
+    font-size: 0.9rem;
+    align-self: center;
+  }
+
+  .buy-item {
+    width: 100%;
+    max-width: 160px;
+    min-height: 140px;
+    padding: 12px 8px;
+  }
+
+  .website_favicons {
+    width: 16px;
+    height: 16px;
+  }
+
+  .website-item {
+    font-size: 0.85rem;
+  }
+
+  .price-item {
+    font-size: 14px;
+  }
+
+  .link-item {
+    font-size: 0.85rem;
+  }
+
+  .specs-box {
+    padding: 15px 12px;
+  }
+
+  .label-text {
+    font-size: 0.85rem;
+  }
+
+  .breadcrumb {
+    font-size: 0.75rem;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+}
+
+.chassis-tooltip {
+  cursor: pointer;
+  color: #6c757d;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.chassis-tooltip:hover {
+  color: #495057;
 }

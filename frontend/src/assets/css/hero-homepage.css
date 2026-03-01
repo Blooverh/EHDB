@@ -89,7 +89,6 @@
 
 .cpu-icon,
 .server-icon {
-  width: 20px;
   color: #082d5e;
   transition: color 0.3s ease;
 }

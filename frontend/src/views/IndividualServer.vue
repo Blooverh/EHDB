@@ -8,7 +8,6 @@ import { Store, SquareArrowOutUpRight, Info, Server } from 'lucide-vue-next'
 import ServerSpecs from '@/components/IndividualPage_Components/ServerSpecs.vue'
 import { Tooltip } from 'bootstrap'
 
-
 const route = useRoute()
 const error = ref(null)
 const loading = ref(true)
@@ -55,39 +54,37 @@ const initTooltips = () => {
   })
 }
 
-
 // Property Setup for servers
 
-// Single value properties 
+// Single value properties
 const singleVal_Props = [
-  {key: 'brand', label: 'Brand'},
-  {key: 'model', label: 'Model'},
-  {key: 'socketInfo', label: 'Socket Type'},
-  {key: 'motherboardType', label: 'Motherboard Memory Generation'},
-  {key: 'serverType', label: 'Server Physical Size'},
-  {key: 'userManual', label: 'User Manual'},
-  {key: 'techSpecs', label: 'Server Specifications'}
+  { key: 'brand', label: 'Brand' },
+  { key: 'model', label: 'Model' },
+  { key: 'socketInfo', label: 'Socket Type' },
+  { key: 'motherboardType', label: 'Motherboard Memory Generation' },
+  { key: 'serverType', label: 'Server Physical Size' },
+  { key: 'userManual', label: 'User Manual' },
+  { key: 'techSpecs', label: 'Server Specifications' },
 ]
 
 // multiple Value general properties
 const multipleVal_props = [
-  {key: 'compatibleCpuGen', label: 'Processor Generations'},
-  {key: 'memorySpecs.memory_type', label: 'Memory Type'}, 
-  {key: 'memorySpecs.speeds', label: 'Compatible Memory Speeds'},
-  {key: 'memorySpecs.max_configs', label: 'Server Configurations'},
-  {key: 'ssdInterfaces', label: 'SSD Interfaces'},
-  {key: 'expansionSlots', label: 'PCIe Expansion Slots'},
-  {key: 'nicInterfaces', label: 'Network Card Interfaces'},
-
+  { key: 'compatibleCpuGen', label: 'Processor Generations' },
+  { key: 'memorySpecs.memory_type', label: 'Memory Type' },
+  { key: 'memorySpecs.speeds', label: 'Compatible Memory Speeds' },
+  { key: 'memorySpecs.max_configs', label: 'Server Configurations' },
+  { key: 'ssdInterfaces', label: 'SSD Interfaces' },
+  { key: 'expansionSlots', label: 'PCIe Expansion Slots' },
+  { key: 'nicInterfaces', label: 'Network Card Interfaces' },
 ]
 
 // Multiple value properties where values are official parts
 const partsVal_props = [
-  {key: 'compatibleRaids', label: 'RAID Controllers'},
-  {key: 'compatibleOs', label: 'Compatible Operating Systems'}, 
-  {key: 'compatibleNics', label: 'Compatible Network Cards'}, 
-  {key: 'compatiblePSU', label: 'Power Supply Configurations'}, 
-  {key: 'sysManagement', label: 'System Management Software'}
+  { key: 'compatibleRaids', label: 'RAID Controllers' },
+  { key: 'compatibleOs', label: 'Compatible Operating Systems' },
+  { key: 'compatibleNics', label: 'Compatible Network Cards' },
+  { key: 'compatiblePSU', label: 'Power Supply Configurations' },
+  { key: 'sysManagement', label: 'System Management Software' },
 ]
 
 watch(server, (newServer) => {
@@ -119,9 +116,9 @@ watch(server, (newServer) => {
             />
 
             <span class="website-item fw-bold">{{ listing.website }}</span>
-            
+
             <span class="price-item">${{ listing.currPrice }}</span>
-            
+
             <span
               v-if="listing.chassis"
               class="chassis-tooltip"
@@ -131,7 +128,7 @@ watch(server, (newServer) => {
               <Info :size="16" :stroke-width="2" />
               Chassis
             </span>
-            
+
             <a
               class="link-item d-flex flex-row gap-1 align-items-center"
               target="_blank"
@@ -148,30 +145,19 @@ watch(server, (newServer) => {
 
       <ServerSpecs :part="server" boxTitle="Quick Specifications" :properties="singleVal_Props" />
 
-      <ServerSpecs :part="server" boxTitle="Server Component Compatibility" :properties="multipleVal_props" />
+      <ServerSpecs
+        :part="server"
+        boxTitle="Server Component Compatibility"
+        :properties="multipleVal_props"
+      />
 
-      <ServerSpecs :part="server" boxTitle="Server Part List Compatibility" :properties="partsVal_props" />
-    
-
+      <ServerSpecs
+        :part="server"
+        boxTitle="Server Part List Compatibility"
+        :properties="partsVal_props"
+      />
     </div>
     <div v-else-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
   </div>
 </template>
-
-<style scoped>
-  .chassis-tooltip {
-    cursor: pointer;
-    color: #6c757d;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .chassis-tooltip:hover {
-    color: #495057;
-  }
-
-  .buy-item{
-    height: auto;
-  }
-</style>
