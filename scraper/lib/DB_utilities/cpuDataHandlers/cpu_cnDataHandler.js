@@ -61,9 +61,6 @@ export default async function cnAddCPU(titleArr, priceArr, linksArr) {
         // price on DB will go to oldPrice
         // if website does not exists, push object to array cpu.info with website, current price and old price
         if (existingWebsite) {
-          if (!existingWebsite.priceHistory) {
-            existingWebsite.priceHistory = [];
-          }
           if (existingWebsite.currPrice !== priceInFloat) {
             existingWebsite.priceHistory.push({
               oldPrice: existingWebsite.currPrice,

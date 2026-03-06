@@ -82,7 +82,6 @@ export const cnCollectionCPU = async () => {
 
   if (TEST_MODE) {
     console.log("[TEST MODE] Scraped data:");
-    console.log(`Collection contains ${scrapedData.length} CPUs`);
     console.log(JSON.stringify(scrapedData, null, 2));
   } else if (scrapedData.length > 0) {
     await cnAddCPU(
