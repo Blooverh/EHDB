@@ -111,6 +111,10 @@ export default async function xbyteAddServer(dataArr){
                     // Check price of chassis entry, if scraped price different from curr price on DB update pricing
                     if(chassisToUpdate){
                         if(chassisToUpdate.currPrice !== server.prices[i]){
+                            chassisToUpdate.priceHistory.push({
+                                oldPrice: chassisToUpdate.currPrice, 
+                                timestamp: new Date()
+                            });
                             chassisToUpdate.oldPrice = chassisToUpdate.currPrice;
                             chassisToUpdate.currPrice = server.prices[i];
                             console.log(`[PRICE UPDATED] Server ${serverDB.brand} ${serverDB.model}, chassis ${chassisToUpdate.chassis}, new price: ${chassisToUpdate.currPrice}`);
@@ -118,7 +122,14 @@ export default async function xbyteAddServer(dataArr){
                             console.log(`[NO PRICE UPDATE] xByte's ${brand} ${model} ${chassis[i]} has no price update`);
                         }
                     }else{
-                        serverDB.chassisInfo.push({website: 'xByte', currPrice: server.prices[i], oldPrice: server.prices[i], chassis: chassis[i], websiteLink: server.websiteLink});
+                        serverDB.chassisInfo.push({
+                            website: 'xByte', 
+                            currPrice: server.prices[i],
+                            oldPrice: server.prices[i], 
+                            chassis: chassis[i], 
+                            websiteLink: server.websiteLink,
+                            priceHistory: []
+                        });
 
                         console.log(`[NEW CHASSIS ENTRY] Server ${serverDB.brand} ${serverDB.model}, chassis ${chassis[i]} | Price: ${server.prices[i]}`);
                     }

@@ -33,6 +33,10 @@ export default async function smAddServer(dataArr){
                 // if entry of website and chassis exists on website, update pricing if there is new pricing
                 if(chassisToUpdate){
                     if(chassisToUpdate.currPrice !== price){
+                        chassisToUpdate.priceHistory.push({
+                            oldPrice: chassisToUpdate.currPrice, 
+                            timestamp: new Date()
+                        });
                         chassisToUpdate.oldPrice = chassisToUpdate.currPrice;
                         chassisToUpdate.currPrice = price;
 
@@ -40,7 +44,14 @@ export default async function smAddServer(dataArr){
                     }
                 }else{
                     // add new entry for server in DB if does not exist on database
-                    serverDb.chassisInfo.push({website: 'Server Monkey', currPrice: price, oldPrice: price, chassis: chassis, websiteLink: link});
+                    serverDb.chassisInfo.push({
+                        website: 'Server Monkey', 
+                        currPrice: price, 
+                        oldPrice: price, 
+                        chassis: chassis, 
+                        websiteLink: link, 
+                        priceHistory: []
+                    });
 
                     console.log(`[NEW CHASSIS ENTRY] ${serverDb.brand} ${serverDb.model} - chassis: ${chassis}, Price: ${price}`);
                 }
