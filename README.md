@@ -13,6 +13,8 @@ npm run build
 npm start -- --version # displays version of program
 npm start -- --help # see main help menu
 
+
+> These are ran withing the /scraper directory, since they have not been updated yet 
 # help menu for cpu command
 npm start -- cpu help
 npm start -- server help 

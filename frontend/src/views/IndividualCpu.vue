@@ -100,7 +100,7 @@ watch(cpu, (newCPU) => {
           <h2 class="fw-bold mb-0">Where To Buy</h2>
         </div>
 
-        <ol class="d-flex flex-row gap-3 p-0">
+        <ol class="d-flex flex-row gap-3 p-0 justify-content-start">
           <li class="buy-item" v-for="listing in cpu.info">
             
             <img

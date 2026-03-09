@@ -99,6 +99,11 @@ export default async function cnAddServer(dataArr){
                 // if chassis for a website already exists then we only check to update pricing 
                 if(chassisToUpdate){
                     if(chassisToUpdate.currPrice !== data.pricing){
+                        chassisToUpdate.priceHistory.push({
+                            oldPrice: chassisToUpdate.currPrice, 
+                            timestamp: new Date()
+                        });
+
                         chassisToUpdate.oldPrice = chassisToUpdate.currPrice;
                         chassisToUpdate.currPrice = data.pricing;
 
@@ -107,7 +112,14 @@ export default async function cnAddServer(dataArr){
                 }else{ 
                     // if chassis for website does not exist create new entry of that chassis for that website
 
-                    server.chassisInfo.push({website: data.website, currPrice: data.pricing, oldPrice: data.pricing, chassis: data.chassisType, websiteLink: data.serverLink});
+                    server.chassisInfo.push({
+                        website: data.website, 
+                        currPrice: data.pricing, 
+                        oldPrice: data.pricing, 
+                        chassis: data.chassisType, 
+                        websiteLink: data.serverLink,
+                        priceHistory: []
+                    });
                     console.log(`[NEW CHASSIS ADDED] Server: ${server.brand} ${server.model} - chassis: ${data.chassisType}, Price: ${data.pricing}`);
 
                 }

@@ -107,7 +107,7 @@ watch(server, (newServer) => {
           <h2 class="fw-bold mb-0">Where to buy</h2>
         </div>
 
-        <ol class="d-flex flex-row flex-wrap gap-3 p-0">
+        <ol class="d-flex flex-row flex-wrap gap-3 p-0 justify-content-start">
           <li class="buy-item" v-for="listing in server.chassisInfo">
             <img
               class="website_favicons"
