@@ -22,7 +22,7 @@ serverRouter.get("/servers", async (req, res) => {
   const numericField = "memorySpecs.speeds";
 
   // destructure query parameters with default values for pagination
-  const { page = 1, limit = 20 } = req.query;
+  const { page = 1, limit = 21 } = req.query;
 
   try {
     const filter = {};
