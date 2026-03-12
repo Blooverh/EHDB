@@ -222,10 +222,10 @@ const breadcrumbs = computed(() => {
         <div class="d-flex flex-row gap-2 align-items-center">
           <!-- Need to change the svg based on the type of hardware -->
           <component :is="typeIcon" class="svg-type" :size="34" />
-          <h1 v-if="displayData.type === 'cpu'">
+          <h1 class="fw-bold" v-if="displayData.type === 'cpu'">
             {{ cpuBrandFormatter(displayData.brand) }} {{ formatModel(displayData.model) }}
           </h1>
-          <h1 v-else>{{ displayData.brand }} {{ displayData.model }}</h1>
+          <h1 class="fw-bold" v-else>{{ displayData.brand }} {{ displayData.model }}</h1>
         </div>
 
         <div class="part-tags d-flex gap-2">

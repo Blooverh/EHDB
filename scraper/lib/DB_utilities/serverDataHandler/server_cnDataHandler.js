@@ -7,8 +7,6 @@ export default async function cnAddServer(dataArr){
         throw new Error('[Error] Array does not contain any Server information');
     }
 
-    // console.log(`There are ${dataArr.length} Servers`);
-
     let serverData = [];
 
     const browser = await puppeteer.launch({headless: true});

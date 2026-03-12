@@ -62,7 +62,7 @@ const props = defineProps({
       <div class="emblem">
         <ChartNoAxesCombined color="white" />
       </div>
-      <span class="info-val">Daily</span>
+      <span class="info-val">Weekly</span>
       <span class="fw-bold fs-5">Updates</span>
       <span class="info-subtitle">Latest specifications and Pricing Data</span>
     </div>

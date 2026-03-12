@@ -2,15 +2,15 @@
 // Component import
 import HeroPart from '@/components/IndividualPage_Components/Hero_part.vue' // hero component for individual parts
 import CpuSpecs from '@/components/IndividualPage_Components/CpuSpecs.vue'
+import PriceHistoryCpu from '@/components/PriceHistoryCpu.vue'
 import '../assets/css/individual-parts.css'
-import { ref, watch, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, watch, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle'
 import { Store, SquareArrowOutUpRight } from 'lucide-vue-next'
 
 const route = useRoute()
-const router = useRouter()
 
 const error = ref(false)
 const loading = ref(true)
@@ -102,15 +102,14 @@ watch(cpu, (newCPU) => {
 
         <ol class="d-flex flex-row gap-3 p-0 justify-content-start">
           <li class="buy-item" v-for="listing in cpu.info">
-            
             <img
               class="website_favicons"
               :src="getFavicon(listing.website)"
               :alt="`${cpu.brand} ${cpu.model} - ${listing.website}`"
             />
-            
+
             <span class="website-item fw-bold">{{ listing.website }}</span>
-            
+
             <span class="price-item">${{ listing.currPrice }}</span>
             <a
               class="link-item d-flex flex-row gap-1 align-items-center"
@@ -123,6 +122,8 @@ watch(cpu, (newCPU) => {
           </li>
         </ol>
       </div>
+
+      <PriceHistoryCpu :listings="cpu.info" />
 
       <CpuSpecs :part="cpu" boxTitle="Core Specifications" :properties="coreProps" />
 
