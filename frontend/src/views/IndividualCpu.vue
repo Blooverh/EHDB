@@ -94,8 +94,8 @@ watch(cpu, (newCPU) => {
     <div v-if="cpu">
       <HeroPart :part="cpu" type="cpu" />
 
-      <div class="container d-flex flex-column gap-2">
-        <div class="d-flex flex-row align-items-center gap-2">
+      <div class="container d-flex flex-column gap-2 mt-3 mb-3">
+        <div class="d-flex flex-row align-items-center gap-2 justify-content-center">
           <Store :size="30" />
           <h2 class="fw-bold mb-0">Where To Buy</h2>
         </div>
@@ -116,8 +116,8 @@ watch(cpu, (newCPU) => {
               target="_blank"
               :href="listing.link"
             >
-              <span>Visit</span>
-              <SquareArrowOutUpRight :size="16" :stroke-width="2" />
+              <span style="color: gray">Visit</span>
+              <SquareArrowOutUpRight color="gray" :size="16" :stroke-width="2" />
             </a>
           </li>
         </ol>

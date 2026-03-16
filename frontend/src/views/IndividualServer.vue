@@ -1,17 +1,29 @@
 <script setup>
 import '../assets/css/individual-parts.css'
 import HeroPart from '@/components/IndividualPage_Components/Hero_part.vue'
-import { ref, watch, onMounted, nextTick } from 'vue'
+import { ref, watch, onMounted, nextTick, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
-import { Store, SquareArrowOutUpRight, Info, Server } from 'lucide-vue-next'
+import { Store, SquareArrowOutUpRight, Info, TrendingUp } from 'lucide-vue-next'
 import ServerSpecs from '@/components/IndividualPage_Components/ServerSpecs.vue'
+import PriceHistoryServer from '@/components/PriceHistoryServer.vue'
 import { Tooltip } from 'bootstrap'
 
 const route = useRoute()
 const error = ref(null)
 const loading = ref(true)
 const server = ref(null)
+const selectedWebsite = ref('') // reactive variable to keep track which website price graph is being displayed
+
+// we compute based on future changes on webiste additions or removals
+const uniqueWebsites = computed(() => {
+  if (!server.value?.chassisInfo) return []
+  const websites = [...new Set(server.value.chassisInfo.map((item) => item.website))] // we use set to avoid replicated websites 
+  if (websites.length > 0 && !selectedWebsite.value) {
+    selectedWebsite.value = websites[0]
+  }
+  return websites
+})
 
 onMounted(async () => {
   const serverBrand = route.params.brand
@@ -101,46 +113,6 @@ watch(server, (newServer) => {
     <div v-if="server">
       <HeroPart :part="server" type="server" />
 
-      <div class="container d-flex flex-column gap-2">
-        <div class="d-flex flex-row align-items-center gap-2">
-          <Store :size="30" />
-          <h2 class="fw-bold mb-0">Where to buy</h2>
-        </div>
-
-        <ol class="d-flex flex-row flex-wrap gap-3 p-0 justify-content-start">
-          <li class="buy-item" v-for="listing in server.chassisInfo">
-            <img
-              class="website_favicons"
-              :src="getFavicon(listing.website)"
-              :alt="`${server.brand} ${server.model} - ${listing.website}`"
-            />
-
-            <span class="website-item fw-bold">{{ listing.website }}</span>
-
-            <span class="price-item">${{ listing.currPrice }}</span>
-
-            <span
-              v-if="listing.chassis"
-              class="chassis-tooltip"
-              data-bs-toggle="tooltip"
-              :data-bs-title="listing.chassis"
-            >
-              <Info :size="16" :stroke-width="2" />
-              Chassis
-            </span>
-
-            <a
-              class="link-item d-flex flex-row gap-1 align-items-center"
-              target="_blank"
-              :href="listing.websiteLink"
-            >
-              <span>Visit</span>
-              <SquareArrowOutUpRight :size="16" :stroke-width="2" />
-            </a>
-          </li>
-        </ol>
-      </div>
-
       <!-- Specs Component -->
 
       <ServerSpecs :part="server" boxTitle="Quick Specifications" :properties="singleVal_Props" />
@@ -156,6 +128,76 @@ watch(server, (newServer) => {
         boxTitle="Server Part List Compatibility"
         :properties="partsVal_props"
       />
+
+      <!-- Price History Tabs -->
+      <div v-if="uniqueWebsites.length > 0" class="container mb-3 mt-5">
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+          <TrendingUp :size="30" />
+          <h3 class="fw-bold mb-0">Price Tracker</h3>
+        </div>
+
+        <ul class="nav nav-tabs">
+          <li v-for="website in uniqueWebsites" :key="website" class="nav-item">
+            <button
+              class="nav-link"
+              :class="{ active: selectedWebsite === website }"
+              @click="selectedWebsite = website"
+            >
+              {{ website }}
+            </button>
+          </li>
+        </ul>
+        <PriceHistoryServer :chassisInfo="server.chassisInfo" :selectedWebsite="selectedWebsite" />
+      </div>
+
+      <!-- List of where to buy -->
+
+      <div class="container d-flex flex-column gap-2 mt-5">
+        <div class="d-flex flex-row align-items-center justify-content-center gap-2 mb-3">
+          <Store :size="30" />
+          <h2 class="fw-bold mb-0">Where to buy</h2>
+        </div>
+
+        <ol class="d-flex flex-column gap-2 p-0">
+          <li class="buy-item-vertical" v-for="listing in server.chassisInfo">
+            <div class="d-flex flex-row flex-wrap align-items-center gap-3 w-100">
+              <img
+                class="website_favicons"
+                :src="getFavicon(listing.website)"
+                :alt="`${server.brand} ${server.model} - ${listing.website}`"
+              />
+
+              <div class="d-flex flex-column flex-grow-1" style="min-width: 120px">
+                <span class="website-item fw-bold">{{ listing.website }}</span>
+                <span v-if="listing.chassis" class="website-item text-muted small">
+                  {{ listing.chassis }}
+                </span>
+              </div>
+
+              <div class="d-flex align-items-center gap-2">
+                <span class="price-item fw-bold">${{ listing.currPrice }}</span>
+
+                <span
+                  v-if="listing.priceChange !== 0"
+                  class="price-change fw-bold"
+                  :class="listing.priceChange > 0 ? 'text-danger' : 'text-success'"
+                >
+                  {{ listing.priceChange > 0 ? '+' : '' }}${{ listing.priceChange }}
+                </span>
+              </div>
+
+              <a
+                class="link-item d-flex flex-row gap-1 align-items-center btn btn-primary btn-sm"
+                target="_blank"
+                :href="listing.websiteLink"
+              >
+                <span>Visit</span>
+                <SquareArrowOutUpRight :size="16" :stroke-width="2" />
+              </a>
+            </div>
+          </li>
+        </ol>
+      </div>
     </div>
     <div v-else-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>

@@ -179,6 +179,22 @@ ol.d-flex.flex-row.gap-3.p-0 {
   min-height: 150px;
 }
 
+.buy-item-vertical {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.buy-item-vertical:hover {
+  background-color: white;
+  transition: all 0.3s;
+}
+
 .buy-item:hover {
   background-color: white;
   transition: all 0.3s;
@@ -191,10 +207,27 @@ ol.d-flex.flex-row.gap-3.p-0 {
   margin: auto 0;
 }
 
+.price-change {
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: right;
+}
+
 .link-item {
   color: gray;
   opacity: 80%;
   margin-top: auto;
+}
+
+.link-item.btn-primary {
+  color: white;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.link-item.btn-primary:hover {
+  background-color: #1a4d8c;
+  border-color: #1a4d8c;
 }
 
 .buy-item:hover {
@@ -208,9 +241,10 @@ ol.d-flex.flex-row.gap-3.p-0 {
   font-size: 20px;
 }
 
-.link-item {
-  color: gray;
-  opacity: 80%;
+.price-change {
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: right;
 }
 
 .website_favicons {
@@ -302,6 +336,14 @@ ol.d-flex.flex-row.gap-3.p-0 {
 
   .price-item {
     font-size: 16px;
+  }
+
+  .buy-item-vertical {
+    padding: 10px 12px;
+  }
+
+  .buy-item-vertical .d-flex {
+    gap: 1rem !important;
   }
 
   .hero-individualPart {
@@ -409,14 +451,36 @@ ol.d-flex.flex-row.gap-3.p-0 {
 
   .website-item {
     font-size: 0.85rem;
+    text-align: center;
   }
 
   .price-item {
     font-size: 14px;
   }
 
+  .buy-item-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px !important;
+  }
+
+  .buy-item-vertical .d-flex {
+    flex-wrap: wrap;
+    gap: 8px !important;
+  }
+
+  .price-change {
+    font-size: 0.8rem;
+  }
+
   .link-item {
     font-size: 0.85rem;
+    color: white;
+  }
+
+  .link-item:hover {
+    color: white;
+    opacity: 0.9;
   }
 
   .specs-box {

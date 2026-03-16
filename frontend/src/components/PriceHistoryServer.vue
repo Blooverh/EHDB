@@ -1,5 +1,4 @@
 <script setup>
-import { TrendingUp } from 'lucide-vue-next'
 import { computed } from 'vue'
 import { Line } from 'vue-chartjs'
 import {
@@ -16,8 +15,12 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const props = defineProps({
-  listings: {
+  chassisInfo: {
     type: Array,
+    required: true,
+  },
+  selectedWebsite: {
+    type: String,
     required: true,
   },
 })
@@ -31,22 +34,27 @@ const colorPalette = [
   '#ec4899',
   '#14b8a6',
   '#f97316',
+  '#06b6d4',
+  '#84cc16',
 ]
 
-const getColor = (website, index) => {
+const getColor = (chassis, index) => {
   return colorPalette[index % colorPalette.length]
 }
+
+const websiteChassis = computed(() => {
+  return props.chassisInfo.filter((item) => item.website === props.selectedWebsite)
+})
 
 const chartData = computed(() => {
   const datasets = []
   const allLabels = new Set()
 
-  props.listings.forEach((listing, index) => {
-    const label = listing.website
-    const color = getColor(label, index)
+  websiteChassis.value.forEach((listing, index) => {
+    const chassisName = listing.chassis || `Chassis ${index + 1}`
+    const color = getColor(chassisName, index)
 
-    const prices = []
-    const labels = []
+    const dataPoints = []
 
     if (listing.priceHistory && listing.priceHistory.length > 0) {
       const sortedHistory = [...listing.priceHistory].sort(
@@ -58,22 +66,20 @@ const chartData = computed(() => {
           month: 'short',
           day: 'numeric',
         })
-        labels.push(date)
-        prices.push(p.oldPrice)
+        dataPoints.push({ x: date, y: p.oldPrice })
         allLabels.add(date)
       })
     }
 
     if (listing.currPrice && listing.currPrice > 0) {
-      labels.push('Current')
-      prices.push(listing.currPrice)
+      dataPoints.push({ x: 'Current', y: listing.currPrice })
       allLabels.add('Current')
     }
 
-    if (prices.length > 0) {
+    if (dataPoints.length > 0) {
       datasets.push({
-        label,
-        data: prices,
+        label: chassisName,
+        data: dataPoints,
         borderColor: color,
         backgroundColor: color,
         tension: 0.3,
@@ -115,10 +121,14 @@ const chartOptions = {
       },
     },
   },
+  parsing: {
+    xAxisKey: 'x',
+    yAxisKey: 'y',
+  },
 }
 
 const hasData = computed(() => {
-  return props.listings.some(
+  return websiteChassis.value.some(
     (listing) =>
       (listing.priceHistory && listing.priceHistory.length > 0) ||
       (listing.currPrice && listing.currPrice > 0),
@@ -127,12 +137,8 @@ const hasData = computed(() => {
 </script>
 
 <template>
-  <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
-    <TrendingUp :size="30" />
-    <h3 class="fw-bold mb-0">Price Tracker</h3>
-  </div>
   <div class="price-history-chart container mb-3">
-    <h3 class="spec-title fw-bold">Price History</h3>
+    <h3 class="spec-title fw-bold">Price History - {{ selectedWebsite }}</h3>
     <div v-if="hasData" class="chart-container">
       <Line :data="chartData" :options="chartOptions" />
     </div>
@@ -154,7 +160,7 @@ const hasData = computed(() => {
 }
 
 .chart-container {
-  height: 300px;
+  height: 350px;
   position: relative;
 }
 

@@ -134,7 +134,7 @@ const navigateToResult = (item, type) => {
     router.push({ name: 'Individual CPU', params: { brand: item.brand, slug: item.slug } })
   } else if (type === 'server') {
     // Navigate to individual Server page using named route and parameters
-    router.push({ name: 'Individual Server', params: { brand: item.brand, slug: item.slug } })
+    router.push({ name: 'Individual Server', params: { brand: item.brand.toLowerCase(), slug: item.slug } })
   }
   closeResults() // Hide the results dropdown after navigation
 }
