@@ -178,6 +178,11 @@ const breadcrumbs = computed(() => {
       } else {
         moddedLabel = displayData.value.model
       }
+    
+    }else if (path === 'amd'){
+      moddedLabel = 'AMD'
+    }else if (path === 'intel'){
+      moddedLabel = 'Intel'
     } else if (path === 'cpus') {
       moddedLabel = 'CPUs'
     } else if (path === 'servers') {

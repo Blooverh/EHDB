@@ -35,7 +35,7 @@ serverRouter.get("/servers", async (req, res) => {
 
       if (numericField == field) {
         /* (Note: If the URL was `?speeds=3200&speeds=4800`, some web frameworks would parse
-                `queryParams` as `['3200', '4800']` directly. This line handles both cases.) */
+          `queryParams` as `['3200', '4800']` directly. This line handles both cases.) */
         // ensure query parameters is always an array of strings regardless of how it is sent
         // 1. check if queryparams is already an array, if not create an array of strings from queryParams
         const values = Array.isArray(queryParams)
@@ -48,11 +48,11 @@ serverRouter.get("/servers", async (req, res) => {
 
         if (numericValues.length > 1) {
           /* 
-                    If query parameter for a numeric filter fielter field, we use
-                    $in operator to query DB for all matching cases of values  in numeric values
-                    { 'memorySpecs.speeds': { $in: [3200, 4800] } } // matches servers that have both speeds
-                    Note: works when multiple numeric values for same filter field
-                    */
+            If query parameter for a numeric filter fielter field, we use
+            $in operator to query DB for all matching cases of values  in numeric values
+            { 'memorySpecs.speeds': { $in: [3200, 4800] } } // matches servers that have both speeds
+            Note: works when multiple numeric values for same filter field
+          */
           filter[field] = { $in: numericValues };
         } else if (numericValues.length === 1) {
           // if only 1 numeric value for that filter field
