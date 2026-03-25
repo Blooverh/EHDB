@@ -183,6 +183,8 @@ const breadcrumbs = computed(() => {
       moddedLabel = 'AMD'
     }else if (path === 'intel'){
       moddedLabel = 'Intel'
+    }else if (path === 'cloud-ninjas'){
+      moddedLabel = 'Cloud Ninjas'
     } else if (path === 'cpus') {
       moddedLabel = 'CPUs'
     } else if (path === 'servers') {
