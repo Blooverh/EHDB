@@ -1,7 +1,7 @@
 <script setup>
-import Header from './components/Header.vue';
-import Footer from './components/footer.vue';
-import { RouterView } from 'vue-router';
+import Header from './components/Header.vue'
+import Footer from './components/footer.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
@@ -9,10 +9,7 @@ import { RouterView } from 'vue-router';
     <Header />
   </header>
   <main>
-    <RouterView/>
+    <RouterView />
   </main>
   <Footer />
-  
 </template>
-
-<style scoped></style>

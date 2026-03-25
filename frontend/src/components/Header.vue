@@ -1,9 +1,9 @@
 <script setup>
-    import '../assets/css/header.css';
+import '../assets/css/header.css'
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
     <div class="container-fluid px-5 justify-content-between">
       <RouterLink class="navbar-brand home-img" to="/"
         ><img src="../assets/images/EHDB-logo.png" alt="EHDB"
@@ -81,4 +81,3 @@
     </div>
   </nav>
 </template>
-

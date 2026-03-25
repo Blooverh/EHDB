@@ -2,12 +2,18 @@
   max-width: 5rem;
 }
 
+nav.navbar.sticky-top {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+}
+
 .dropdown-menu > li {
   padding: 5px;
 }
 
 .navbar-nav {
-    gap: 3rem;
+  gap: 3rem;
 }
 
 .dropdown-menu {

@@ -56,3 +56,9 @@ img, picture, video, canvas, svg {
 ul, ol {
   list-style: none;
 }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
