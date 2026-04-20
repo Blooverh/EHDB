@@ -25,18 +25,18 @@ const gpuSchema = new mongoose.Schema({
   slotWidth: { type: String, default: defaultVal },
   brandMPN: { type: String, default: defaultVal },
   gpuBrandMPN: { type: String, default: defaultVal },
-  gpuWorkload: { type: String, default: defaultVal}, // Enterprise Consumer
-  gpuTags: [{type: [String], default: [defaultVal]}], // Tags for the GPU in array format ['Inference', 'Gaming', etc...]
+  gpuWorkload: { type: String, default: defaultVal }, // Enterprise Consumer
+  gpuTags: [{ type: [String], default: [defaultVal] }], // Tags for the GPU in array format ['Inference', 'Gaming', etc...]
   gpuInfo: [
     {
       website: { type: String, default: defaultVal },
-      currPrice: { type: Number, default: defaultNum },
-      oldPrice: { type: Number, default: defaultNum },
-      priceChange: { type: Number, default: defaultNum },
+      currPrice: { type: "Double", default: defaultNum },
+      oldPrice: { type: "Double", default: defaultNum },
+      priceChange: { type: "Double", default: defaultNum },
       websiteLink: { type: String, default: defaultVal },
       priceHistory: [
         {
-          price: { type: Number },
+          price: { type: "Double" },
           timestamp: { type: Date, default: Date.now },
         },
       ],

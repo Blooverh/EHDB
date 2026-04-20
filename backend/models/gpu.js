@@ -30,13 +30,13 @@ const gpuSchema = new mongoose.Schema({
   gpuInfo: [
     {
       website: { type: String, default: defaultVal },
-      currPrice: { type: Number, default: defaultNum },
-      oldPrice: { type: Number, default: defaultNum },
-      priceChange: { type: Number, default: defaultNum },
+      currPrice: { type: "Double", default: defaultNum },
+      oldPrice: { type: "Double", default: defaultNum },
+      priceChange: { type: "Double", default: defaultNum },
       websiteLink: { type: String, default: defaultVal },
       priceHistory: [
         {
-          price: { type: Number },
+          price: { type: "Double" },
           timestamp: { type: Date, default: Date.now },
         },
       ],
@@ -50,8 +50,8 @@ gpuSchema.index({
   gpuBrand: "text",
   vramType: "text",
   gpuWorkload: "text",
-  pcieInterface: "text", 
-  slotWidth: 'text',
+  pcieInterface: "text",
+  slotWidth: "text",
   gpuTags: "text",
 });
 
