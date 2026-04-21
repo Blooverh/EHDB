@@ -22,6 +22,8 @@ import { cnCollectionServer } from './scrapers/serverCollectionScraper/cnServerS
 import { smCollectionServer } from './scrapers/serverCollectionScraper/smServerScraper.js';
 import { xByteCollectionServer } from './scrapers/serverCollectionScraper/xByteServerScraper.js';
 
+import { cnCollectionGpu } from './scrapers/gpuScraper/cnGpuScraper.js';
+
 // import individual cpu data scraper 
 import techpowerupCPU_data from './lib/DB_utilities/cpuDataHandlers/cpu_techpowerupDataHandler.js'
 
@@ -57,11 +59,13 @@ async function main() {
         });
 
         // main cpu programer command 
-        const cpuScraper = scraper.command('cpu')
-        .description('Commands for scraping cpu data');
+        const cpuScraper = scraper.command('cpu').description('Commands for scraping cpu data');
 
         // main Server command 
         const serverScraper = scraper.command('server').description('Commands for Scraping Server data');
+
+        // main GPU command
+        const gpuScraper = scraper.command('gpu').description('Commands for Scraping GPU Data');
 
         // command for scraping cloud Ninjas
         cpuScraper.command('cninjas').
@@ -145,7 +149,16 @@ async function main() {
             await xByteCollectionServer();
             console.log('[SCRAPING] COMPLETE');
 
-        })
+        });
+
+        // GPU Scrapping Commands 
+        gpuScraper.command('cnGpuCollection-gpus').description('Scrapping Cloud Ninjas Gpu Collection').
+        action(async () => {
+
+            await cnCollectionGpu();
+
+        });
+
 
         await scraper.parseAsync(process.argv);    
 
