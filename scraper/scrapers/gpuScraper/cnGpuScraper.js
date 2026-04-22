@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 
 // Import gpu data handler (controller to add gpus to database)
+import cnAddGPU from "../../lib/DB_utilities/gpuDataHandlers/gpu_cnDataHandler.js";
 
 export const cnCollectionGpu = async () => {
   const collectionUrl =
@@ -83,13 +84,22 @@ export const cnCollectionGpu = async () => {
       });
     }
 
-    console.log(scrapedData);
+    // console.log(scrapedData);
+
   } catch (err) {
-    console.error(`[ERROR SCRAPING] ${website} -> ` + err);
+    console.error(`[ERROR SCRAPING] ${website} Closing scraping -> ` + err);
     process.exit(1);
   }
 
   await browser.close();
+
+  if(scrapedData.length > 0){
+    cnAddGPU(
+        scrapedData.map((data) => data.title),
+        scrapedData.map((data) => data.price),
+        scrapedData.map((data) => data.url)
+    )
+  }
 
   console.log("[PROCESS] Cloud Ninjas GPUs Scraped and Saved accordingly");
 };
