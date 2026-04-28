@@ -94,7 +94,7 @@ export const cnCollectionGpu = async () => {
   await browser.close();
 
   if(scrapedData.length > 0){
-    cnAddGPU(
+    await cnAddGPU(
         scrapedData.map((data) => data.title),
         scrapedData.map((data) => data.price),
         scrapedData.map((data) => data.url)

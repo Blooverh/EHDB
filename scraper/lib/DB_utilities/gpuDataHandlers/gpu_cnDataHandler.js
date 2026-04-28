@@ -3,8 +3,8 @@ import slugify from "slugify";
 
 export default async function cnAddGPU(titleArr, priceArr, linksArr) {
   if (
-    titleArr.length !== priceArr.length &&
-    titleArr.length !== linksArr.length &&
+    titleArr.length !== priceArr.length ||
+    titleArr.length !== linksArr.length ||
     priceArr.length !== linksArr.length
   ) {
     console.error(
@@ -20,11 +20,15 @@ export default async function cnAddGPU(titleArr, priceArr, linksArr) {
   for (let i = 0; i < titleArr.length; i++) {
     const originalName = titleArr[i];
     const priceInFloat = parseFloat(priceArr[i].replace(/,/g, ""));
+    if (isNaN(priceInFloat)) {
+      console.error(`[ERROR] Invalid price for ${originalName}, skipping`);
+      continue;
+    }
     const link = linksArr[i];
 
     const { brand, model } = extractGpuName(titleArr[i]);
 
-    const gpu = await findGPUByModel(model, brand);
+    let gpu = await findGPUByModel(model, brand);
 
     const slug = slugify(model, {
       replacement: "-",
@@ -127,16 +131,21 @@ export function extractGpuName(gpuName) {
 }
 
 export async function findGPUByModel(model, brand) {
-  const keyMatch = model.match(/(RTX|RX|Arc)\s*\d{3,4}[A-Z]*|A\d{3,4}[A-Z]*/i);
+  const keyMatch = model.match(
+    /(RTX|RX|Arc)\s*\d{3,4}[A-Z]*(?:\s+(?:Ti|Super|XT|XTX|GRE|SE))?|A\d{3,4}[A-Z]*(?:\s+(?:Ti|Super))?/i,
+  );
   if (!keyMatch) return null;
 
-  let key = keyMatch[0].replace(/\s+/g, " ");
+  let key = keyMatch[0].replace(/\s+/g, " ").trim();
   if (brand === "Intel" && !key.startsWith("Arc")) {
     key = `Arc ${key}`;
   }
 
+  // Escape special regex characters and match the full model string (word boundaries)
+  const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
   return await GPU.findOne({
     brand: { $options: "i", $regex: brand },
-    model: { $regex: key, $options: "i" },
+    model: { $regex: `^${escapedKey}$`, $options: "i" },
   });
 }

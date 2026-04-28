@@ -135,7 +135,6 @@ async function main() {
             console.log('[SCRAPING COMPLETE]');
         });
 
-        // ADD server monkey server scraper command
         serverScraper.command('smServerCollection_data').description('Scraping Server Monkey Server Collection')
         .action(async ()=> {
             console.log("[SCRAPING] Server Monkey Server's from Collection and individual pages");
@@ -154,8 +153,9 @@ async function main() {
         // GPU Scrapping Commands 
         gpuScraper.command('cnGpuCollection-gpus').description('Scrapping Cloud Ninjas Gpu Collection').
         action(async () => {
-
+            console.log('[SCRAPING] Cloud Ninjas GPU Collection');
             await cnCollectionGpu();
+            console.log('[SCRAPING COMPLETE]');
 
         });
 

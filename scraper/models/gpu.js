@@ -30,13 +30,13 @@ const gpuSchema = new mongoose.Schema({
   gpuInfo: [
     {
       website: { type: String, default: defaultVal },
-      currPrice: { type: "Double", default: defaultNum },
-      oldPrice: { type: "Double", default: defaultNum },
-      priceChange: { type: "Double", default: defaultNum },
+      currPrice: { type: Number, default: defaultNum },
+      oldPrice: { type: Number, default: defaultNum },
+      priceChange: { type: Number, default: defaultNum },
       websiteLink: { type: String, default: defaultVal },
       priceHistory: [
         {
-          price: { type: "Double" },
+          price: { type: Number },
           timestamp: { type: Date, default: Date.now },
         },
       ],
