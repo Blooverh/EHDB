@@ -57,7 +57,7 @@ const isLinkProperty = (key) => {
 
           <ul v-else class="mb-0 ps-1 spec-list">
             <li class="fw-bold" v-for="(item, index) in getValue(prop.key)" :key="index">
-              {{ item }}
+              {{ prop.label === 'Compatible Memory Speeds' ? item + 'MT/s' : item }}
             </li>
           </ul>
         </div>
@@ -76,5 +76,4 @@ const isLinkProperty = (key) => {
 .spec-item {
   break-inside: avoid;
 }
-
 </style>

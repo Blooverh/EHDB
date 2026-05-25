@@ -13,9 +13,6 @@ export default async function cnAddGPU(titleArr, priceArr, linksArr) {
     process.exit(1);
   }
 
-  // console.log(titleArr);
-  // console.log(priceArr);
-  // console.log(linksArr);
 
   for (let i = 0; i < titleArr.length; i++) {
     const originalName = titleArr[i];

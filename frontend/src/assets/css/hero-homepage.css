@@ -57,9 +57,7 @@
   justify-content: center;
 }
 
-/* Need to add other parts attribute when done */
-.server-box,
-.cpu-box {
+.hardware-card {
   background-color: #ffffffd0;
   padding: 20px;
   display: flex;
@@ -70,13 +68,11 @@
   transition: background-color 0.3s ease;
 }
 
-.server-box:hover,
-.cpu-box:hover {
+.hardware-card:hover {
   background-color: white;
 }
 
-.cpu-box:hover .cpu-icon,
-.server-box:hover .server-icon {
+.hardware-card:hover .box-icon {
   color: #007bff;
 }
 
@@ -87,8 +83,7 @@
   align-items: center;
 }
 
-.cpu-icon,
-.server-icon {
+.box-icon {
   color: #082d5e;
   transition: color 0.3s ease;
 }
@@ -117,8 +112,7 @@
     gap: 15px;
   }
 
-  .server-box,
-  .cpu-box {
+  .hardware-card {
     width: 160px;
     padding: 15px;
   }
@@ -145,15 +139,13 @@
     gap: 12px;
   }
 
-  .server-box,
-  .cpu-box {
+  .hardware-card {
     width: 100%;
     max-width: 280px;
     padding: 20px;
   }
 
-  .server-icon,
-  .cpu-icon {
+  .box-icon {
     width: 28px;
     height: 28px;
   }
