@@ -26,7 +26,7 @@ const gpuSchema = new mongoose.Schema({
   brandMPN: { type: String, default: defaultVal },
   gpuBrandMPN: { type: String, default: defaultVal },
   gpuWorkload: { type: String, default: defaultVal }, // Enterprise Consumer
-  gpuTags: [{ type: [String], default: [defaultVal] }], // Tags for the GPU in array format ['Inference', 'Gaming', etc...]
+  gpuTags: { type: [String], default: [defaultVal] }, // Tags for the GPU in array format ['Inference', 'Gaming', etc...]
   gpuInfo: [
     {
       website: { type: String, default: defaultVal },

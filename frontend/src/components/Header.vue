@@ -68,6 +68,21 @@ import '../assets/css/header.css'
             </ul>
           </li>
 
+          <!-- <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              to="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              >GPUs</a
+            >
+
+            <ul class="dropdown-menu">
+              <li><RouterLink to="/gpus">All GPUs</RouterLink></li>
+            </ul>
+          </li> -->
+
           <!-- More hardware parts to add -->
 
           <li class="nav-item align-self-center">

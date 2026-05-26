@@ -131,3 +131,7 @@ dist
 
 #specifc .txt files 
 /scraper/vendors.txt
+
+# Exported database collections (for AI processing)
+exports/
+scripts/

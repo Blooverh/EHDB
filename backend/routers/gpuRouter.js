@@ -50,3 +50,19 @@ gpuRouter.get("/gpus-length", async (req, res) => {
         res.status(500).json({message: "Internal Server Error"});
     }
 });
+
+// route for filters for general GPU collection
+gpuRouter.get("/gpus/filter-options", async (req, res) => {
+    try{
+        const brands = await GPU.distinct("brand");
+        const vramType = await GPU.distinct('vramType');
+        const vram = await GPU.distinct('vram');
+        const pcieInterface = await GPU.distinct('pcieInterface');
+        const gpuWorkload = await GPU.distinct('gpuWorkloads');
+
+        res.json({brands, vram, vramType, pcieInterface, gpuWorkload});
+    }catch(err){
+        res.status(500).json({message: 'Internal Server Error'});
+    }
+    
+});
