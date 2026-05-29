@@ -7,9 +7,7 @@ import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router'
 
 //Lucide svg import
-import { ArrowBigRight } from 'lucide-vue-next'
-import { ArrowBigLeft } from 'lucide-vue-next'
-import { SlidersHorizontal } from 'lucide-vue-next'
+import { ArrowBigRight, ArrowBigLeft, SlidersHorizontal, Cpu } from 'lucide-vue-next'
 
 const router = useRouter()
 const route = useRoute()
@@ -187,79 +185,8 @@ watch(
       @reset-filter="resetFilters"
     />
     <div class="collection-container">
-      <div class="title-collection d-flex flex-row align-items-center">
-        <svg
-          class="cpu-icon"
-          width="50"
-          height="50"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 2.66675H3.99996C3.26358 2.66675 2.66663 3.2637 2.66663 4.00008V12.0001C2.66663 12.7365 3.26358 13.3334 3.99996 13.3334H12C12.7363 13.3334 13.3333 12.7365 13.3333 12.0001V4.00008C13.3333 3.2637 12.7363 2.66675 12 2.66675Z"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M9.33333 6H6.66667C6.29848 6 6 6.29848 6 6.66667V9.33333C6 9.70152 6.29848 10 6.66667 10H9.33333C9.70152 10 10 9.70152 10 9.33333V6.66667C10 6.29848 9.70152 6 9.33333 6Z"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M10 1.33325V2.66659"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M10 13.3333V14.6666"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M1.33337 10H2.66671"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M1.33337 6H2.66671"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M13.3334 10H14.6667"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M13.3334 6H14.6667"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M6 1.33325V2.66659"
-            stroke="currentColor"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+      <div class="title-collection d-flex flex-row align-items-center" style="gap: 10px">
+        <Cpu :size="35" class="cpu-icon" />
         <h1>Processor Collection</h1>
       </div>
 

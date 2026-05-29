@@ -54,6 +54,15 @@
   flex-shrink: 0;
 }
 
+/* Override leaking .hardware-card rules from hero-homepage.css
+   which set width: 200px, flex-direction: column, and justify-content: center */
+.hardware-card {
+  width: auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: start;
+}
+
 .about-intro {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border-left: 4px solid var(--primary-color);

@@ -68,7 +68,7 @@ import '../assets/css/header.css'
             </ul>
           </li>
 
-          <!-- <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               to="#"
@@ -81,7 +81,7 @@ import '../assets/css/header.css'
             <ul class="dropdown-menu">
               <li><RouterLink to="/gpus">All GPUs</RouterLink></li>
             </ul>
-          </li> -->
+          </li>
 
           <!-- More hardware parts to add -->
 

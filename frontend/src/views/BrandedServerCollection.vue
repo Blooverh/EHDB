@@ -4,7 +4,7 @@ import { ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import BrandedServerFilterBox from '@/components/BrandedServerFilterBox.vue'
-import { ArrowBigLeft, ArrowBigRight } from 'lucide-vue-next'
+import { ArrowBigLeft, ArrowBigRight, Server } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
 import ServerVerticalCard from '@/components/serverVerticalCard.vue'
 
@@ -194,43 +194,8 @@ watch(
     />
 
     <div class="collection-container">
-      <div class="title-collection d-flex flex-row align-items-center">
-        <svg
-          width="50"
-          height="50"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.3334 1.33325H2.66671C1.93033 1.33325 1.33337 1.93021 1.33337 2.66659V5.33325C1.33337 6.06963 1.93033 6.66659 2.66671 6.66659H13.3334C14.0698 6.66659 14.6667 6.06963 14.6667 5.33325V2.66659C14.6667 1.93021 14.0698 1.33325 13.3334 1.33325Z"
-            stroke="#082D5E"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M13.3334 9.33325H2.66671C1.93033 9.33325 1.33337 9.93021 1.33337 10.6666V13.3333C1.33337 14.0696 1.93033 14.6666 2.66671 14.6666H13.3334C14.0698 14.6666 14.6667 14.0696 14.6667 13.3333V10.6666C14.6667 9.93021 14.0698 9.33325 13.3334 9.33325Z"
-            stroke="#082D5E"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M4 4H4.00667"
-            stroke="#082D5E"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M4 12H4.00667"
-            stroke="#082D5E"
-            stroke-width="1.33333"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+      <div class="title-collection d-flex flex-row align-items-center" style="gap: 10px">
+        <Server :size="35" />
         <h1>{{ brand_server }} Server Collection</h1>
       </div>
 

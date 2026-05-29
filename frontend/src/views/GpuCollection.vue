@@ -1,69 +1,63 @@
 <script setup>
-import '../assets/css/hardwareCollection.css'
-import { cpuBrandFormatter } from '@/utils/formatCpuTitle'
 import { ref, watch, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
-import { useRoute, useRouter } from 'vue-router'
-import CpuCard from '@/components/CpuCard.vue'
-import brandedCpuFilter from '@/components/brandedCpuFilter.vue'
-
-// Lucide svg import
-import { ArrowBigRight, ArrowBigLeft, Cpu } from 'lucide-vue-next'
+import '../assets/css/hardwareCollection.css'
+import GpuFilter from '@/components/GpuFilter.vue'
+import GpuVerticalCard from '@/components/gpuVerticalCard.vue'
+import { ArrowBigLeft, ArrowBigRight, Gpu } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
 
+// --- Router and Route instances ---
 const router = useRouter()
 const route = useRoute()
 
 // Filter visibility state - hidden by default on mobile
 const showFilters = ref(window.innerWidth > 768)
 
-// current page is computed property derived from url
+// --- State Management ---
+const gpus = ref([])
+// current page is now a computed property derived from the URL
 const currentPage = computed(() => parseInt(route.query.page) || 1)
-
-// DATA
-//Reactive Objs
-const cpus = ref([])
 const totalPages = ref(0)
-const totalCpus = ref(0)
+const totalGpus = ref(0)
 const loading = ref(true)
 const error = ref(false)
-const brand_cpu = ref(null)
 
-// reactive objs for filter
+// Reactive objects for filter
 const filters = ref({
-  codename: [],
-  generation: [],
-  memorySupport: [],
-  ratedSpeeds: [],
-  socket: [],
-  coreNum: [],
-  cache: [],
+  brands: [],
+  vram: [],
+  vramType: [],
+  pcieInterface: [],
+  gpuWorkload: [],
 })
 
 const selectedFilters = ref({
-  codename: [].concat(route.query.codename || []),
-  generation: [].concat(route.query.generation || []),
-  memorySupport: [].concat(route.query.memorySupport || []),
-  ratedSpeeds: [].concat(parseInt(route.query.ratedSpeeds) || []),
-  socket: [].concat(route.query.socket || []),
-  coreNum: [].concat(parseInt(route.query.coreNum) || []),
-  cache: [].concat(route.query.cache || []),
+  brand: [].concat(route.query.brand || []),
+  vramType: [].concat(route.query.vramType || []),
+  pcieInterface: [].concat(route.query.pcieInterface || []),
+  gpuWorkload: [].concat(route.query.gpuWorkload || []),
+  // Only parse to integer if value exists, otherwise return empty array
+  // This prevents [NaN] when URL has no query params (e.g., when resetting filters)
+  // parseInt(undefined) returns NaN, and [].concat(NaN) creates [NaN] which breaks checkbox logic
+  vram: route.query.vram ? [].concat(parseInt(route.query.vram)) : [],
 })
 
-// Actions
+// --- ACTIONS ---
 const updateFilters = (newFilters) => {
   const query = { ...route.query }
 
   // Iterate over the new filters and update the query object
   for (const key in newFilters) {
     const value = newFilters[key]
-    const queryKey = key === 'cache' ? 'cache.cacheL3' : key
+
     // If the filter has a value, add it to the query.
     if (value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {
-      query[queryKey] = value
+      query[key] = value
     } else {
       // Otherwise, remove it from the query.
-      delete query[queryKey]
+      delete query[key]
     }
   }
 
@@ -79,28 +73,29 @@ const resetFilters = () => {
   router.push({ query: {} })
 }
 
-// pagination actions now directly trigger a route change
+// PAGINATION
 const goToPage = (page) => {
-  // query retains query params and page number
-  const query = { ...route.query, page }
+  const query = { ...route.query, page } // query retains the query params and the page number
 
-  // if page number is less or equal to 1 we delete parameters from query
+  // if page number is less than 1 all query parameter for page is deleted
   if (page <= 1) {
     delete query.page
   }
 
-  // if page more than 1 we push query prams to router
+  // if page is different from 0 and 1 we pass to router the route with query parameters and page
   router.push({ query })
 }
 
-// functions that iterates to next or previous page and triggers route change
+// pagination function for next page and previous page
 const nextPage = () => {
+  // if current page is less than total page based on query we allow next page navigation
   if (currentPage.value < totalPages.value) {
     goToPage(currentPage.value + 1)
   }
 }
 
-const prevPage = () => {
+const previousPage = () => {
+  // if current page is more than 1
   if (currentPage.value > 1) {
     goToPage(currentPage.value - 1)
   }
@@ -110,60 +105,53 @@ const toggleFilters = () => {
   showFilters.value = !showFilters.value
 }
 
-// WATCHERS (SIDE EFFECTS)
-/* 
-    - we pass query as argument and will watch based on new query if we need to update query in URL 
-    */
+// Watcher
+
+/*
+  When URL changes we fetch new data.
+*/
 
 watch(
   () => route.query,
   async (newQuery) => {
     loading.value = true
-    error.value = false
+    error.value = null
 
     // Always sync selectedFilters with URL first (outside try-catch)
     selectedFilters.value = {
-      codename: [].concat(newQuery.codename || []),
-      generation: [].concat(newQuery.generation || []),
-      memorySupport: [].concat(newQuery.memorySupport || []),
+      brand: [].concat(newQuery.brand || []),
+      vramType: [].concat(newQuery.vramType || []),
+      pcieInterface: [].concat(newQuery.pcieInterface || []),
+      gpuWorkload: [].concat(newQuery.gpuWorkload || []),
       // Only parse to integer if value exists, otherwise return empty array
       // This prevents [NaN] when URL has no query params (e.g., when resetting filters)
       // parseInt(undefined) returns NaN, and [].concat(NaN) creates [NaN] which breaks checkbox logic
-      ratedSpeeds: newQuery.ratedSpeeds ? [].concat(parseInt(newQuery.ratedSpeeds)) : [],
-      socket: [].concat(newQuery.socket || []),
-      coreNum: newQuery.coreNum ? [].concat(parseInt(newQuery.coreNum)) : [],
-      // we need to specify cache.cacheL3 on new Query on writing so on reading it also works
-      cache: [].concat(newQuery['cache.cacheL3'] || []),
+      vram: newQuery.vram ? [].concat(parseInt(newQuery.vram)) : [],
     }
 
     try {
-      const params = new URLSearchParams(newQuery)
-      const cpuBrand = route.params.brand
-
-      // since watcher changes immediate to avoid undefined we check if param exists
-      if (!cpuBrand) return
-
-      const response = await axios.get(`/api/cpus/${cpuBrand}?${params.toString()}`)
-      cpus.value = response.data.cpus
-      totalCpus.value = response.data.totalCpus
+      const params = new URLSearchParams(newQuery) // this turns to a string like brand=nvidia&vramType=GDDR6
+      // fetch data with the new query params
+      const response = await axios.get(`/api/gpus?${params.toString()}`)
+      gpus.value = response.data.gpus
       totalPages.value = response.data.totalPages
-      brand_cpu.value = cpuBrand
+      totalGpus.value = response.data.totalGpus
 
-      const { data } = await axios.get(`/api/cpus/${cpuBrand}/filter-options`)
+      const { data } = await axios.get('/api/gpus/filter-options')
       filters.value = data
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        error.value = 'No CPUs match this Brand selection'
-        totalCpus.value = 0
+        error.value = 'No GPUs Match Your Selection'
+        totalGpus.value = 0
       } else {
-        error.value = 'Failed to fetch CPUs. Please Try Again'
+        error.value = 'Failed to fetch GPUs. Please Try Again later.'
       }
-      console.error(err.response)
+      console.error(err)
     } finally {
       loading.value = false
     }
   },
-  { immediate: true },
+  { immediate: true, deep: true },
 )
 </script>
 
@@ -173,8 +161,7 @@ watch(
       <SlidersHorizontal :size="20" />
       {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
     </button>
-    <!-- CpuFilterBox for brands -->
-    <brandedCpuFilter
+    <GpuFilter
       v-show="showFilters"
       :filters="filters"
       :selectedFilters="selectedFilters"
@@ -184,36 +171,36 @@ watch(
 
     <div class="collection-container">
       <div class="title-collection d-flex flex-row align-items-center" style="gap: 10px">
-        <Cpu :size="35" class="cpu-icon" />
-        <h1>{{ cpuBrandFormatter(brand_cpu) }} Processor Collection</h1>
+        <Gpu :size="35" />
+        <h1>GPU Collection</h1>
       </div>
 
-      <p v-if="totalCpus > 0">
-        Current List of {{ cpuBrandFormatter(brand_cpu) }} CPUs: ({{ totalCpus }})
-      </p>
+      <p v-if="totalGpus > 0">Current List: ({{ totalGpus }} GPUs)</p>
 
-      <div v-if="loading" class="loading-message">Loading CPUs...</div>
+      <div v-if="loading" class="loading-message">Loading GPUs...</div>
 
       <div v-if="error" class="error-message">
         {{ error }}
         Reset Filters !
       </div>
 
+      <!-- if loading is completed and there is no error add GPU Card -->
       <div v-if="!loading && !error">
-        <div v-if="cpus.length > 0" class="d-grid gap-3 m-3">
-          <CpuCard v-for="cpu in cpus" :key="cpu._id" :cpu="cpu" class="cpu-card p-2" />
+        <div v-if="gpus.length > 0" class="d-flex flex-wrap flex-row gap-5 m-3 align-items-center">
+          <GpuVerticalCard v-for="gpu in gpus" :key="gpu._id" :gpu="gpu" />
         </div>
         <div v-else class="no-results">
-          <p>No cpus found matching your criteria.</p>
+          <p>No GPUs found matching your criteria.</p>
         </div>
       </div>
+
       <!-- Pagination Controls -->
       <div
         v-if="!loading && totalPages > 1"
         class="pagination-controls d-flex justify-content-center"
       >
         <button
-          @click="prevPage"
+          @click="previousPage"
           :disabled="currentPage <= 1"
           :class="{ active: currentPage > 1 }"
           class="btn-box-left p-2"
@@ -222,10 +209,10 @@ watch(
         </button>
         <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
         <button
+          class="btn-box-right p-2"
           @click="nextPage"
           :disabled="currentPage >= totalPages"
           :class="{ active: currentPage <= totalPages }"
-          class="p-2 btn-box-right"
         >
           <ArrowBigRight />
         </button>

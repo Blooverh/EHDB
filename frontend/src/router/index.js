@@ -11,6 +11,7 @@ import SearchPage from '@/views/SearchPage.vue';
 import IndividualServer from '@/views/IndividualServer.vue';
 import BrandedServerCollection from '@/views/BrandedServerCollection.vue';
 import About from '@/views/About.vue';
+import GpuCollection from '@/views/GpuCollection.vue';
 
 
 const router = createRouter({
@@ -59,6 +60,11 @@ const router = createRouter({
       path: '/servers/:brand/:slug',
       name: 'Individual Server',
       component: IndividualServer
+    },
+    { // All GPU Collection
+      path: '/gpus', 
+      name: 'GPU Collection',
+      component: GpuCollection
     },
     { // might need to add query URI (?)
       path: '/search',
