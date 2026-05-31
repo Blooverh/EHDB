@@ -7,7 +7,7 @@ export const cpuRouter = express.Router();
 
 cpuRouter.get(
   "/cpus",
-  pagination(20),
+  pagination(21),
   filterBuilder({
     filterableFields: [
       "brand",
@@ -112,7 +112,7 @@ cpuRouter.get("/cpus/:brand/filter-options", async (req, res) => {
 
 cpuRouter.get(
   "/cpus/:brand",
-  pagination(20),
+  pagination(21),
   filterBuilder({
     filterableFields: [
       "codename",

@@ -1,5 +1,5 @@
 <script setup>
-/* 
+/*
     WILL NEED TO ADD OTHER PARTS WHEN AVAILABLE ON DATABASE
   */
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
@@ -9,7 +9,7 @@ import { cpuBrandFormatter, formatModel } from '../utils/formatCpuTitle.js'
 
 // Reactive state variables for the search component
 const searchTerm = ref('') // Stores the current input value from the search bar
-const searchResults = ref({ cpus: [], servers: [] }) // Stores the fetched search results for CPUs and Servers
+const searchResults = ref({ cpus: [], servers: [], gpus: [] }) // Stores the fetched search results for CPUs, Servers, and GPUs
 const isLoading = ref(false) // Indicates if an API call is currently in progress
 const showResults = ref(false) // Controls the visibility of the search results dropdown
 const highlightedIndex = ref(-1) // Tracks the currently highlighted item for keyboard navigation
@@ -22,7 +22,8 @@ let debounceTimer = null // Used to hold the timer ID for debouncing search requ
 const flatResults = computed(() => {
   const cpus = (searchResults.value.cpus || []).map((item) => ({ type: 'cpu', item }))
   const servers = (searchResults.value.servers || []).map((item) => ({ type: 'server', item }))
-  return [...cpus, ...servers]
+  const gpus = (searchResults.value.gpus || []).map((item) => ({ type: 'gpu', item }))
+  return [...cpus, ...servers, ...gpus]
 })
 
 /**
@@ -32,7 +33,7 @@ const flatResults = computed(() => {
 const performSearch = async (term) => {
   // If the search term is too short, clear results and hide the dropdown
   if (term.length < 2) {
-    searchResults.value = { cpus: [], servers: [] }
+    searchResults.value = { cpus: [], servers: [], gpus: [] }
     showResults.value = false
     return
   }
@@ -41,21 +42,20 @@ const performSearch = async (term) => {
   try {
     // Make an API request to the backend search endpoint
     const response = await axios.get(`/api/search?q=${term}`)
-    const { cpus, servers } = response.data
+    const { cpus, servers, gpus } = response.data
 
-    // "CPU-first" logic: If any CPUs are found, we only show those.
-    // Otherwise, show servers if they exist.
-    if (cpus && cpus.length > 0) {
-      searchResults.value = { cpus, servers: [] } // Clear server results
-    } else {
-      searchResults.value = { cpus: [], servers }
+    // Show all matching results from any category
+    searchResults.value = {
+      cpus: cpus || [],
+      servers: servers || [],
+      gpus: gpus || [],
     }
 
     showResults.value = true // Show the results dropdown
   } catch (error) {
     console.error('Error fetching search results:', error)
     // On error, clear results and hide dropdown
-    searchResults.value = { cpus: [], servers: [] }
+    searchResults.value = { cpus: [], servers: [], gpus: [] }
     showResults.value = false
   } finally {
     isLoading.value = false // Always reset loading state
@@ -134,7 +134,10 @@ const navigateToResult = (item, type) => {
     router.push({ name: 'Individual CPU', params: { brand: item.brand, slug: item.slug } })
   } else if (type === 'server') {
     // Navigate to individual Server page using named route and parameters
-    router.push({ name: 'Individual Server', params: { brand: item.brand.toLowerCase(), slug: item.slug } })
+    router.push({ name: 'Individual Server', params: { brand: item.brand, slug: item.slug } })
+  } else if (type === 'gpu') {
+    // Navigate to individual GPU page (branded collection for now until individual GPU page exists)
+    router.push({ name: 'Branded GPU Collection', params: { brand: item.brand.toLowerCase() } })
   }
   closeResults() // Hide the results dropdown after navigation
 }
@@ -178,7 +181,8 @@ onBeforeUnmount(() => {
 const hasResults = computed(() => {
   return (
     (searchResults.value.cpus && searchResults.value.cpus.length > 0) ||
-    (searchResults.value.servers && searchResults.value.servers.length > 0)
+    (searchResults.value.servers && searchResults.value.servers.length > 0) ||
+    (searchResults.value.gpus && searchResults.value.gpus.length > 0)
   )
 })
 </script>
@@ -237,6 +241,27 @@ const hasResults = computed(() => {
             </li>
           </ul>
         </div>
+        <!-- Display GPU results if any -->
+        <div v-if="searchResults.gpus && searchResults.gpus.length">
+          <div class="results-header d-flex flex-row justify-content-between align-items-center">
+            <h4 class="header-part">GPUs</h4>
+            <RouterLink :to="`/gpus`">Browse All</RouterLink>
+          </div>
+          <ul>
+            <li
+              v-for="(gpu, index) in searchResults.gpus"
+              :key="gpu._id"
+              :class="{
+                highlighted:
+                  highlightedIndex ===
+                  searchResults.cpus.length + searchResults.servers.length + index,
+              }"
+              @click="navigateToResult(gpu, 'gpu')"
+            >
+              {{ gpu.brand }} {{ gpu.model }}
+            </li>
+          </ul>
+        </div>
       </div>
       <!-- Message when no results are found -->
       <div v-else class="no-results">No results found for "{{ searchTerm }}"</div>
@@ -245,5 +270,5 @@ const hasResults = computed(() => {
 </template>
 
 <style scoped>
-@import "../assets/css/liveSearchBar.css";
+@import '../assets/css/liveSearchBar.css';
 </style>

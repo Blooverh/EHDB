@@ -80,6 +80,14 @@ import '../assets/css/header.css'
 
             <ul class="dropdown-menu">
               <li><RouterLink to="/gpus">All GPUs</RouterLink></li>
+              <li><RouterLink to="/gpus/nvidia">NVIDIA</RouterLink></li>
+              <!-- <li><RouterLink to="/gpus/amd">AMD</RouterLink></li>
+              <li><RouterLink to="/gpus/intel">Intel</RouterLink></li>
+              <li><RouterLink to="/gpus/pny">PNY</RouterLink></li>
+              <li><RouterLink to="/gpus/msi">MSI</RouterLink></li>
+              <li><RouterLink to="/gpus/asus">ASUS</RouterLink></li>
+              <li><RouterLink to="/gpus/gigabyte">Gigabyte</RouterLink></li>
+              <li><RouterLink to="/gpus/dell">Dell</RouterLink></li> -->
             </ul>
           </li>
 

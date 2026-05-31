@@ -1,67 +1,73 @@
 <script setup>
-  import { ref, watch, computed } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import axios from 'axios';
-  import CpuCard from '@/components/CpuCard.vue';
-  import serverVerticalCard from '@/components/serverVerticalCard.vue';
-  import '../assets/css/hardwareCollection.css';
-  import { ArrowBigRight, ArrowBigLeft } from 'lucide-vue-next';
-import ServerVerticalCard from '@/components/serverVerticalCard.vue';
+import { ref, watch, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
+import CpuCard from '@/components/CpuCard.vue'
+import ServerVerticalCard from '@/components/serverVerticalCard.vue'
+import GpuVerticalCard from '@/components/gpuVerticalCard.vue'
+import '../assets/css/hardwareCollection.css'
+import { ArrowBigRight, ArrowBigLeft } from 'lucide-vue-next'
 
-  const route = useRoute();
-  const router = useRouter();
-  const query = ref('');
-  const results = ref({ cpus: [], servers: [] });
-  const isLoading = ref(false);
-  const error = ref(null);
-  const totalPages = ref(0);
-  const currentPage = ref(1);
+const route = useRoute()
+const router = useRouter()
+const query = ref('')
+const results = ref({ cpus: [], servers: [], gpus: [] })
+const isLoading = ref(false)
+const error = ref(null)
+const totalPages = ref(0)
+const currentPage = ref(1)
 
-  const fetchResults = async (searchTerm, page = 1) => {
-    if (!searchTerm) {
-      results.value = { cpus: [], servers: [] };
-      totalPages.value = 0;
-      return;
-    }
-    isLoading.value = true;
-    error.value = null;
-    try {
-      const response = await axios.get(`/api/full-search?q=${searchTerm}&page=${page}`);
-      results.value = response.data.results;
-      totalPages.value = response.data.totalPages;
-      currentPage.value = response.data.currentPage;
-    } catch (err) {
-      console.error('Error fetching search results:', err);
-      error.value = 'Failed to fetch search results. Please try again later.';
-    } finally {
-      isLoading.value = false;
-    }
-  };
+const fetchResults = async (searchTerm, page = 1) => {
+  if (!searchTerm) {
+    results.value = { cpus: [], servers: [], gpus: [] }
+    totalPages.value = 0
+    return
+  }
+  isLoading.value = true
+  error.value = null
+  try {
+    const response = await axios.get(`/api/full-search?q=${searchTerm}&page=${page}`)
+    results.value = response.data.results
+    totalPages.value = response.data.totalPages
+    currentPage.value = response.data.currentPage
+  } catch (err) {
+    console.error('Error fetching search results:', err)
+    error.value = 'Failed to fetch search results. Please try again later.'
+  } finally {
+    isLoading.value = false
+  }
+}
 
-  watch(() => route.query, (newQuery) => {
-    query.value = newQuery.q || '';
-    const page = parseInt(newQuery.page || '1', 10);
-    fetchResults(query.value, page);
-  }, { immediate: true });
+watch(
+  () => route.query,
+  (newQuery) => {
+    query.value = newQuery.q || ''
+    const page = parseInt(newQuery.page || '1', 10)
+    fetchResults(query.value, page)
+  },
+  { immediate: true },
+)
 
-  const hasResults = computed(() => {
-      return (results.value.cpus && results.value.cpus.length > 0) || (results.value.servers && results.value.servers.length > 0)
-  })
+const hasResults = computed(() => {
+  return (
+    (results.value.cpus && results.value.cpus.length > 0) ||
+    (results.value.servers && results.value.servers.length > 0) ||
+    (results.value.gpus && results.value.gpus.length > 0)
+  )
+})
 
-  const goToPage = (page) => {
-    if (page >= 1 && page <= totalPages.value) {
-        router.push({ query: { ...route.query, page } });
-    }
-  };
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    router.push({ query: { ...route.query, page } })
+  }
+}
 
-  const newSearch = () => {
-      if (query.value) {
-        router.push({ query: { q: query.value, page: 1 } });
-      }
-  };
-
+const newSearch = () => {
+  if (query.value) {
+    router.push({ query: { q: query.value, page: 1 } })
+  }
+}
 </script>
-
 
 <template>
   <div class="search-page">
@@ -89,8 +95,18 @@ import ServerVerticalCard from '@/components/serverVerticalCard.vue';
       </div>
       <div v-if="results.servers && results.servers.length" class="server-results">
         <h2>Servers</h2>
-        <div class="d-flex flex-wrap flex-row  gap-5 m-3 algin-items-center justify-content-center">
-          <ServerVerticalCard v-for="server in results.servers" :key="server._id" :server="server" />
+        <div class="d-flex flex-wrap flex-row gap-5 m-3 algin-items-center justify-content-center">
+          <ServerVerticalCard
+            v-for="server in results.servers"
+            :key="server._id"
+            :server="server"
+          />
+        </div>
+      </div>
+      <div v-if="results.gpus && results.gpus.length" class="gpu-results">
+        <h2>GPUs</h2>
+        <div class="d-flex flex-wrap flex-row gap-5 m-3 align-items-center justify-content-center">
+          <GpuVerticalCard v-for="gpu in results.gpus" :key="gpu._id" :gpu="gpu" />
         </div>
       </div>
     </div>
@@ -99,9 +115,23 @@ import ServerVerticalCard from '@/components/serverVerticalCard.vue';
       <p>If no hardware displayed, try another term.</p>
     </div>
     <div v-if="totalPages > 1" class="pagination-controls d-flex justify-content-center">
-        <button class="p-2 btn-box-left" :class="{'active': currentPage > 1}" @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"><ArrowBigLeft /></button>
-        <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
-        <button class="p-2 btn-box-right" :class="{'active': currentPage <= totalPages}" @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"><ArrowBigRight /></button>
+      <button
+        class="p-2 btn-box-left"
+        :class="{ active: currentPage > 1 }"
+        @click="goToPage(currentPage - 1)"
+        :disabled="currentPage === 1"
+      >
+        <ArrowBigLeft />
+      </button>
+      <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button
+        class="p-2 btn-box-right"
+        :class="{ active: currentPage <= totalPages }"
+        @click="goToPage(currentPage + 1)"
+        :disabled="currentPage === totalPages"
+      >
+        <ArrowBigRight />
+      </button>
     </div>
   </div>
 </template>
@@ -120,13 +150,13 @@ import ServerVerticalCard from '@/components/serverVerticalCard.vue';
 }
 
 .search-box {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 25px;
-    padding: 5px 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-    width: 500px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 25px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 500px;
 }
 
 .search-input {
@@ -138,12 +168,12 @@ import ServerVerticalCard from '@/components/serverVerticalCard.vue';
 }
 
 .search-btn {
-    background-color: #007bff; /* Primary blue color */
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
+  background-color: #007bff; /* Primary blue color */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
 .results-grid {
@@ -158,22 +188,26 @@ import ServerVerticalCard from '@/components/serverVerticalCard.vue';
   gap: 1.5rem;
 }
 
-h1, h2 {
+h1,
+h2 {
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.server-results > h2, .cpu-results > h2 {
+.server-results > h2,
+.cpu-results > h2,
+.gpu-results > h2 {
   font-weight: bold;
   color: #007bff;
   font-size: 40px;
 }
 
-.loading, .error, .no-results {
+.loading,
+.error,
+.no-results {
   text-align: center;
   font-size: 1.2rem;
   color: #666;
   margin-top: 4rem;
 }
-
 </style>

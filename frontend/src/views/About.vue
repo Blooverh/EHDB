@@ -122,6 +122,21 @@ import {
       </div>
 
       <div class="col-md-6 mb-3">
+        <div class="hardware-card h-100 p-4 border rounded-3 d-flex align-items-center gap-3">
+          <div class="hardware-icon">
+            <Gpu :size="40" class="text-primary" />
+          </div>
+          <div>
+            <h3 class="h5 fw-bold mb-1">GPUs</h3>
+            <p class="text-muted mb-0">
+              Detailed GPU specifications from NVIDIA, AMD, and Intel including VRAM, clock speeds,
+              and CUDA core counts.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
         <div
           class="hardware-card h-100 p-4 border rounded-3 d-flex align-items-center gap-3 coming-soon"
         >
@@ -165,21 +180,6 @@ import {
           <div>
             <h3 class="h5 fw-bold mb-1">Network Cards</h3>
             <p class="text-muted mb-0">NICs, converged adapters, and networking expansion cards.</p>
-            <span class="badge bg-secondary mt-2">Coming Soon</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 mb-3">
-        <div
-          class="hardware-card h-100 p-4 border rounded-3 d-flex align-items-center gap-3 coming-soon"
-        >
-          <div class="hardware-icon">
-            <Gpu :size="40" />
-          </div>
-          <div>
-            <h3 class="h5 fw-bold mb-1">GPUs</h3>
-            <p class="text-muted mb-0">GPUs from NVIDIA, AMD and Intel, we have the information.</p>
             <span class="badge bg-secondary mt-2">Coming Soon</span>
           </div>
         </div>

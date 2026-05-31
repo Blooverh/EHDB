@@ -127,7 +127,7 @@ serverRouter.get("/servers-length", async (req, res) => {
 serverRouter.get(
   "/servers/:brand",
   normalizeBrand,
-  pagination(20),
+  pagination(21),
   filterBuilder({
     filterableFields: [
       "socketInfo",

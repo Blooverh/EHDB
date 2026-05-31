@@ -47,6 +47,7 @@ const gpuSchema = new mongoose.Schema({
 
 gpuSchema.index({
   brand: "text",
+  model: "text",
   gpuBrand: "text",
   vramType: "text",
   gpuWorkload: "text",
