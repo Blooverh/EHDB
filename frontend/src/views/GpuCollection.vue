@@ -4,8 +4,9 @@ import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import '../assets/css/hardwareCollection.css'
 import GpuFilter from '@/components/GpuFilter.vue'
+import PaginationControls from '@/components/PaginationControls.vue'
 import GpuVerticalCard from '@/components/gpuVerticalCard.vue'
-import { ArrowBigLeft, ArrowBigRight, Gpu, SlidersHorizontal } from 'lucide-vue-next'
+import { Gpu, SlidersHorizontal } from 'lucide-vue-next'
 
 // --- Router and Route instances ---
 const router = useRouter()
@@ -83,21 +84,6 @@ const goToPage = (page) => {
 
   // if page is different from 0 and 1 we pass to router the route with query parameters and page
   router.push({ query })
-}
-
-// pagination function for next page and previous page
-const nextPage = () => {
-  // if current page is less than total page based on query we allow next page navigation
-  if (currentPage.value < totalPages.value) {
-    goToPage(currentPage.value + 1)
-  }
-}
-
-const previousPage = () => {
-  // if current page is more than 1
-  if (currentPage.value > 1) {
-    goToPage(currentPage.value - 1)
-  }
 }
 
 const toggleFilters = () => {
@@ -193,29 +179,12 @@ watch(
         </div>
       </div>
 
-      <!-- Pagination Controls -->
-      <div
-        v-if="!loading && totalPages > 1"
-        class="pagination-controls d-flex justify-content-center"
-      >
-        <button
-          @click="previousPage"
-          :disabled="currentPage <= 1"
-          :class="{ active: currentPage > 1 }"
-          class="btn-box-left p-2"
-        >
-          <ArrowBigLeft />
-        </button>
-        <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
-        <button
-          class="btn-box-right p-2"
-          @click="nextPage"
-          :disabled="currentPage >= totalPages"
-          :class="{ active: currentPage <= totalPages }"
-        >
-          <ArrowBigRight />
-        </button>
-      </div>
+      <PaginationControls
+        v-if="!loading"
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        @page-change="goToPage"
+      />
     </div>
   </div>
 </template>

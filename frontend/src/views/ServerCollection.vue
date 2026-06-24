@@ -4,7 +4,8 @@ import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import '../assets/css/hardwareCollection.css'
 import ServerFilterBox from '@/components/ServerFilterBox.vue'
-import { ArrowBigLeft, ArrowBigRight, Server } from 'lucide-vue-next'
+import PaginationControls from '@/components/PaginationControls.vue'
+import { Server } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
 import ServerVerticalCard from '@/components/serverVerticalCard.vue'
 
@@ -106,21 +107,6 @@ const goToPage = (page) => {
   router.push({ query })
 }
 
-// pagination function for next page and previous page
-const nextPage = () => {
-  // if current page is less than total page based on query we allow next page navigation
-  if (currentPage.value < totalPages.value) {
-    goToPage(currentPage.value + 1)
-  }
-}
-
-const previousPage = () => {
-  //if current page is more than 1
-  if (currentPage.value > 1) {
-    goToPage(currentPage.value - 1)
-  }
-}
-
 const toggleFilters = () => {
   showFilters.value = !showFilters.value
 }
@@ -216,29 +202,12 @@ watch(
         </div>
       </div>
 
-      <!-- Pagination Controls -->
-      <div
-        v-if="!loading && totalPages > 1"
-        class="pagination-controls d-flex justify-content-center"
-      >
-        <button
-          @click="previousPage"
-          :disabled="currentPage <= 1"
-          :class="{ active: currentPage > 1 }"
-          class="btn-box-left p-2"
-        >
-          <ArrowBigLeft />
-        </button>
-        <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
-        <button
-          class="btn-box-right p-2"
-          @click="nextPage"
-          :disabled="currentPage >= totalPages"
-          :class="{ active: currentPage <= totalPages }"
-        >
-          <ArrowBigRight />
-        </button>
-      </div>
+      <PaginationControls
+        v-if="!loading"
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        @page-change="goToPage"
+      />
     </div>
   </div>
 </template>

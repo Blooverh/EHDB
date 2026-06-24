@@ -3,10 +3,10 @@ import { ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import CpuCard from '@/components/CpuCard.vue'
+import PaginationControls from '@/components/PaginationControls.vue'
 import ServerVerticalCard from '@/components/serverVerticalCard.vue'
 import GpuVerticalCard from '@/components/gpuVerticalCard.vue'
 import '../assets/css/hardwareCollection.css'
-import { ArrowBigRight, ArrowBigLeft } from 'lucide-vue-next'
 
 const route = useRoute()
 const router = useRouter()
@@ -114,25 +114,11 @@ const newSearch = () => {
       <h2>Looking for "{{ query }}"</h2>
       <p>If no hardware displayed, try another term.</p>
     </div>
-    <div v-if="totalPages > 1" class="pagination-controls d-flex justify-content-center">
-      <button
-        class="p-2 btn-box-left"
-        :class="{ active: currentPage > 1 }"
-        @click="goToPage(currentPage - 1)"
-        :disabled="currentPage === 1"
-      >
-        <ArrowBigLeft />
-      </button>
-      <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
-      <button
-        class="p-2 btn-box-right"
-        :class="{ active: currentPage <= totalPages }"
-        @click="goToPage(currentPage + 1)"
-        :disabled="currentPage === totalPages"
-      >
-        <ArrowBigRight />
-      </button>
-    </div>
+    <PaginationControls
+      :currentPage="currentPage"
+      :totalPages="totalPages"
+      @page-change="goToPage"
+    />
   </div>
 </template>
 

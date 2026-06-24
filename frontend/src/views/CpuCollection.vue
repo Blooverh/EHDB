@@ -1,13 +1,14 @@
 <script setup>
 import '../assets/css/hardwareCollection.css'
 import CpuFilterBox from '@/components/CpuFilterBox.vue'
+import PaginationControls from '@/components/PaginationControls.vue'
 import { cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle.js'
 import { ref, watch, computed } from 'vue'
 import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router'
 
 //Lucide svg import
-import { ArrowBigRight, ArrowBigLeft, SlidersHorizontal, Cpu } from 'lucide-vue-next'
+import { SlidersHorizontal, Cpu } from 'lucide-vue-next'
 
 const router = useRouter()
 const route = useRoute()
@@ -87,18 +88,6 @@ const goToPage = (page) => {
     delete query.page
   }
   router.push({ query }) // pass query to router
-}
-
-// functions that increases and decreases pages and triggers function to change router url
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    goToPage(currentPage.value + 1)
-  }
-}
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    goToPage(currentPage.value - 1)
-  }
 }
 
 const toggleFilters = () => {
@@ -248,29 +237,12 @@ watch(
         </div>
       </div>
 
-      <!-- Pagination Controls -->
-      <div
-        v-if="!loading && totalPages > 1"
-        class="pagination-controls d-flex justify-content-center"
-      >
-        <button
-          @click="prevPage"
-          :disabled="currentPage <= 1"
-          :class="{ active: currentPage > 1 }"
-          class="btn-box-left p-2"
-        >
-          <ArrowBigLeft />
-        </button>
-        <span class="p-2 fw-bold">Page {{ currentPage }} of {{ totalPages }}</span>
-        <button
-          @click="nextPage"
-          :disabled="currentPage >= totalPages"
-          :class="{ active: currentPage <= totalPages }"
-          class="p-2 btn-box-right"
-        >
-          <ArrowBigRight />
-        </button>
-      </div>
+      <PaginationControls
+        v-if="!loading"
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        @page-change="goToPage"
+      />
     </div>
   </div>
 </template>
