@@ -3,10 +3,19 @@ import { ref, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import '../assets/css/hardwareCollection.css'
-import GpuFilter from '@/components/GpuFilter.vue'
+import FilterBox from '@/components/FilterBox.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
 import { Gpu, SlidersHorizontal } from 'lucide-vue-next'
+
+// Filter section configuration for the unified FilterBox
+const filterSections = [
+  { key: 'brand', dataKey: 'brands', label: 'Brand' },
+  { key: 'vram', label: 'VRAM Size', format: (v) => `${v} GB` },
+  { key: 'vramType', label: 'VRAM Type' },
+  { key: 'pcieInterface', label: 'PCIe Interface' },
+  { key: 'gpuWorkload', label: 'Workload' },
+]
 
 // --- Router and Route instances ---
 const router = useRouter()
@@ -146,10 +155,11 @@ watch(
       <SlidersHorizontal :size="20" />
       {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
     </button>
-    <GpuFilter
+    <FilterBox
       v-show="showFilters"
       :filters="filters"
       :selectedFilters="selectedFilters"
+      :sections="filterSections"
       @filters-changed="updateFilters"
       @reset-filter="resetFilters"
     />

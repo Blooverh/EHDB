@@ -3,11 +3,21 @@ import '../assets/css/hardwareCollection.css'
 import { ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import BrandedServerFilterBox from '@/components/BrandedServerFilterBox.vue'
+import FilterBox from '@/components/FilterBox.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import { Server } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
 import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
+
+// Filter section configuration for the unified FilterBox (no brand — already scoped by URL param)
+const filterSections = [
+  { key: 'socket', label: 'CPU Socket' },
+  { key: 'cpuGen', label: 'CPU Generation' },
+  { key: 'ssdInterfaces', label: 'SSD Interface' },
+  { key: 'moboType', label: 'Motherboard Type' },
+  { key: 'speeds', label: 'Memory Speeds', format: (v) => `${v} MT/s` },
+  { key: 'memoryType', label: 'Memory Types' },
+]
 
 const router = useRouter()
 const route = useRoute()
@@ -172,11 +182,11 @@ watch(
       <SlidersHorizontal :size="20" />
       {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
     </button>
-    <!-- ServerFilterBox for brands -->
-    <BrandedServerFilterBox
+    <FilterBox
       v-show="showFilters"
       :filters="filters"
       :selectedFilters="selectedFilters"
+      :sections="filterSections"
       @filters-changed="updateFilters"
       @reset-filter="resetFilters"
     />

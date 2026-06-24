@@ -6,11 +6,22 @@ import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router'
 import CpuCard from '@/components/CpuCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
-import brandedCpuFilter from '@/components/brandedCpuFilter.vue'
+import FilterBox from '@/components/FilterBox.vue'
 
 // Lucide svg import
 import { Cpu } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
+
+// Filter section configuration for the unified FilterBox (no brand — already scoped by URL param)
+const filterSections = [
+  { key: 'codename', label: 'Code Name' },
+  { key: 'generation', label: 'Generation' },
+  { key: 'socket', label: 'Socket' },
+  { key: 'coreNum', label: 'CPU Cores' },
+  { key: 'ratedSpeeds', label: 'Memory Speeds', format: (v) => `${v} MT/s` },
+  { key: 'memorySupport', label: 'Memory Types' },
+  { key: 'cache', label: 'L3 Cache' },
+]
 
 const router = useRouter()
 const route = useRoute()
@@ -161,11 +172,11 @@ watch(
       <SlidersHorizontal :size="20" />
       {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
     </button>
-    <!-- CpuFilterBox for brands -->
-    <brandedCpuFilter
+    <FilterBox
       v-show="showFilters"
       :filters="filters"
       :selectedFilters="selectedFilters"
+      :sections="filterSections"
       @filters-changed="updateFilters"
       @reset-filter="resetFilters"
     />

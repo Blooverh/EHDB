@@ -5,11 +5,20 @@ import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router'
 import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
-import BrandedGpuFilterBox from '@/components/BrandedGpuFilterBox.vue'
+import FilterBox from '@/components/FilterBox.vue'
 
 // Lucide svg import
 import { Gpu } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
+
+// Filter section configuration for the unified FilterBox (no overall brand — already scoped by URL param)
+const filterSections = [
+  { key: 'gpuBrand', label: 'GPU Brand' },
+  { key: 'vram', label: 'VRAM Size', format: (v) => `${v} GB` },
+  { key: 'vramType', label: 'VRAM Type' },
+  { key: 'pcieInterface', label: 'PCIe Interface' },
+  { key: 'gpuWorkload', label: 'Workload' },
+]
 
 const router = useRouter()
 const route = useRoute()
@@ -173,11 +182,11 @@ watch(
       <SlidersHorizontal :size="20" />
       {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
     </button>
-    <!-- BrandedGpuFilterBox for brands -->
-    <BrandedGpuFilterBox
+    <FilterBox
       v-show="showFilters"
       :filters="filters"
       :selectedFilters="selectedFilters"
+      :sections="filterSections"
       @filters-changed="updateFilters"
       @reset-filter="resetFilters"
     />

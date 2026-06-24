@@ -66,105 +66,6 @@
   color: rgb(128, 128, 128);
 }
 
-/* Filter component style */
-
-.filter-box {
-  height: 100vh;
-  position: sticky;
-  overflow-y: scroll;
-  top: 20px;
-  padding: 10px;
-}
-
-.filter-head {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.reset {
-  background-color: #007bff;
-  font-weight: 700;
-  border-radius: 8px;
-  border: none;
-  padding: 5px;
-  color: white;
-}
-
-.reset:hover {
-  background-color: #007bffb6;
-}
-
-.filter-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.brand-box,
-.generation-box,
-.core-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-radius: 8px 8px 0 0;
-  border: solid 1px #007bff;
-}
-
-.option-box {
-  overflow: hidden;
-  padding: 5px;
-}
-
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition:
-    max-height 0.4s ease-in-out,
-    opacity 0.3s ease-in-out;
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  max-height: 0;
-  opacity: 0;
-}
-
-.slide-fade-enter-to,
-.slide-fade-leave-from {
-  max-height: 200px; /* Adjust if your brand list is taller */
-  opacity: 1;
-}
-
-/* Basic styling for the header */
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #007bff;
-  border-radius: 8px 8px 0 0;
-  padding: 5px;
-}
-
-.toggle-btn {
-  background-color: inherit;
-  border: none;
-  padding: 5px;
-  color: white;
-}
-
-.toggle-btn:hover {
-  font-weight: 700;
-}
-
-.filter-tl {
-  margin: 0px;
-  color: white;
-}
-
-.input-option > label {
-  cursor: pointer;
-}
-
 /* ==================== RESPONSIVE STYLES ==================== */
 
 /* Filter Toggle Button */
@@ -204,17 +105,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .filter-box {
-    height: auto;
-    position: relative;
-    top: 0;
-    overflow-y: visible;
-    padding: 10px;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    margin-bottom: 10px;
   }
 
   .collection-container {
@@ -341,34 +231,6 @@
   .solid-separation {
     border-width: 1px;
     margin: 8px 0;
-  }
-
-  /* Filter */
-  .filter-box {
-    padding: 8px;
-  }
-
-  .filter-header {
-    padding: 8px;
-  }
-
-  .filter-tl {
-    font-size: 0.9rem;
-  }
-
-  .toggle-btn {
-    padding: 4px;
-  }
-
-  .reset {
-    padding: 6px 10px;
-    font-size: 0.85rem;
-  }
-
-  .brand-box,
-  .generation-box,
-  .core-box {
-    padding: 8px;
   }
 
   /* Server Cards - stack vertically */
