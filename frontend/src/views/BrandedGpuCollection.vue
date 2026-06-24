@@ -3,7 +3,7 @@ import '../assets/css/hardwareCollection.css'
 import { ref, watch, computed } from 'vue'
 import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router'
-import GpuVerticalCard from '@/components/gpuVerticalCard.vue'
+import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import BrandedGpuFilterBox from '@/components/BrandedGpuFilterBox.vue'
 
@@ -95,6 +95,23 @@ const toggleFilters = () => {
   showFilters.value = !showFilters.value
 }
 
+// Converts lowercase URL param to proper display name for the heading
+const setBrandDisplay = (brand) => {
+  switch (brand) {
+    case 'nvidia':
+      brand_gpu.value = 'NVIDIA'
+      break
+    case 'amd':
+      brand_gpu.value = 'AMD'
+      break
+    case 'intel':
+      brand_gpu.value = 'Intel'
+      break
+    default:
+      brand_gpu.value = brand
+  }
+}
+
 // WATCHERS (SIDE EFFECTS)
 /*
     - we pass query as argument and will watch based on new query if we need to update query in URL
@@ -125,22 +142,23 @@ watch(
       // since watcher changes immediate to avoid undefined we check if param exists
       if (!gpuBrand) return
 
+      // Set display name before the API call so heading shows even if empty collection
+      setBrandDisplay(gpuBrand)
+
       const response = await axios.get(`/api/gpus/${gpuBrand}?${params.toString()}`)
       gpus.value = response.data.gpus
       totalGpus.value = response.data.totalGpus
       totalPages.value = response.data.totalPages
-      brand_gpu.value = gpuBrand
 
       const { data } = await axios.get(`/api/gpus/${gpuBrand}/filter-options`)
       filters.value = data
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        error.value = 'No GPUs match this Brand selection'
+        error.value = `No GPUs match the brand ${brand_gpu.value}`
         totalGpus.value = 0
       } else {
         error.value = 'Failed to fetch GPUs. Please Try Again'
       }
-      console.error(err.response)
     } finally {
       loading.value = false
     }
@@ -181,7 +199,7 @@ watch(
 
       <div v-if="!loading && !error">
         <div v-if="gpus.length > 0" class="d-flex flex-wrap flex-row gap-5 m-3 align-items-center">
-          <GpuVerticalCard v-for="gpu in gpus" :key="gpu._id" :gpu="gpu" />
+          <HardwareVerticalCard v-for="gpu in gpus" :key="gpu._id" :item="gpu" type="gpu" />
         </div>
         <div v-else class="no-results">
           <p>No GPUs found matching your criteria.</p>

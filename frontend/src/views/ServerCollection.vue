@@ -7,7 +7,7 @@ import ServerFilterBox from '@/components/ServerFilterBox.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import { Server } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
-import ServerVerticalCard from '@/components/serverVerticalCard.vue'
+import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
 
 // --- Router and Route instances ---
 const router = useRouter()
@@ -198,7 +198,12 @@ watch(
           v-if="servers.length > 0"
           class="d-flex flex-wrap flex-row gap-5 m-3 algin-items-center"
         >
-          <ServerVerticalCard v-for="server in servers" :key="server._id" :server="server" />
+          <HardwareVerticalCard
+            v-for="server in servers"
+            :key="server._id"
+            :item="server"
+            type="server"
+          />
         </div>
       </div>
 

@@ -5,7 +5,7 @@ import axios from 'axios'
 import '../assets/css/hardwareCollection.css'
 import GpuFilter from '@/components/GpuFilter.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
-import GpuVerticalCard from '@/components/gpuVerticalCard.vue'
+import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
 import { Gpu, SlidersHorizontal } from 'lucide-vue-next'
 
 // --- Router and Route instances ---
@@ -172,7 +172,7 @@ watch(
       <!-- if loading is completed and there is no error add GPU Card -->
       <div v-if="!loading && !error">
         <div v-if="gpus.length > 0" class="d-flex flex-wrap flex-row gap-5 m-3 align-items-center">
-          <GpuVerticalCard v-for="gpu in gpus" :key="gpu._id" :gpu="gpu" />
+          <HardwareVerticalCard v-for="gpu in gpus" :key="gpu._id" :item="gpu" type="gpu" />
         </div>
         <div v-else class="no-results">
           <p>No GPUs found matching your criteria.</p>

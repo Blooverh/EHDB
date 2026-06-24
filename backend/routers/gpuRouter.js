@@ -73,24 +73,33 @@ gpuRouter.get("/gpus/filter-options", async (req, res) => {
   }
 });
 
-// Brand-scoped filter options (refactor plan item 3)
+// Brand-scoped filter options — scoped by gpuBrand (GPU chip maker)
 gpuRouter.get("/gpus/:brand/filter-options", async (req, res) => {
-  const brand = req.params.brand;
+  const gpuBrand = req.params.brand;
+  const brandFilter = {
+    gpuBrand: { $regex: new RegExp(`^${gpuBrand}$`, "i") },
+  };
 
   try {
-    const vramType = await GPU.distinct("vramType", { brand });
-    const vram = await GPU.distinct("vram", { brand });
-    const pcieInterface = await GPU.distinct("pcieInterface", { brand });
-    const gpuWorkload = await GPU.distinct("gpuWorkload", { brand });
-    const gpuBrand = await GPU.distinct("gpuBrand", { brand });
+    const vramType = await GPU.distinct("vramType", brandFilter);
+    const vram = await GPU.distinct("vram", brandFilter);
+    const pcieInterface = await GPU.distinct("pcieInterface", brandFilter);
+    const gpuWorkload = await GPU.distinct("gpuWorkload", brandFilter);
+    const gpuBrands = await GPU.distinct("gpuBrand", brandFilter);
 
-    res.json({ vram, vramType, pcieInterface, gpuWorkload, gpuBrand });
+    res.json({
+      vram,
+      vramType,
+      pcieInterface,
+      gpuWorkload,
+      gpuBrand: gpuBrands,
+    });
   } catch (err) {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
-// Brand-specific GPU listing
+// Brand-specific GPU listing — scoped by gpuBrand (GPU chip maker)
 gpuRouter.get(
   "/gpus/:brand",
   pagination(21),
@@ -109,7 +118,10 @@ gpuRouter.get(
     try {
       const brand = req.params.brand;
       const { page, limit, skip } = req.pagination;
-      const filter = { brand, ...req.filter };
+      const filter = {
+        gpuBrand: { $regex: new RegExp(`^${brand}$`, "i") },
+        ...req.filter,
+      };
 
       const totalGpus = await GPU.countDocuments(filter);
       const totalPages = Math.ceil(totalGpus / limit);
@@ -127,15 +139,17 @@ gpuRouter.get(
   },
 );
 
-// GPU count per brand
+// GPU count per gpuBrand (for branded collections)
 gpuRouter.get("/gpus/:brand/gpu-length", async (req, res) => {
-  const brand = req.params.brand;
+  const gpuBrand = req.params.brand;
 
   try {
-    const gpus = await GPU.find({ brand }).lean();
+    const gpus = await GPU.find({
+      gpuBrand: { $regex: new RegExp(`^${gpuBrand}$`, "i") },
+    }).lean();
 
     if (!gpus) {
-      return res.status(404).json({ message: `No GPUs found for ${brand}` });
+      return res.status(404).json({ message: `No GPUs found for ${gpuBrand}` });
     }
 
     res.json(gpus);

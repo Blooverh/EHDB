@@ -4,8 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import CpuCard from '@/components/CpuCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
-import ServerVerticalCard from '@/components/serverVerticalCard.vue'
-import GpuVerticalCard from '@/components/gpuVerticalCard.vue'
+import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
 import '../assets/css/hardwareCollection.css'
 
 const route = useRoute()
@@ -96,17 +95,18 @@ const newSearch = () => {
       <div v-if="results.servers && results.servers.length" class="server-results">
         <h2>Servers</h2>
         <div class="d-flex flex-wrap flex-row gap-5 m-3 algin-items-center justify-content-center">
-          <ServerVerticalCard
+          <HardwareVerticalCard
             v-for="server in results.servers"
             :key="server._id"
-            :server="server"
+            :item="server"
+            type="server"
           />
         </div>
       </div>
       <div v-if="results.gpus && results.gpus.length" class="gpu-results">
         <h2>GPUs</h2>
         <div class="d-flex flex-wrap flex-row gap-5 m-3 align-items-center justify-content-center">
-          <GpuVerticalCard v-for="gpu in results.gpus" :key="gpu._id" :gpu="gpu" />
+          <HardwareVerticalCard v-for="gpu in results.gpus" :key="gpu._id" :item="gpu" type="gpu" />
         </div>
       </div>
     </div>
