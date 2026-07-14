@@ -110,7 +110,7 @@ watch(cpu, (newCPU) => {
 
             <span class="website-item fw-bold">{{ listing.website }}</span>
 
-            <span class="price-item">${{ listing.currPrice }}</span>
+            <span class="price-item">${{ listing.currPrice.toLocaleString() }}</span>
             <a
               class="link-item d-flex flex-row gap-1 align-items-center"
               target="_blank"

@@ -18,7 +18,7 @@ const selectedWebsite = ref('') // reactive variable to keep track which website
 // we compute based on future changes on webiste additions or removals
 const uniqueWebsites = computed(() => {
   if (!server.value?.chassisInfo) return []
-  const websites = [...new Set(server.value.chassisInfo.map((item) => item.website))] // we use set to avoid replicated websites 
+  const websites = [...new Set(server.value.chassisInfo.map((item) => item.website))] // we use set to avoid replicated websites
   if (websites.length > 0 && !selectedWebsite.value) {
     selectedWebsite.value = websites[0]
   }
@@ -175,14 +175,16 @@ watch(server, (newServer) => {
               </div>
 
               <div class="d-flex align-items-center gap-2">
-                <span class="price-item fw-bold">${{ listing.currPrice }}</span>
+                <span class="price-item fw-bold">${{ listing.currPrice.toLocaleString() }}</span>
 
                 <span
                   v-if="listing.priceChange !== 0"
                   class="price-change fw-bold"
                   :class="listing.priceChange > 0 ? 'text-danger' : 'text-success'"
                 >
-                  {{ listing.priceChange > 0 ? '+' : '' }}${{ listing.priceChange }}
+                  {{ listing.priceChange > 0 ? '+' : '' }}${{
+                    listing.priceChange.toLocaleString()
+                  }}
                 </span>
               </div>
 

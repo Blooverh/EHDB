@@ -1,5 +1,5 @@
 <script setup>
-import { ArrowRight, Cpu, Server } from 'lucide-vue-next'
+import { ArrowRight, Cpu, Server, Gpu } from 'lucide-vue-next'
 
 const props = defineProps({
   hardware: Number,
@@ -17,6 +17,7 @@ const props = defineProps({
       <div :class="`${svgTypeClass}`">
         <Cpu v-if="hardwareType == 'Processors'" />
         <Server v-else-if="hardwareType == 'Servers'" />
+        <Gpu v-else-if="hardwareType == 'GPUs'" />
       </div>
       <RouterLink :to="`/${collectionLink}`"><ArrowRight color="gray" /> </RouterLink>
     </div>
@@ -48,17 +49,9 @@ const props = defineProps({
   color: #007bff;
 }
 
-.svg-box-servers {
-  background: linear-gradient(to right, #10b981, #0d9488);
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.svg-box-cpu {
-  background: linear-gradient(to right, #3b82f6, #4f46e5);
+.svg-box-servers,
+.svg-box-cpu,
+.svg-box-gpu {
   width: 50px;
   height: 50px;
   border-radius: 8px;
@@ -67,8 +60,19 @@ const props = defineProps({
   justify-content: center;
 }
 
+.svg-box-servers {
+  background: linear-gradient(to right, #10b981, #0d9488);
+}
+.svg-box-cpu {
+  background: linear-gradient(to right, #3b82f6, #4f46e5);
+}
+.svg-box-gpu {
+  background: linear-gradient(to right, #f97316, #ea580c);
+}
+
 .svg-box-servers :deep(svg),
-.svg-box-cpu :deep(svg) {
+.svg-box-cpu :deep(svg),
+.svg-box-gpu :deep(svg) {
   stroke: white;
   stroke-width: 1.5;
 }
@@ -85,13 +89,15 @@ const props = defineProps({
   }
 
   .svg-box-servers,
-  .svg-box-cpu {
+  .svg-box-cpu,
+  .svg-box-gpu {
     width: 45px;
     height: 45px;
   }
 
   .svg-box-servers :deep(svg),
-  .svg-box-cpu :deep(svg) {
+  .svg-box-cpu :deep(svg),
+  .svg-box-gpu :deep(svg) {
     width: 28px;
     height: 28px;
   }

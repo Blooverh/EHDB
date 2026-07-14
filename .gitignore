@@ -142,3 +142,4 @@ AGENTS.md
 
 # Refactor planning notes (project-local)
 refactor-plan.md
+scraper/lib/infoExtracter/cpus_and_links.json

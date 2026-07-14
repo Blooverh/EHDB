@@ -165,7 +165,10 @@ gpuRouter.get("/gpus/:brand/:slug", async (req, res) => {
   const slug = req.params.slug;
 
   try {
-    const gpu = await GPU.findOne({ brand, slug }).lean();
+    const gpu = await GPU.findOne({
+      brand: { $regex: new RegExp(`^${brand}$`, "i") },
+      slug,
+    }).lean();
 
     if (!gpu) {
       return res.status(404).json({ message: "GPU not found" });

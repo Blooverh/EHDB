@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { formatModel, cpuBrandFormatter } from '@/utils/formatCpuTitle'
-import { Cpu, Server, HardDrive } from 'lucide-vue-next'
+import { Cpu, Server, HardDrive, Gpu } from 'lucide-vue-next'
 
 const route = useRoute()
 
@@ -15,7 +15,7 @@ const props = defineProps({
     // ensuring only valid parts are passed, ensuring bug prevention
     type: String,
     required: true,
-    validator: (value) => ['cpu', 'server'].includes(value),
+    validator: (value) => ['cpu', 'server', 'gpu'].includes(value),
   },
 })
 
@@ -54,6 +54,23 @@ const fieldMappings = {
     info5: ['memorySpecs', 'memory_type'],
     info6: ['memorySpecs', 'speeds'],
     info7: 'expansionSlots',
+  },
+  gpu: {
+    image: 'gpuImage',
+    prices: 'gpuInfo',
+    model: 'model',
+    brand: 'brand',
+    tag1: 'gpuBrand',
+    tag2: 'vramType',
+    tag3: ['pcieInterface'],
+    tag4: 'gpuWorkload',
+    info1: 'vram',
+    info2: 'coreClock',
+    info3: 'boostClock',
+    info4: 'power',
+    info5: ['cudaCores'],
+    info6: ['tensorCores'],
+    info7: 'gpuTags',
   },
 }
 
@@ -147,6 +164,36 @@ const statLabels = {
       result: displayData.value.info7[0],
     },
   },
+  gpu: {
+    info1: {
+      label: 'VRAM',
+      result: `${displayData.value.info1} GB`,
+    },
+    info2: {
+      label: 'Core Clock',
+      result: `${displayData.value.info2} MHz`,
+    },
+    info3: {
+      label: 'Boost Clock',
+      result: `${displayData.value.info3} MHz`,
+    },
+    info4: {
+      label: 'TDP',
+      result: `${displayData.value.info4}W`,
+    },
+    info5: {
+      label: 'CUDA Cores',
+      result: displayData.value.info5,
+    },
+    info6: {
+      label: 'Tensor Cores',
+      result: displayData.value.info6,
+    },
+    info7: {
+      label: 'GPU Tags',
+      result: displayData.value.info7?.join?.(', '),
+    },
+  },
 }
 
 const currentLabels = computed(() => statLabels[displayData.value.type])
@@ -155,6 +202,7 @@ const typeIcon = computed(() => {
   const icons = {
     cpu: Cpu,
     server: Server,
+    gpu: Gpu,
   }
   return icons[props.type]
 })
@@ -178,17 +226,20 @@ const breadcrumbs = computed(() => {
       } else {
         moddedLabel = displayData.value.model
       }
-    
-    }else if (path === 'amd'){
+    } else if (path === 'amd') {
       moddedLabel = 'AMD'
-    }else if (path === 'intel'){
+    } else if (path === 'intel') {
       moddedLabel = 'Intel'
-    }else if (path === 'cloud-ninjas'){
+    } else if (path === 'nvidia') {
+      moddedLabel = 'NVIDIA'
+    } else if (path === 'cloud-ninjas') {
       moddedLabel = 'Cloud Ninjas'
     } else if (path === 'cpus') {
       moddedLabel = 'CPUs'
     } else if (path === 'servers') {
       moddedLabel = 'Servers'
+    } else if (path === 'gpus') {
+      moddedLabel = 'GPUs'
     } else {
       moddedLabel = path.charAt(0).toUpperCase() + path.slice(1)
     }

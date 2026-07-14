@@ -13,6 +13,7 @@ import BrandedServerCollection from '@/views/BrandedServerCollection.vue'
 import About from '@/views/About.vue'
 import GpuCollection from '@/views/GpuCollection.vue'
 import BrandedGpuCollection from '@/views/BrandedGpuCollection.vue'
+import IndividualGpu from '@/views/IndividualGpu.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -78,6 +79,12 @@ const router = createRouter({
       path: '/gpus/:brand',
       name: 'Branded GPU Collection',
       component: BrandedGpuCollection,
+    },
+    {
+      // Individual GPU page
+      path: '/gpus/:brand/:slug',
+      name: 'Individual GPU',
+      component: IndividualGpu,
     },
     {
       // might need to add query URI (?)

@@ -136,8 +136,11 @@ const navigateToResult = (item, type) => {
     // Navigate to individual Server page using named route and parameters
     router.push({ name: 'Individual Server', params: { brand: item.brand, slug: item.slug } })
   } else if (type === 'gpu') {
-    // Navigate to individual GPU page (branded collection for now until individual GPU page exists)
-    router.push({ name: 'Branded GPU Collection', params: { brand: item.brand.toLowerCase() } })
+    // Navigate to individual GPU page using named route and parameters
+    router.push({
+      name: 'Individual GPU',
+      params: { brand: item.brand.toLowerCase(), slug: item.slug },
+    })
   }
   closeResults() // Hide the results dropdown after navigation
 }

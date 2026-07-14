@@ -9,6 +9,7 @@ import axios from 'axios'
 const cpus = ref(0) // individual cpu entries
 const servers = ref(0) // individual server entries
 const hardwareEntries = ref(0) // all hardware entries
+const gpus = ref(0) // Individual GPU entries
 
 const loading = ref(true)
 const error = ref(null)
@@ -17,10 +18,13 @@ onMounted(async () => {
   try {
     const cpuResponse = await axios.get(`/api/cpus`)
     const serverResponse = await axios.get('/api/servers')
+    const gpuResponse = await axios.get('/api/gpus')
 
     cpus.value = cpuResponse.data.totalCPUs
     servers.value = serverResponse.data.totalServers
+    gpus.value = gpuResponse.data.totalGpus
     hardwareEntries.value = servers.value + cpus.value
+    
   } catch (err) {
     console.log(err)
     error.value = 'Failed to load hardware data. Please try again later.'
@@ -62,6 +66,14 @@ onMounted(async () => {
         subText="Rack, Blade, Towers and HCI Systems"
         collectionLink="servers"
         svgTypeClass="svg-box-servers"
+      />
+
+      <HardwareBoxHome
+        :hardware="gpus"
+        hardwareType="GPUs"
+        subText="NVIDIA, Intel & AMD GPUs from Different brands"
+        collectionLink="gpus"
+        svgTypeClass="svg-box-gpu"
       />
     </div>
   </template>
