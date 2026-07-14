@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import LiveSearchBar from './LiveSearchBar.vue'
 import '../assets/css/hero-homepage.css'
-import { Gpu, Server, Cpu } from 'lucide-vue-next'
+import { Gpu, Server, Cpu, LoaderCircle } from 'lucide-vue-next'
 
 const error = ref(null)
 const servers = ref(null)
@@ -54,95 +54,7 @@ onMounted(async () => {
           <span class="parts-in-db" v-if="servers > 100"> 100+</span>
         </div>
         <div v-else>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-            <circle fill="#007bff" stroke="#007bff" stroke-width="15" r="15" cx="35" cy="100">
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin="0"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".8"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin="0.05"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".6"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".1"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".4"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".15"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".2"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".2"
-              ></animate>
-            </circle>
-          </svg>
+          <LoaderCircle class="box-icon spinning" />
         </div>
       </div>
       <div class="hardware-card">
@@ -155,95 +67,7 @@ onMounted(async () => {
           <span class="parts-in-db" v-if="cpus > 400"> 400+</span>
         </div>
         <div v-else>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-            <circle fill="#007bff" stroke="#007bff" stroke-width="15" r="15" cx="35" cy="100">
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin="0"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".8"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin="0.05"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".6"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".1"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".4"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".15"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".2"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".2"
-              ></animate>
-            </circle>
-          </svg>
+          <LoaderCircle class="box-icon spinning" />
         </div>
       </div>
       <div class="hardware-card">
@@ -253,100 +77,27 @@ onMounted(async () => {
         <div v-else-if="gpus" class="box-align">
           <Gpu class="box-icon" />
           <span class="box-span">GPUs</span>
-          <span class="parts-in-db" v-if="gpus > 20"> 20+</span>
+          <span class="parts-in-db" v-if="gpus > 40"> 40+</span>
         </div>
         <div v-else>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-            <circle fill="#007bff" stroke="#007bff" stroke-width="15" r="15" cx="35" cy="100">
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin="0"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".8"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin="0.05"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".6"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".1"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".4"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".15"
-              ></animate>
-            </circle>
-            <circle
-              fill="#007bff"
-              stroke="#007bff"
-              stroke-width="15"
-              opacity=".2"
-              r="15"
-              cx="35"
-              cy="100"
-            >
-              <animate
-                attributeName="cx"
-                calcMode="spline"
-                dur="2"
-                values="35;165;165;35;35"
-                keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1"
-                repeatCount="indefinite"
-                begin=".2"
-              ></animate>
-            </circle>
-          </svg>
+          <LoaderCircle class="box-icon spinning" />
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

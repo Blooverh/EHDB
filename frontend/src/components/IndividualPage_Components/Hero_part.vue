@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { formatModel, cpuBrandFormatter } from '@/utils/formatCpuTitle'
-import { Cpu, Server, HardDrive, Gpu } from 'lucide-vue-next'
+import { Cpu, Server, Gpu } from 'lucide-vue-next'
 
 const route = useRoute()
 
