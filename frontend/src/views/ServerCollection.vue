@@ -8,6 +8,7 @@ import PaginationControls from '@/components/PaginationControls.vue'
 import { Server } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
 import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
+import CollectionSkeleton from '@/components/CollectionSkeleton.vue'
 
 // Filter section configuration for the unified FilterBox
 const filterSections = [
@@ -197,7 +198,7 @@ watch(
 
       <p v-if="totalServers > 0">Current List: ({{ totalServers }} Servers)</p>
 
-      <div v-if="loading" class="loading-message">Loading Servers...</div>
+      <CollectionSkeleton v-if="loading" type="server" />
 
       <div v-if="error" class="error-message">
         {{ error }}

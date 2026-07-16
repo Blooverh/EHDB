@@ -6,6 +6,7 @@ import '../assets/css/hardwareCollection.css'
 import FilterBox from '@/components/FilterBox.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
+import CollectionSkeleton from '@/components/CollectionSkeleton.vue'
 import { Gpu, SlidersHorizontal } from 'lucide-vue-next'
 
 // Filter section configuration for the unified FilterBox
@@ -172,7 +173,7 @@ watch(
 
       <p v-if="totalGpus > 0">Current List: ({{ totalGpus }} GPUs)</p>
 
-      <div v-if="loading" class="loading-message">Loading GPUs...</div>
+      <CollectionSkeleton v-if="loading" type="gpu" />
 
       <div v-if="error" class="error-message">
         {{ error }}

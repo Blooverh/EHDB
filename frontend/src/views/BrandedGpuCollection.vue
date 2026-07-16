@@ -6,6 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import FilterBox from '@/components/FilterBox.vue'
+import CollectionSkeleton from '@/components/CollectionSkeleton.vue'
 
 // Lucide svg import
 import { Gpu } from 'lucide-vue-next'
@@ -199,7 +200,7 @@ watch(
 
       <p v-if="totalGpus > 0">Current List of {{ brand_gpu }} GPUs: ({{ totalGpus }})</p>
 
-      <div v-if="loading" class="loading-message">Loading GPUs...</div>
+      <CollectionSkeleton v-if="loading" type="gpu" />
 
       <div v-if="error" class="error-message">
         {{ error }}

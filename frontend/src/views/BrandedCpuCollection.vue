@@ -7,6 +7,7 @@ import { useRoute, useRouter } from 'vue-router'
 import CpuCard from '@/components/CpuCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import FilterBox from '@/components/FilterBox.vue'
+import CollectionSkeleton from '@/components/CollectionSkeleton.vue'
 
 // Lucide svg import
 import { Cpu } from 'lucide-vue-next'
@@ -191,7 +192,7 @@ watch(
         Current List of {{ cpuBrandFormatter(brand_cpu) }} CPUs: ({{ totalCpus }})
       </p>
 
-      <div v-if="loading" class="loading-message">Loading CPUs...</div>
+      <CollectionSkeleton v-if="loading" type="cpu" />
 
       <div v-if="error" class="error-message">
         {{ error }}

@@ -4,6 +4,7 @@ import { ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import FilterBox from '@/components/FilterBox.vue'
+import CollectionSkeleton from '@/components/CollectionSkeleton.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import { Server } from 'lucide-vue-next'
 import { SlidersHorizontal } from 'lucide-vue-next'
@@ -201,7 +202,7 @@ watch(
         Current List of {{ brand_server }} Servers: ({{ totalServers }})
       </p>
 
-      <div v-if="loading" class="loading-message">Loading Servers...</div>
+      <CollectionSkeleton v-if="loading" type="server" />
 
       <div v-if="error" class="error-message">
         {{ error }}

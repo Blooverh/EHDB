@@ -2,6 +2,7 @@
 import '../assets/css/hardwareCollection.css'
 import FilterBox from '@/components/FilterBox.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
+import CollectionSkeleton from '@/components/CollectionSkeleton.vue'
 import { cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle.js'
 import { ref, watch, computed } from 'vue'
 import axios from 'axios'
@@ -194,7 +195,7 @@ watch(
 
       <p v-if="totalCpus > 0">Current List: ({{ totalCpus }} CPUs)</p>
 
-      <div v-if="loading" class="loading-message">Loading cpus...</div>
+      <CollectionSkeleton v-if="loading" type="cpu" />
       <div v-if="error" class="error-message">
         {{ error }}
         Reset Filters !
