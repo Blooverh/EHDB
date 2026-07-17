@@ -37,7 +37,7 @@ const itemName = `${props.item.brand} ${props.item.model}`
             <div class="col">
               <div class="icon-spec">
                 <Zap class="icon-color" />
-                <span class="spec">{{ item.gpuBrand }}</span>
+                <span class="spec">{{ item.brand }}</span>
               </div>
               <div class="icon-spec">
                 <MemoryStickIcon class="icon-color" />
