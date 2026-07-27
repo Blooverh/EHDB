@@ -17,71 +17,92 @@
   border-radius: 4px;
 }
 
-/* ==================== CPU SKELETON CARD ==================== */
-/* Mirrors the CpuCard layout: title row + tags, separator, spec boxes */
+/* ==================== HORIZONTAL CARD SKELETON ==================== */
+/* Mirrors the HorizontalCard layout: brand sidebar + content (title, tags, divider, specs, button) */
 
-.skeleton-cpu-card {
-  border: 2px solid #d0d0d0;
-  border-radius: 8px;
-  padding: 12px;
+.skeleton-hc-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
 }
 
-.skeleton-cpu-title-row {
+.skeleton-hc-brand {
+  width: auto;
+  background: linear-gradient(135deg, #c0c0c0 25%, #d8d8d8 37%, #c0c0c0 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.skeleton-hc-content {
+  flex: 1;
+  padding: 1rem 1.25rem;
   display: flex;
-  flex-direction: row;
-  gap: 12px;
-  align-items: center;
-  margin-top: 8px;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.skeleton-cpu-title {
-  height: 28px;
-  width: 320px;
-  flex-shrink: 0;
+.skeleton-hc-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.skeleton-cpu-tags {
+.skeleton-hc-title {
+  height: 24px;
+  width: 300px;
+}
+
+.skeleton-hc-tags {
   display: flex;
   flex-direction: row;
   gap: 8px;
 }
 
-.skeleton-cpu-tag {
-  height: 28px;
-  width: 60px;
-  border-radius: 8px;
+.skeleton-hc-tag {
+  height: 24px;
+  width: 65px;
+  border-radius: 6px;
 }
 
-.skeleton-cpu-separator {
-  height: 2px;
-  background: #d0d0d0;
-  margin: 12px 0;
-  border-radius: 0;
-  animation: none;
+.skeleton-hc-divider {
+  height: 1px;
+  background: #e5e7eb;
 }
 
-.skeleton-cpu-specs {
+.skeleton-hc-specs {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 8px;
-  margin-top: 8px;
 }
 
-.skeleton-cpu-spec {
+.skeleton-hc-spec {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 0.5rem;
 }
 
-.skeleton-cpu-spec-label {
-  height: 14px;
+.skeleton-hc-spec-value {
+  height: 18px;
   width: 70%;
 }
 
-.skeleton-cpu-spec-value {
-  height: 18px;
+.skeleton-hc-spec-label {
+  height: 12px;
   width: 80%;
+}
+
+.skeleton-hc-btn {
+  height: 34px;
+  width: 130px;
+  border-radius: 8px;
 }
 
 /* ==================== VERTICAL CARD SKELETON ==================== */
@@ -172,21 +193,26 @@
 
 /* ==================== RESPONSIVE SKELETON ==================== */
 
+/* Wide tablet */
+@media (max-width: 1200px) {
+  .skeleton-hc-specs {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 /* Tablet */
 @media (max-width: 992px) {
-  .skeleton-cpu-title {
-    height: 22px;
-    width: 240px;
+  .skeleton-hc-brand {
+    height: 40px;
   }
 
-  .skeleton-cpu-specs {
+  .skeleton-hc-title {
+    height: 20px;
+    width: 220px;
+  }
+
+  .skeleton-hc-specs {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .skeleton-cpu-title-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
   }
 
   .skeleton-vertical-card {
@@ -202,30 +228,22 @@
 
 /* Mobile */
 @media (max-width: 576px) {
-  .skeleton-cpu-card {
-    padding: 10px;
-  }
-
-  .skeleton-cpu-title {
-    height: 18px;
-    width: 180px;
-  }
-
-  .skeleton-cpu-tag {
-    height: 24px;
+  .skeleton-hc-tag {
+    height: 22px;
     width: 50px;
   }
 
-  .skeleton-cpu-specs {
+  .skeleton-hc-specs {
     grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
   }
 
-  .skeleton-cpu-spec-label {
-    height: 12px;
+  .skeleton-hc-btn {
+    width: 100%;
   }
 
-  .skeleton-cpu-spec-value {
-    height: 14px;
+  .skeleton-hc-content {
+    padding: 0.75rem 1rem;
   }
 
   .skeleton-vertical-card {

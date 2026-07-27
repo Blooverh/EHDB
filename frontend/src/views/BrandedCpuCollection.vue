@@ -4,7 +4,7 @@ import { cpuBrandFormatter } from '@/utils/formatCpuTitle'
 import { ref, watch, computed } from 'vue'
 import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router'
-import CpuCard from '@/components/CpuCard.vue'
+import HorizontalCard from '@/components/HorizontalCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import FilterBox from '@/components/FilterBox.vue'
 import CollectionSkeleton from '@/components/CollectionSkeleton.vue'
@@ -201,7 +201,7 @@ watch(
 
       <div v-if="!loading && !error">
         <div v-if="cpus.length > 0" class="d-grid gap-3 m-3">
-          <CpuCard v-for="cpu in cpus" :key="cpu._id" :cpu="cpu" class="cpu-card p-2" />
+          <HorizontalCard v-for="cpu in cpus" :key="cpu._id" :cpu="cpu" />
         </div>
         <div v-else class="no-results">
           <p>No cpus found matching your criteria.</p>

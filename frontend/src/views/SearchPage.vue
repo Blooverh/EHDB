@@ -2,7 +2,7 @@
 import { ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import CpuCard from '@/components/CpuCard.vue'
+import HorizontalCard from '@/components/HorizontalCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
 import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
 import '../assets/css/hardwareCollection.css'
@@ -89,7 +89,7 @@ const newSearch = () => {
       <div v-if="results.cpus && results.cpus.length" class="cpu-results">
         <h2>CPUs</h2>
         <div class="d-grid gap-3 m-3">
-          <CpuCard class="cpu-card p-2" v-for="cpu in results.cpus" :key="cpu._id" :cpu="cpu" />
+          <HorizontalCard v-for="cpu in results.cpus" :key="cpu._id" :cpu="cpu" />
         </div>
       </div>
       <div v-if="results.servers && results.servers.length" class="server-results">

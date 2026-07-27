@@ -1,4 +1,4 @@
-/* CPU Collection View */
+/* Collection Layout */
 .part-collection {
   display: grid;
   grid-template-columns: 500px 1fr;
@@ -10,38 +10,16 @@
   max-width: 1440px;
 } */
 
-.cpu-card {
-  border: 2px solid #007bff;
-  border-radius: 8px;
-}
-
-.cpu-title,
 .server-title {
   text-decoration: none;
   color: #007bff;
   font-weight: 700;
-}
-
-.server-title {
   font-size: 16px;
 }
 
-.cpu-title {
-  font-size: 2rem;
-}
-
-.cpu-title:hover,
 .server-title:hover {
   color: #1068a6;
   text-decoration: none;
-}
-
-.tag {
-  background: rgba(128, 128, 128, 0.339);
-  border-radius: 8px;
-  align-self: center;
-  padding: 5px;
-  margin-bottom: 0px;
 }
 
 .solid-separation {
@@ -56,14 +34,6 @@
 
 .active svg:hover {
   stroke: #007bff;
-}
-
-.spec-tl {
-  font-weight: 700;
-}
-
-.spec-info {
-  color: rgb(128, 128, 128);
 }
 
 /* ==================== RESPONSIVE STYLES ==================== */
@@ -124,37 +94,6 @@
     font-size: 1.75rem;
   }
 
-  /* CPU Card - 3 columns for specs */
-  .spec-boxes {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px !important;
-  }
-
-  .cpu-card {
-    padding: 15px !important;
-  }
-
-  .cpu-title {
-    font-size: 1.5rem;
-  }
-
-  .title-tags {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 10px !important;
-  }
-
-  .cpu-tags {
-    flex-wrap: wrap;
-    gap: 6px !important;
-  }
-
-  .tag {
-    font-size: 0.8rem;
-    padding: 4px 8px;
-  }
-
   .solid-separation {
     margin: 10px 0;
   }
@@ -198,34 +137,6 @@
   .collection-container p {
     font-size: 0.9rem;
     text-align: center;
-  }
-
-  /* CPU Card - 2 columns for specs */
-  .spec-boxes {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px !important;
-  }
-
-  .spec-tl {
-    font-size: 0.75rem;
-  }
-
-  .spec-info {
-    font-size: 0.85rem;
-  }
-
-  .cpu-card {
-    padding: 10px !important;
-    margin: 5px 0 !important;
-  }
-
-  .cpu-title {
-    font-size: 1.2rem;
-  }
-
-  .tag {
-    font-size: 0.7rem;
-    padding: 3px 6px;
   }
 
   .solid-separation {

@@ -14,35 +14,44 @@ const props = defineProps({
 })
 
 // CPU specs that the skeleton replicates (labels only — values are animated blocks)
-const cpuSpecs = ['Cores', 'Threads', 'Max RAM Speed', 'Base Clock', 'Turbo Clock', 'MPN']
+const cpuSpecs = ['Cores', 'Threads', 'RAM MT/s', 'Base GHz', 'Boost GHz', 'MPN']
 // GPU/Server icon-spec rows (2 columns of 3)
 const verticalSpecRows = [0, 1, 2]
 </script>
 
 <template>
-  <!-- CPU Skeleton: full-width cards in a grid, matching CpuCard layout -->
+  <!-- CPU Skeleton: horizontal card layout matching HorizontalCard.vue -->
   <div v-if="type === 'cpu'" class="d-grid gap-3 m-3">
-    <div v-for="n in count" :key="n" class="skeleton-cpu-card">
-      <!-- Title row + tags -->
-      <div class="skeleton-cpu-title-row">
-        <div class="skeleton-block skeleton-cpu-title"></div>
-        <div class="skeleton-cpu-tags">
-          <div class="skeleton-block skeleton-cpu-tag"></div>
-          <div class="skeleton-block skeleton-cpu-tag"></div>
-          <div class="skeleton-block skeleton-cpu-tag"></div>
-          <div class="skeleton-block skeleton-cpu-tag"></div>
-        </div>
-      </div>
+    <div v-for="n in count" :key="n" class="d-flex skeleton-hc-card">
+      <!-- Brand sidebar -->
+      <div class="skeleton-hc-brand skeleton-block"></div>
 
-      <!-- Separator -->
-      <div class="skeleton-cpu-separator"></div>
-
-      <!-- Spec boxes -->
-      <div class="skeleton-cpu-specs">
-        <div v-for="spec in cpuSpecs" :key="spec" class="skeleton-cpu-spec">
-          <div class="skeleton-block skeleton-cpu-spec-label"></div>
-          <div class="skeleton-block skeleton-cpu-spec-value"></div>
+      <!-- Content area -->
+      <div class="skeleton-hc-content">
+        <!-- Title + tags -->
+        <div class="skeleton-hc-header">
+          <div class="skeleton-block skeleton-hc-title"></div>
+          <div class="skeleton-hc-tags">
+            <div class="skeleton-block skeleton-hc-tag"></div>
+            <div class="skeleton-block skeleton-hc-tag"></div>
+            <div class="skeleton-block skeleton-hc-tag"></div>
+            <div class="skeleton-block skeleton-hc-tag"></div>
+          </div>
         </div>
+
+        <!-- Divider -->
+        <div class="skeleton-hc-divider"></div>
+
+        <!-- Spec grid -->
+        <div class="skeleton-hc-specs">
+          <div v-for="spec in cpuSpecs" :key="spec" class="skeleton-hc-spec">
+            <div class="skeleton-block skeleton-hc-spec-value"></div>
+            <div class="skeleton-block skeleton-hc-spec-label"></div>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="skeleton-block skeleton-hc-btn"></div>
       </div>
     </div>
   </div>
