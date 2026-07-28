@@ -1,0 +1,137 @@
+.search-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  max-width: 720px;
+  width: 100%;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  gap: 1.5rem;
+}
+
+.search-card:hover {
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.svg-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(to right, cyan, blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.svg-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: #ffffff;
+}
+
+.item-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex-grow: 1;
+}
+
+.item-brand {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.item-model {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.item-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, cyan, blue);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.item-link:hover {
+  opacity: 0.9;
+  transform: translateX(2px);
+}
+
+.item-link svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Skeleton Loading ────────────────────────────── */
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.skeleton {
+  background: #e5e7eb;
+  border-radius: 6px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.skeleton-brand {
+  width: 64px;
+  height: 10px;
+  border-radius: 4px;
+  margin-bottom: 0.35rem;
+}
+
+.skeleton-model {
+  width: 180px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.skeleton-link {
+  width: 80px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  align-self: center;
+}

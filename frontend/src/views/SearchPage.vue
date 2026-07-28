@@ -2,9 +2,9 @@
 import { ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import HorizontalCard from '@/components/HorizontalCard.vue'
 import PaginationControls from '@/components/PaginationControls.vue'
-import HardwareVerticalCard from '@/components/HardwareVerticalCard.vue'
+import SearchSkeleton from '@/components/SearchSkeleton.vue'
+import SearchCard from '@/components/SearchCard.vue'
 import '../assets/css/hardwareCollection.css'
 
 const route = useRoute()
@@ -83,19 +83,21 @@ const newSearch = () => {
         <button type="button" class="search-btn" @click="newSearch">Search</button>
       </div>
     </div>
-    <div v-if="isLoading" class="loading">Loading...</div>
+    <div v-if="isLoading" class="skeleton-stack">
+      <SearchSkeleton v-for="n in 5" :key="n" />
+    </div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else-if="hasResults" class="results-grid">
       <div v-if="results.cpus && results.cpus.length" class="cpu-results">
         <h2>CPUs</h2>
         <div class="d-grid gap-3 m-3">
-          <HorizontalCard v-for="cpu in results.cpus" :key="cpu._id" :cpu="cpu" />
+          <SearchCard v-for="cpu in results.cpus" :key="cpu._id" :item="cpu" type="cpu" />
         </div>
       </div>
       <div v-if="results.servers && results.servers.length" class="server-results">
         <h2>Servers</h2>
         <div class="d-flex flex-wrap flex-row gap-5 m-3 algin-items-center justify-content-center">
-          <HardwareVerticalCard
+          <SearchCard
             v-for="server in results.servers"
             :key="server._id"
             :item="server"
@@ -106,7 +108,7 @@ const newSearch = () => {
       <div v-if="results.gpus && results.gpus.length" class="gpu-results">
         <h2>GPUs</h2>
         <div class="d-flex flex-wrap flex-row gap-5 m-3 align-items-center justify-content-center">
-          <HardwareVerticalCard v-for="gpu in results.gpus" :key="gpu._id" :item="gpu" type="gpu" />
+          <SearchCard v-for="gpu in results.gpus" :key="gpu._id" :item="gpu" type="gpu" />
         </div>
       </div>
     </div>
@@ -195,5 +197,13 @@ h2 {
   font-size: 1.2rem;
   color: #666;
   margin-top: 4rem;
+}
+
+.skeleton-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
 }
 </style>
