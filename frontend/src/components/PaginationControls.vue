@@ -48,3 +48,49 @@ const goNext = () => {
     </button>
   </div>
 </template>
+
+<style scoped>
+/* Base */
+.btn-box-left,
+.btn-box-right {
+  background: none;
+  border: none;
+}
+
+.active :deep(svg):hover {
+  stroke: #007bff;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .pagination-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pagination-controls span {
+    font-size: 0.9rem;
+    order: -1;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .pagination-controls {
+    padding: 10px 0;
+  }
+
+  .btn-box-left,
+  .btn-box-right {
+    padding: 8px !important;
+  }
+
+  .btn-box-left :deep(svg),
+  .btn-box-right :deep(svg) {
+    width: 24px;
+    height: 24px;
+  }
+}
+</style>

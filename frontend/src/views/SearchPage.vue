@@ -5,7 +5,6 @@ import axios from 'axios'
 import PaginationControls from '@/components/PaginationControls.vue'
 import SearchSkeleton from '@/components/SearchSkeleton.vue'
 import SearchCard from '@/components/SearchCard.vue'
-import '../assets/css/hardwareCollection.css'
 
 const route = useRoute()
 const router = useRouter()

@@ -77,7 +77,7 @@ onMounted(async () => {
         <div v-else-if="gpus" class="box-align">
           <Gpu class="box-icon" />
           <span class="box-span">GPUs</span>
-          <span class="parts-in-db" v-if="gpus > 40"> 40+</span>
+          <span class="parts-in-db" v-if="gpus > 20"> 20+</span>
         </div>
         <div v-else>
           <LoaderCircle class="box-icon spinning" />
