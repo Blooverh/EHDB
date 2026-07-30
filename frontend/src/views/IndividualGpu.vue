@@ -7,6 +7,7 @@ import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { Store, SquareArrowOutUpRight } from 'lucide-vue-next'
+import Skeleton from '@/components/IndividualPage_Components/Skeleton.vue'
 
 const route = useRoute()
 const error = ref(null)
@@ -132,7 +133,7 @@ watch(gpu, (newGpu) => {
         :properties="tagsProps"
       />
     </div>
-    <div v-else-if="loading">Loading...</div>
+    <div v-else-if="loading"><Skeleton /></div>
     <div v-else-if="error">{{ error }}</div>
   </div>
 </template>

@@ -9,6 +9,7 @@ import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { cpuBrandFormatter, formatModel } from '@/utils/formatCpuTitle'
 import { Store, SquareArrowOutUpRight } from 'lucide-vue-next'
+import Skeleton from '@/components/IndividualPage_Components/Skeleton.vue'
 
 const route = useRoute()
 
@@ -129,7 +130,7 @@ watch(cpu, (newCPU) => {
 
       <CpuSpecs :part="cpu" boxTitle="Cache &amp; Memory" :properties="memoryProps" />
     </div>
-    <div v-else-if="loading">Loading...</div>
+    <div v-else-if="loading"><Skeleton /></div>
     <div v-else-if="error">{{ error }}</div>
   </div>
 </template>

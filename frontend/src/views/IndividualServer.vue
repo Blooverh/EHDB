@@ -4,10 +4,11 @@ import HeroPart from '@/components/IndividualPage_Components/Hero_part.vue'
 import { ref, watch, onMounted, nextTick, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
-import { Store, SquareArrowOutUpRight, Info, TrendingUp } from 'lucide-vue-next'
+import { Store, SquareArrowOutUpRight, TrendingUp } from 'lucide-vue-next'
 import ServerSpecs from '@/components/IndividualPage_Components/ServerSpecs.vue'
 import PriceHistoryServer from '@/components/PriceHistoryServer.vue'
 import { Tooltip } from 'bootstrap'
+import Skeleton from '@/components/IndividualPage_Components/Skeleton.vue'
 
 const route = useRoute()
 const error = ref(null)
@@ -201,7 +202,7 @@ watch(server, (newServer) => {
         </ol>
       </div>
     </div>
-    <div v-else-if="loading">Loading...</div>
+    <div v-else-if="loading"><Skeleton /></div>
     <div v-else-if="error">{{ error }}</div>
   </div>
 </template>
