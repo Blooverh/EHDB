@@ -1,7 +1,7 @@
 <script setup>
 import '../assets/css/individual-parts.css'
 import HeroPart from '@/components/IndividualPage_Components/Hero_part.vue'
-import ServerSpecs from '@/components/IndividualPage_Components/ServerSpecs.vue'
+import ComponentSpecs from '@/components/IndividualPage_Components/ComponentSpecs.vue'
 import PriceHistoryCpu from '@/components/PriceHistoryCpu.vue'
 import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -122,14 +122,14 @@ watch(gpu, (newGpu) => {
 
       <PriceHistoryCpu v-if="gpu.gpuInfo && gpu.gpuInfo.length" :listings="gpu.gpuInfo" />
 
-      <ServerSpecs :part="gpu" boxTitle="Core Specifications" :properties="coreProps" />
+      <ComponentSpecs :part="gpu" boxTitle="Core Specifications" :properties="coreProps" />
 
-      <ServerSpecs :part="gpu" boxTitle="Compute &amp; Physical" :properties="computeProps" />
+      <ComponentSpecs :part="gpu" boxTitle="Compute &amp; Physical" :properties="computeProps" />
 
-      <ServerSpecs
+      <ComponentSpecs
         v-if="gpu.gpuTags && gpu.gpuTags.length && gpu.gpuTags[0] !== 'N/A'"
         :part="gpu"
-        boxTitle="Tags"
+        boxTitle="Workloads"
         :properties="tagsProps"
       />
     </div>

@@ -5,7 +5,7 @@ import { ref, watch, onMounted, nextTick, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { Store, SquareArrowOutUpRight, TrendingUp } from 'lucide-vue-next'
-import ServerSpecs from '@/components/IndividualPage_Components/ServerSpecs.vue'
+import ComponentSpecs from '@/components/IndividualPage_Components/ComponentSpecs.vue'
 import PriceHistoryServer from '@/components/PriceHistoryServer.vue'
 import { Tooltip } from 'bootstrap'
 import Skeleton from '@/components/IndividualPage_Components/Skeleton.vue'
@@ -116,15 +116,15 @@ watch(server, (newServer) => {
 
       <!-- Specs Component -->
 
-      <ServerSpecs :part="server" boxTitle="Quick Specifications" :properties="singleVal_Props" />
+      <ComponentSpecs :part="server" boxTitle="Quick Specifications" :properties="singleVal_Props" />
 
-      <ServerSpecs
+      <ComponentSpecs
         :part="server"
         boxTitle="Server Component Compatibility"
         :properties="multipleVal_props"
       />
 
-      <ServerSpecs
+      <ComponentSpecs
         :part="server"
         boxTitle="Server Part List Compatibility"
         :properties="partsVal_props"

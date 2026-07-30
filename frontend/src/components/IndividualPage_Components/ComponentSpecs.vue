@@ -41,7 +41,7 @@ const isLinkProperty = (key) => {
     <div class="specs-list p-3">
       <div class="spec-item" v-for="prop in properties" :key="prop.key">
         <div class="d-flex flex-column">
-          <span class="label-text">{{ prop.label }}</span>
+          <span class="label-text">{{ prop.label === 'GPU Tags' ? 'GPU Workloads' : prop.label }}</span>
           <!-- if statement for checking whether its an URL property, non array property value, or an array property value -->
           <a
             v-if="isLinkProperty(prop.key)"
