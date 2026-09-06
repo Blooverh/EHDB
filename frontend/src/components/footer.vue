@@ -1,5 +1,8 @@
 <script setup>
   import '../assets/css/footer.css'
+
+  let currentDate = new Date();
+
 </script>
 
 <template>
@@ -67,7 +70,7 @@
     <div class="solid"></div>
 
     <div class="sub-footer d-flex justify-content-center">
-      <span>© 2025 EHDB - Enterprise Hardware Database. All rights reserved.</span>
+      <span>© {{  currentDate.getFullYear() }} EHDB - Enterprise Hardware Database. All rights reserved.</span>
     </div>
   </div>
 </template>

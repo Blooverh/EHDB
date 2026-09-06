@@ -1,7 +1,7 @@
 /* Collection Layout */
 .part-collection {
   display: grid;
-  grid-template-columns: 500px 1fr;
+  grid-template-columns: 300px 1fr;
   margin: 30px 20px 20px 20px;
   gap: 20px;
 }
