@@ -1,113 +1,558 @@
-.home-img {
-  max-width: 5rem;
-}
+/* ==================== SITE HEADER ==================== */
 
-nav.navbar.sticky-top {
+.site-navbar.sticky-top {
   position: sticky !important;
   top: 0 !important;
   z-index: 9999 !important;
 }
 
-.dropdown-menu > li {
-  padding: 5px;
-}
+.site-navbar {
+  --eh-ink: #0f172a;
+  --eh-ink-soft: #475569;
+  --eh-line: rgba(15, 23, 42, 0.08);
+  --eh-gradient: linear-gradient(90deg, #00e0ff 0%, #2563eb 100%);
 
-.navbar-nav {
-  gap: 3rem;
-}
-
-.dropdown-menu {
-  opacity: 0;
+  padding: 0.55rem 0;
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
   transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
-  transform-origin: top center;
-  animation: dropdownFadeIn 0.25s ease forwards;
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
-@keyframes dropdownFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Gradient hairline that appears once the page scrolls */
+.site-navbar::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 224, 255, 0.65) 35%,
+    rgba(37, 99, 235, 0.6) 65%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
+
+.site-navbar.is-scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.45);
+}
+
+.site-navbar.is-scrolled::after {
+  opacity: 1;
+}
+
+.navbar-inner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-inline: clamp(1rem, 3vw, 2.5rem);
+}
+
+/* Keep the header links free of the global underline hover */
+.site-navbar a,
+.site-navbar a:hover,
+.site-navbar a:focus {
+  text-decoration: none;
+}
+
+/* ==================== BRAND ==================== */
+
+.site-navbar .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow:
+    0 4px 12px -6px rgba(15, 23, 42, 0.5),
+    0 0 0 1px rgba(15, 23, 42, 0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.brand:hover .brand-logo {
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 18px -8px rgba(37, 99, 235, 0.55),
+    0 0 0 1px rgba(37, 99, 235, 0.25);
+}
+
+.brand-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.brand-name {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--eh-ink);
+}
+
+.brand-tagline {
+  margin-top: 0.3rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+/* ==================== MOBILE TOGGLE ==================== */
+
+.site-navbar .nav-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  margin-left: auto;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--eh-ink);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.site-navbar .nav-toggle:hover {
+  border-color: rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 12px -6px rgba(37, 99, 235, 0.45);
+}
+
+.site-navbar .nav-toggle:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.nav-toggle-icon {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 12px;
+}
+
+.nav-toggle-icon span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease,
+    top 0.25s ease;
+}
+
+.nav-toggle-icon span:nth-child(1) {
+  top: 0;
+}
+
+.nav-toggle-icon span:nth-child(2) {
+  top: 5px;
+}
+
+.nav-toggle-icon span:nth-child(3) {
+  top: 10px;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle-icon span:nth-child(1) {
+  top: 5px;
+  transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle-icon span:nth-child(3) {
+  top: 5px;
+  transform: rotate(-45deg);
+}
+
+/* ==================== NAV LINKS ==================== */
+
+.nav-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-navbar .nav-main .nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.9rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--eh-ink-soft);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.18s ease,
+    background 0.18s ease;
+}
+
+.site-navbar .nav-main .nav-link:hover,
+.site-navbar .nav-main .nav-link:focus-visible {
+  color: var(--eh-ink);
+  background: rgba(15, 23, 42, 0.045);
+}
+
+.site-navbar .nav-main .nav-link:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+.site-navbar .nav-main .nav-link.is-active {
+  color: var(--eh-ink);
+  font-weight: 600;
+}
+
+/* Animated gradient underline (grows from the centre) */
+.site-navbar .nav-main .nav-link::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0.15rem;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--eh-gradient);
+  opacity: 0;
+  translate: -50% 0;
+  transition:
+    width 0.22s ease,
+    opacity 0.22s ease;
+  pointer-events: none;
+}
+
+.site-navbar .nav-main .nav-link:hover::before,
+.site-navbar .nav-main .nav-link.is-active::before {
+  width: calc(100% - 1.8rem);
+  opacity: 1;
+}
+
+/* Replace Bootstrap's caret with a rotating chevron */
+.site-navbar .nav-main .dropdown-toggle::after {
+  display: none;
+}
+
+.nav-chevron {
+  opacity: 0.65;
+  transition: transform 0.22s ease;
+}
+
+.site-navbar .nav-main .dropdown-toggle[aria-expanded='true'] .nav-chevron {
+  transform: rotate(180deg);
+}
+
+/* ==================== DROPDOWNS ==================== */
+
+.site-navbar .dropdown-menu {
+  --bs-dropdown-min-width: 14.5rem;
+
+  min-width: 14.5rem;
+  margin-top: 1rem;
+  padding: 0.45rem;
+  border: 1px solid var(--eh-line);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow:
+    0 24px 48px -24px rgba(15, 23, 42, 0.35),
+    0 8px 16px -12px rgba(15, 23, 42, 0.18);
+}
+
+.site-navbar .dropdown-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.55rem 0.75rem;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--eh-ink-soft);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    padding-left 0.15s ease;
+}
+
+.site-navbar .dropdown-item:hover,
+.site-navbar .dropdown-item:focus {
+  padding-left: 0.95rem;
+  background: #f1f5f9;
+  color: #1d4ed8;
+}
+
+.site-navbar .dropdown-item.router-link-exact-active {
+  padding-left: 0.95rem;
+  background: linear-gradient(90deg, rgba(0, 224, 255, 0.14), rgba(37, 99, 235, 0.1));
+  color: #0b3b7a;
+  font-weight: 600;
+}
+
+/* ==================== SEARCH CTA ==================== */
 
 .search-btn {
-  padding: 10px;
-  border-radius: 8px;
-  background: linear-gradient(to right, cyan, blue);
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-  transition: background-position 0.5s ease-in-out;
-  cursor: pointer;
-  background-size: 200% 100%; /* Make background twice as wide */
-  background-position: 0% 0%; /* Start at the beginning of the gradient */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  background-image: linear-gradient(90deg, cyan, blue);
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #ffffff;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px -10px rgba(0, 0, 255, 0.6);
+  transition:
+    background-position 0.45s ease,
+    box-shadow 0.22s ease,
+    transform 0.18s ease;
 }
 
 .search-btn:hover {
   background-position: 100% 0%;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+  color: #ffffff;
+  box-shadow: 0 10px 22px -10px rgba(0, 0, 255, 0.7);
+  transform: translateY(-1px);
 }
 
 .search-btn:active {
-  transform: translateY(0); /* Press down effect */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+  box-shadow: 0 4px 10px -6px rgba(0, 0, 255, 0.6);
 }
 
-@media (max-width: 992px) {
-  .navbar-collapse {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    text-align: center;
+.search-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.search-kbd {
+  display: none;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* ==================== DESKTOP LAYOUT ==================== */
+
+@media (min-width: 992px) {
+  .site-navbar .nav-toggle {
+    display: none;
   }
 
-  .navbar-nav {
+  .site-navbar .navbar-collapse {
+    display: flex !important;
+    flex: 1;
+    flex-basis: auto;
     align-items: center;
-    margin-bottom: 1rem;
-    width: 100%;
-    justify-content: center;
-    display: flex;
-    gap: 0px;
   }
 
-  .nav-item {
-    padding: 0.5rem 0;
+  /* Pin the links to the true centre of the header, independent of the
+     brand and CTA widths. The overlay never intercepts clicks outside
+     of the links themselves. */
+  .nav-main {
+    position: absolute;
+    inset: 0;
+    justify-content: center;
+    margin-inline: 0;
+    pointer-events: none;
+  }
+
+  .nav-main > .nav-item {
+    pointer-events: auto;
+  }
+
+  .search-btn {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .search-kbd {
+    display: inline-block;
+  }
+}
+
+/* ==================== TABLET / SMALL DESKTOP ==================== */
+
+/* Between the collapsed menu and the wide centred layout the wordmark
+   steals too much room, so keep only the "EHDB" text. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .brand-tagline {
+    display: none;
+  }
+}
+
+/* ==================== MOBILE / TABLET LAYOUT ==================== */
+
+@media (max-width: 991.98px) {
+  .navbar-inner {
+    position: static;
+  }
+
+  .site-navbar .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    right: 1rem;
+    flex-basis: auto;
+    margin-top: 0.4rem;
+    padding: 0.6rem;
+    max-height: calc(100vh - 6.5rem);
+    max-height: calc(100dvh - 6.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #ffffff;
+    border: 1px solid var(--eh-line);
+    border-radius: 16px;
+    box-shadow: 0 24px 48px -28px rgba(15, 23, 42, 0.45);
+  }
+
+  .nav-main {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.1rem;
+    width: 100%;
+  }
+
+  .nav-main .nav-item {
+    width: 100%;
+  }
+
+  .site-navbar .nav-main .nav-link {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.75rem 0.8rem;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+
+  .site-navbar .nav-main .nav-link::before {
+    display: none;
+  }
+
+  .site-navbar .nav-main .nav-link.is-active {
+    background: linear-gradient(90deg, rgba(0, 224, 255, 0.12), rgba(37, 99, 235, 0.08));
+    color: #0b3b7a;
+  }
+
+  .nav-chevron {
+    margin-left: auto;
+  }
+
+  /* Dropdowns become inline accordion panels */
+  .site-navbar .dropdown-menu {
+    position: static !important;
+    transform: none !important;
+    width: 100%;
+    min-width: 0;
+    margin: 0.15rem 0 0.35rem !important;
+    padding: 0.35rem;
+    background: #f8fafc;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    border-radius: 12px;
+    box-shadow: none;
+  }
+
+  .site-navbar .dropdown-item {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .site-navbar .dropdown-item:hover,
+  .site-navbar .dropdown-item:focus {
+    padding-left: 0.85rem;
   }
 
   .search-btn {
     width: 100%;
-    text-align: center;
-    display: block;
-    max-width: 200px;
-    margin: 0 auto;
+    margin-top: 0.5rem;
+    padding: 0.7rem 1rem;
+  }
+
+  .search-kbd {
+    display: none;
   }
 }
 
-@media (max-width: 576px) {
-  .container-fluid {
-    padding-left: 1rem;
-    padding-right: 1rem;
+/* ==================== SMALL PHONES ==================== */
+
+@media (max-width: 575.98px) {
+  .navbar-inner {
+    padding-inline: 1rem;
   }
 
-  .home-img img {
-    max-width: 4rem;
+  .brand-logo {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 10px;
   }
 
-  .navbar-toggler {
-    padding: 0.4rem;
+  .brand-name {
+    font-size: 1rem;
   }
 
-  .dropdown-menu {
-    text-align: center;
+  .brand-tagline {
+    display: none;
   }
+}
 
-  .nav-link {
-    font-size: 0.95rem;
+/* ==================== REDUCED MOTION ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .site-navbar,
+  .site-navbar *,
+  .site-navbar *::before,
+  .site-navbar *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
